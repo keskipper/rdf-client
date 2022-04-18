@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  useRoutes,
+  Route
 } from "react-router-dom";
 
 import './App.css';
@@ -50,7 +49,6 @@ export default class App extends Component {
     return (
       <div className="App">
 
-
       {this.state.loggedInStatus === "NOT_LOGGED_IN" ?
         <Login 
           handleSuccessfulLogin={this.handleSuccessfulLogin}
@@ -61,11 +59,11 @@ export default class App extends Component {
       }
 
       <Locator />
-<Router>
+      <Router>
         <Routes>
           <Route path="/user" element={<User/>} />
         </Routes>
-        </Router>
+      </Router>
     </div>
     );
   }
