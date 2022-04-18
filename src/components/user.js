@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
 
 
 function User() {
@@ -16,7 +16,6 @@ function User() {
     })
 
     const toggleForm = () => {
-      
       setUser(previousState => {
         return { ...previousState, showForm: !previousState.showForm}
       })

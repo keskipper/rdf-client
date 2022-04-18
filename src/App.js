@@ -4,12 +4,13 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import axios from 'axios';
 
 import './App.css';
 
 import Login from './components/login';
 import Logout from './components/logout';
-import Locator from './components/locator';
+import Home from './components/home';
 
 import User from './components/user';
 
@@ -19,7 +20,9 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      loggedInStatus: "NOT_LOGGED_IN"
+      loggedInStatus: "NOT_LOGGED_IN",
+      email: "",
+      user: {}
     }
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
@@ -27,16 +30,39 @@ export default class App extends Component {
     this.handleSuccessfulLogout = this.handleSuccessfulLogout.bind(this);
   }
 
-  handleSuccessfulLogin() {
+  handleSuccessfulLogin(props) {
+    //console.log("props: ", props);
     this.setState({
-      loggedInStatus: "LOGGED_IN"
+      loggedInStatus: "LOGGED_IN",
+      email: props
+    }, () => {
+      //check for user existing in db
+      axios({
+          method: 'post',
+          url: "http://localhost:8080/api/users/email",
+          data: {
+            email: this.state.email
+          }
+        }
+      ).then(response => {
+        if(response.data.message === "NOTFOUND") {
+          console.log("user not found");
+          //TODO open user profile creation component
+        } else {
+          console.log("User id", response.data.id, "logged in.");
+          //TODO open game search component
+        }
+        
+      }).catch(error => {
+        console.log("Error in App.js handleSuccessfulLogin(): ", error)
+      })
     })
   }
 
   handleUnsuccessfulLogin(){
     this.setState({
       loggedInStatus: "NOT_LOGGED_IN"
-    })
+    }) 
   }
 
   handleSuccessfulLogout(){
@@ -58,9 +84,9 @@ export default class App extends Component {
         <Logout handleSuccessfulLogout={this.handleSuccessfulLogout}/>
       }
 
-      <Locator />
       <Router>
         <Routes>
+          <Route path="/" element={<Home/>} />
           <Route path="/user" element={<User/>} />
         </Routes>
       </Router>

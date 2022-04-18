@@ -10,8 +10,9 @@ const clientId =
 function Login(props) {
   const onSuccess = (res) => {
     //console.log('Login Success: currentUser:', res.profileObj);
+    const email = res.profileObj.email;
     refreshTokenSetup(res);
-    props.handleSuccessfulLogin();
+    props.handleSuccessfulLogin(email);
   };
 
   const onFailure = (res) => {
