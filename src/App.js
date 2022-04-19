@@ -12,7 +12,8 @@ import Login from './components/login';
 import Logout from './components/logout';
 import Home from './components/home';
 
-import User from './components/user';
+import UserEditor from './components/user-editor';
+import GameFinder from './components/game-finder';
 
 
 export default class App extends Component {
@@ -22,12 +23,15 @@ export default class App extends Component {
     this.state = {
       loggedInStatus: "NOT_LOGGED_IN",
       email: "",
-      user: {}
+      userExists: false,
+      userEditMode: false
     }
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
     this.handleUnsuccessfulLogin = this.handleUnsuccessfulLogin.bind(this);
     this.handleSuccessfulLogout = this.handleSuccessfulLogout.bind(this);
+    this.showUserEditor = this.showUserEditor.bind(this);
+    this.hideUserEditor = this.hideUserEditor.bind(this);
   }
 
   handleSuccessfulLogin(props) {
@@ -47,10 +51,16 @@ export default class App extends Component {
       ).then(response => {
         if(response.data.message === "NOTFOUND") {
           console.log("user not found");
-          //TODO open user profile creation component
+          //open user profile creation component
+          this.setState({
+            userExists: false
+          })
         } else {
           console.log("User id", response.data.id, "logged in.");
-          //TODO open game search component
+          //open game search component
+          this.setState({
+            userExists: true
+          })
         }
         
       }).catch(error => {
@@ -71,7 +81,33 @@ export default class App extends Component {
     })
   }
 
+  showUserEditor(){
+    this.setState({
+      userEditMode: true
+    })
+  }
+
+  hideUserEditor(){
+    this.setState({
+      userEditMode: false
+    })
+  }
+
+
   render() {
+
+    const contentManager = () => {
+        if ((!this.state.userExists && this.state.loggedInStatus === "LOGGED_IN") || (this.state.userEditMode)) {
+          return <UserEditor 
+            showUserEditor={this.showUserEditor}
+            hideUserEditor={this.hideUserEditor}
+            />
+        } else if (this.state.userExists && this.state.loggedInStatus === "LOGGED_IN" && !this.state.userEditMode) {
+          return <GameFinder />
+        }
+    }
+
+
     return (
       <div className="App">
 
@@ -84,10 +120,13 @@ export default class App extends Component {
         <Logout handleSuccessfulLogout={this.handleSuccessfulLogout}/>
       }
 
+      {contentManager()}
+
+
       <Router>
         <Routes>
           <Route path="/" element={<Home/>} />
-          <Route path="/user" element={<User/>} />
+          <Route path="/user" element={<UserEditor/>} />
         </Routes>
       </Router>
     </div>
