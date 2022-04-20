@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import Locator from './locator';
 
+import UserViewer from './user-viewer';
+
 
 const UserEditor = (props) => {
     const [ user, setUser ] = useState({
@@ -18,8 +20,6 @@ const UserEditor = (props) => {
       userInDatabase: props.userExists,
       currentUser: props.user
     })
-
-    
 
 
     const populate = () => {
@@ -56,7 +56,6 @@ const UserEditor = (props) => {
     }
 
 
-
     const handleSubmit = (event) => {
       //make axios post call to create/update user with data: buildForm()
       //.then empty state
@@ -68,14 +67,7 @@ const UserEditor = (props) => {
 
   return (
     <div>
-        <h1>Current Information</h1>
-        {user.currentUser.derbyName}
-        ({user.currentUser.firstName} {user.currentUser.lastName})
-        {user.currentUser.age} years old
-        {user.currentUser.gender}
-        {user.currentUser.email}
-        {user.currentUser.phone}
-        {user.currentUser.location}
+      <UserViewer user={user.currentUser}/>
 
     <form onSubmit={handleSubmit}>
       <input 
@@ -114,7 +106,6 @@ const UserEditor = (props) => {
         placeholder="Preferred jersey number"
         value={user.jerseyNumber}/>
 
-{/* TODO make this a dropdown */}
       <select 
         onChange={(event) => {setUser(prevUser => ({
           ...prevUser, gender: event.target.value

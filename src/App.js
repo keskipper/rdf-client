@@ -10,7 +10,6 @@ import './App.css';
 
 import Login from './components/login';
 import Logout from './components/logout';
-import Home from './components/home';
 
 import UserEditor from './components/user-editor';
 import GameFinder from './components/game-finder';
