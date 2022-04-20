@@ -23,13 +23,10 @@ const UserEditor = (props) => {
 
 
     const populate = () => {
-      console.log("populate() called");
+      //put user's current info into input boxes for potential editing
       
 
     }
-
-
-
 
 
     const buildForm = () => {
@@ -43,8 +40,8 @@ const UserEditor = (props) => {
       formData.append("jerseyNumber", user.jerseyNumber);
       formData.append("gender", user.gender);
       formData.append("age", user.age);
-
-      //TODO get location data
+      formData.append("userLat", user.userLat);
+      formData.append("userLng", user.userLng);
 
       return formData;
     }
@@ -57,6 +54,8 @@ const UserEditor = (props) => {
 
 
     const handleSubmit = (event) => {
+      //check for empty form fields, prompt user to fix if any NN fields are empty
+
       //make axios post call to create/update user with data: buildForm()
       //.then empty state
       //.catch error
@@ -69,86 +68,123 @@ const UserEditor = (props) => {
     <div>
       <UserViewer user={user.currentUser}/>
 
-    <form onSubmit={handleSubmit}>
-      <input 
-        onChange={(event) => {setUser(prevUser => ({
-          ...prevUser, firstName: event.target.value
-        }))}} 
-        type="text"
-        name="firstName"
-        placeholder="Legal first name"
-        value={user.firstName}/>
+      <div className="user-form-wrapper">
+        <div className="user-form-header">
+          Update profile:
+        </div>
 
-      <input 
-        onChange={(event) => {setUser(prevUser => ({
-          ...prevUser, lastName: event.target.value
-        }))}} 
-        type="text"
-        name="lastName"
-        placeholder="Legal last name"
-        value={user.lastName}/>  
+        <form onSubmit={handleSubmit}>
+          <div className="user-form-item">
+            <input 
+              onChange={(event) => {setUser(prevUser => ({
+                ...prevUser, firstName: event.target.value
+              }))}} 
+              type="text"
+              name="firstName"
+              placeholder="Legal first name (required)"
+              maxLength={45}
+              required
+              value={user.firstName}/>
+          </div>
 
-      <input 
-        onChange={(event) => {setUser(prevUser => ({
-          ...prevUser, derbyName: event.target.value
-        }))}} 
-        type="text"
-        name="derbyName"
-        placeholder="Derby name"
-        value={user.derbyName}/>
+          <div className="user-form-item">
+            <input 
+              onChange={(event) => {setUser(prevUser => ({
+                ...prevUser, lastName: event.target.value
+              }))}} 
+              type="text"
+              name="lastName"
+              placeholder="Legal last name (required)"
+              maxLength={45}
+              required
+              value={user.lastName}/>  
+          </div>
 
-      <input 
-        onChange={(event) => {setUser(prevUser => ({
-          ...prevUser, jerseyNumber: event.target.value
-        }))}} 
-        type="text"
-        name="jerseyNumber"
-        placeholder="Preferred jersey number"
-        value={user.jerseyNumber}/>
+          <div className="user-form-item">
+            <input 
+              onChange={(event) => {setUser(prevUser => ({
+                ...prevUser, derbyName: event.target.value
+              }))}} 
+              type="text"
+              name="derbyName"
+              placeholder="Derby name"
+              maxLength={45}
+              value={user.derbyName}/>
+          </div>
 
-      <select 
-        onChange={(event) => {setUser(prevUser => ({
-          ...prevUser, gender: event.target.value
-        }))}} 
-        name="gender"
-        value={user.gender} >
-          <option>Female</option>
-          <option>Male</option>
-          <option>Expansive</option>
-        </select>
+          <div className="user-form-item">
+            <input 
+              onChange={(event) => {setUser(prevUser => ({
+                ...prevUser, jerseyNumber: event.target.value
+              }))}} 
+              type="text"
+              name="jerseyNumber"
+              placeholder="Preferred jersey number"
+              maxLength={4}
+              value={user.jerseyNumber}/>
+          </div>
 
-      <input 
-        onChange={(event) => {setUser(prevUser => ({
-          ...prevUser, age: event.target.value
-        }))}} 
-        type="text"
-        name="age"
-        placeholder="Age"
-        value={user.age}/>
+          <div className="user-form-item">
+            <select 
+              onChange={(event) => {setUser(prevUser => ({
+                ...prevUser, gender: event.target.value
+              }))}} 
+              name="gender"
+              value={user.gender} >
+                <option>female</option>
+                <option>male</option>
+                <option>expansive</option>
+            </select>
+          </div>
 
-      <input 
-        onChange={(event) => {setUser(prevUser => ({
-          ...prevUser, email: event.target.value
-        }))}} 
-        type="text"
-        name="email"
-        placeholder="Email address"
-        value={user.email || ""}/>
+          <div className="user-form-item">
+            <input 
+              onChange={(event) => {setUser(prevUser => ({
+                ...prevUser, age: event.target.value
+              }))}} 
+              type="text"
+              name="age"
+              placeholder="Age (required)"
+              maxLength={3}
+              required
+              value={user.age}/>  
+          </div>
 
-      <input 
-        onChange={(event) => {setUser(prevUser => ({
-          ...prevUser, phone: event.target.value
-        }))}} 
-        type="text"
-        name="phone"
-        placeholder="Phone number"
-        value={user.phone}/>
+          <div className="user-form-item">
+            <input 
+              onChange={(event) => {setUser(prevUser => ({
+                ...prevUser, email: event.target.value
+              }))}} 
+              type="text"
+              name="email"
+              placeholder="Email address (required)"
+              maxLength={100}
+              required
+              value={user.email || ""}/>
+          </div>
 
-        <Locator handleLocation={handleLocation} />
+          <div className="user-form-item">
+            <input 
+              onChange={(event) => {setUser(prevUser => ({
+                ...prevUser, phone: event.target.value
+              }))}} 
+              type="text"
+              name="phone"
+              placeholder="Phone number"
+              maxLength={10}
+              value={user.phone}/>
+          </div>
 
+          <div className="user-form-item">
+            <Locator handleLocation={handleLocation} />
+          </div>
 
-      <button type='submit' className="btn">Save Profile</button>
-    </form>
+          <div className="user-form-item">
+            <button type='submit' className="btn">Save Profile</button>
+          </div>
+        </form>
+
+      </div>
 
     </div>
   )
