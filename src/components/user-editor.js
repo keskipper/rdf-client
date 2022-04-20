@@ -50,8 +50,9 @@ const UserEditor = (props) => {
     }
 
 
-    function handleLocation(lat, lng) {
-      //put locator lat and lng into form
+    function handleLocation(lat, lng) {      
+      user.userLat = lat.toFixed(4);
+      user.userLng = lng.toFixed(4);
     }
 
 
