@@ -24,7 +24,8 @@ export default class App extends Component {
       loggedInStatus: "NOT_LOGGED_IN",
       email: "",
       userExists: false,
-      userEditMode: false
+      userEditMode: false,
+      user: {}
     }
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
@@ -59,7 +60,8 @@ export default class App extends Component {
           console.log("User id", response.data.id, "logged in.");
           //open game search component
           this.setState({
-            userExists: true
+            userExists: true,
+            user: response.data
           })
         }
         
@@ -94,11 +96,15 @@ export default class App extends Component {
   }
 
 
+
   render() {
 
     const contentManager = () => {
         if ((!this.state.userExists && this.state.loggedInStatus === "LOGGED_IN") || (this.state.userEditMode)) {
           return <UserEditor 
+            email={this.props.email}
+            userExists={this.state.userExists}
+            user={this.state.user}
             showUserEditor={this.showUserEditor}
             hideUserEditor={this.hideUserEditor}
             />
@@ -110,6 +116,7 @@ export default class App extends Component {
 
     return (
       <div className="App">
+        <button onClick={this.showUserEditor}>Edit User Profile</button>
 
       {this.state.loggedInStatus === "NOT_LOGGED_IN" ?
         <Login 
@@ -123,12 +130,7 @@ export default class App extends Component {
       {contentManager()}
 
 
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/user" element={<UserEditor/>} />
-        </Routes>
-      </Router>
+
     </div>
     );
   }

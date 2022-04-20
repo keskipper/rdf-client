@@ -1,87 +1,161 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import Locator from './locator';
 
 
-function UserEditor() {
+const UserEditor = (props) => {
     const [ user, setUser ] = useState({
       firstName: "",
       lastName: "",
       derbyName: "",
-      email: "",
+      email: props.email,
       phone: "",
       jerseyNumber: "",
       gender: "",
       age: "",
       userLat: "",
-      userLng: ""
+      userLng: "",
+      userInDatabase: props.userExists,
+      currentUser: props.user
     })
+
+    
+
+
+    const populate = () => {
+      console.log("populate() called");
+      
+
+    }
+
+
+
 
 
     const buildForm = () => {
       let formData = new FormData();
 
-      formData.append("firstName", this.state.firstName);
-      formData.append("lastName", this.state.lastName);
-      formData.append("derbyName", this.state.derbyName);
-      formData.append("email", this.state.email);
-      formData.append("phone", this.state.phone);
-      formData.append("jerseyNumber", this.state.jerseyNumber);
-      formData.append("gender", this.state.gender);
-      formData.append("age", this.state.age);
+      formData.append("firstName", user.firstName);
+      formData.append("lastName", user.lastName);
+      formData.append("derbyName", user.derbyName);
+      formData.append("email", user.email);
+      formData.append("phone", user.phone);
+      formData.append("jerseyNumber", user.jerseyNumber);
+      formData.append("gender", user.gender);
+      formData.append("age", user.age);
 
       //TODO get location data
 
       return formData;
     }
 
+
+    function handleLocation(lat, lng) {
+      //put locator lat and lng into form
+    }
+
+
+
     const handleSubmit = (event) => {
-      //make axios call with data: buildForm()
+      //make axios post call to create/update user with data: buildForm()
       //.then empty state
       //.catch error
-
-
 
       event.preventDefault();
     }
 
 
-    // const handleChange = (event) => {
-    //   setState({
-    //       [event.target.name]: event.target.value
-    //   })
-    // }
-
-  
-
-
-
   return (
     <div>
         <h1>Current Information</h1>
-        {user.derbyName}
-        ({user.firstName} {user.lastName})
-        {user.age} years old
-        {user.gender}
-        {user.email}
-        {user.phone}
-        {user.location}
+        {user.currentUser.derbyName}
+        ({user.currentUser.firstName} {user.currentUser.lastName})
+        {user.currentUser.age} years old
+        {user.currentUser.gender}
+        {user.currentUser.email}
+        {user.currentUser.phone}
+        {user.currentUser.location}
 
     <form onSubmit={handleSubmit}>
       <input 
-        onChange={e => setUser.firstName(e.target.value)} 
+        onChange={(event) => {setUser(prevUser => ({
+          ...prevUser, firstName: event.target.value
+        }))}} 
         type="text"
         name="firstName"
         placeholder="Legal first name"
         value={user.firstName}/>
 
+      <input 
+        onChange={(event) => {setUser(prevUser => ({
+          ...prevUser, lastName: event.target.value
+        }))}} 
+        type="text"
+        name="lastName"
+        placeholder="Legal last name"
+        value={user.lastName}/>  
+
+      <input 
+        onChange={(event) => {setUser(prevUser => ({
+          ...prevUser, derbyName: event.target.value
+        }))}} 
+        type="text"
+        name="derbyName"
+        placeholder="Derby name"
+        value={user.derbyName}/>
+
+      <input 
+        onChange={(event) => {setUser(prevUser => ({
+          ...prevUser, jerseyNumber: event.target.value
+        }))}} 
+        type="text"
+        name="jerseyNumber"
+        placeholder="Preferred jersey number"
+        value={user.jerseyNumber}/>
+
+{/* TODO make this a dropdown */}
+      <select 
+        onChange={(event) => {setUser(prevUser => ({
+          ...prevUser, gender: event.target.value
+        }))}} 
+        name="gender"
+        value={user.gender} >
+          <option>Female</option>
+          <option>Male</option>
+          <option>Expansive</option>
+        </select>
+
+      <input 
+        onChange={(event) => {setUser(prevUser => ({
+          ...prevUser, age: event.target.value
+        }))}} 
+        type="text"
+        name="age"
+        placeholder="Age"
+        value={user.age}/>
+
+      <input 
+        onChange={(event) => {setUser(prevUser => ({
+          ...prevUser, email: event.target.value
+        }))}} 
+        type="text"
+        name="email"
+        placeholder="Email address"
+        value={user.email || ""}/>
+
+      <input 
+        onChange={(event) => {setUser(prevUser => ({
+          ...prevUser, phone: event.target.value
+        }))}} 
+        type="text"
+        name="phone"
+        placeholder="Phone number"
+        value={user.phone}/>
+
+        <Locator handleLocation={handleLocation} />
 
 
-
-
-
-
-
-      <button className="btn">Save Profile</button>
+      <button type='submit' className="btn">Save Profile</button>
     </form>
 
     </div>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 export default class Locator extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             lat: '',
@@ -21,14 +21,16 @@ export default class Locator extends Component {
 
           navigator.geolocation.getCurrentPosition((position) => {
               this.setState({
-                  status:null,
-                  lat:position.coords.latitude,
-                  lng:position.coords.longitude
+                status:null,
+                lat:position.coords.latitude,
+                lng:position.coords.longitude
+              }, () => {
+                this.props.handleLocation(this.state.lat, this.state.lng);
               })
 
           }, () => {
             this.setState({
-                status:'Unable to retrieve your location'})
+                status:'Unable to retrieve your location.'})
           });
         }
 
