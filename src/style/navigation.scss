@@ -1,0 +1,20 @@
+.navigation-wrapper {
+    display: flex;
+    background-color: black;
+    width: 100vw;
+    justify-content: space-between;
+
+    .navigation-left {
+        display: flex;
+    }
+
+
+    .navigation-right {
+        display: flex;
+    }
+
+    .navigation-item {
+        display: flex;
+        margin: 5px;
+    }
+}

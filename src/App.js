@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import './App.css';
+import './style/main.scss';
 
 import Login from './components/login';
 import Logout from './components/logout';
@@ -89,7 +89,7 @@ export default class App extends Component {
 
   render() {
 
-    const profileManager = () => {
+    const contentManager = () => {
 
       if ((!this.state.userExists && this.state.loggedInStatus === "LOGGED_IN") || (this.state.userProfileVisible)) {
         return (
@@ -110,23 +110,42 @@ export default class App extends Component {
 
 
     return (
-      <div className="App">
+      <div className="app-wrapper">
+        <div className="navigation-wrapper">
+          <div className="navigation-left">
+            <div className="navigation-item">
+              <button>Logo</button>
+              </div>
+          </div>
 
-      {this.state.loggedInStatus === "NOT_LOGGED_IN" ?
-        <Login 
-          handleSuccessfulLogin={this.handleSuccessfulLogin}
-          handleUnsuccessfulLogin={this.handleUnsuccessfulLogin}
-        />
-        :
-        <Logout handleSuccessfulLogout={this.handleSuccessfulLogout}/>
-      }
 
-      {this.state.loggedInStatus === "LOGGED_IN" ?
-        <button onClick={this.showUserProfile}>Show User Profile</button>
-        : null
-      }
+          <div className="navigation-right">
+            <div className="navigation-item">
+              {this.state.loggedInStatus === "LOGGED_IN" ?
+                <button onClick={this.showUserProfile}>Show User Profile</button>
+                : null
+              }
+            </div>
 
-      {profileManager()}
+            <div className="navigation-item">
+              {this.state.loggedInStatus === "NOT_LOGGED_IN" ?
+              <Login 
+                handleSuccessfulLogin={this.handleSuccessfulLogin}
+                handleUnsuccessfulLogin={this.handleUnsuccessfulLogin}
+              />
+              :
+              <Logout handleSuccessfulLogout={this.handleSuccessfulLogout}/>
+              }
+            </div>
+          </div>          
+        </div>
+
+        <div className="home-wrapper">
+          <div className="content">
+            {contentManager()}
+          </div>
+        </div>
+      
 
 
 
