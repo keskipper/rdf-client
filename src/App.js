@@ -1,9 +1,4 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from "react-router-dom";
 import axios from 'axios';
 
 import './App.css';
@@ -11,7 +6,7 @@ import './App.css';
 import Login from './components/login';
 import Logout from './components/logout';
 
-import UserEditor from './components/user-editor';
+import UserViewer from './components/user-viewer';
 import GameFinder from './components/game-finder';
 
 
@@ -23,15 +18,15 @@ export default class App extends Component {
       loggedInStatus: "NOT_LOGGED_IN",
       email: "",
       userExists: false,
-      userEditMode: false,
+      userProfileVisible: false,
       user: {}
     }
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
     this.handleUnsuccessfulLogin = this.handleUnsuccessfulLogin.bind(this);
     this.handleSuccessfulLogout = this.handleSuccessfulLogout.bind(this);
-    this.showUserEditor = this.showUserEditor.bind(this);
-    this.hideUserEditor = this.hideUserEditor.bind(this);
+    this.showUserProfile = this.showUserProfile.bind(this);
+    this.hideUserProfile = this.hideUserProfile.bind(this);
   }
 
   handleSuccessfulLogin(props) {
@@ -53,7 +48,8 @@ export default class App extends Component {
           console.log("user not found");
           //open user profile creation component
           this.setState({
-            userExists: false
+            userExists: false,
+            userProfileVisible: true
           })
         } else {
           console.log("User id", response.data.id, "logged in.");
@@ -82,41 +78,39 @@ export default class App extends Component {
     })
   }
 
-  showUserEditor(){
-    this.setState({
-      userEditMode: true
-    })
+  showUserProfile(){
+    this.setState({ userProfileVisible: true })
   }
 
-  hideUserEditor(){
-    this.setState({
-      userEditMode: false
-    })
+  hideUserProfile(){
+    this.setState({ userProfileVisible: false })
   }
-
 
 
   render() {
 
-    const contentManager = () => {
-        if ((!this.state.userExists && this.state.loggedInStatus === "LOGGED_IN") || (this.state.userEditMode)) {
-          return <UserEditor 
-            email={this.props.email}
-            userExists={this.state.userExists}
-            user={this.state.user}
-            id={this.state.user.id}
-            showUserEditor={this.showUserEditor}
-            hideUserEditor={this.hideUserEditor}
+    const profileManager = () => {
+
+      if ((!this.state.userExists && this.state.loggedInStatus === "LOGGED_IN") || (this.state.userProfileVisible)) {
+        return (
+          <div>
+            <UserViewer
+              email={this.props.email}
+              userExists={this.state.userExists}
+              user={this.state.user}
+              showUserProfile={this.showUserProfile}
+              hideUserProfile={this.hideUserProfile}
             />
-        } else if (this.state.userExists && this.state.loggedInStatus === "LOGGED_IN" && !this.state.userEditMode) {
-          return <GameFinder />
-        }
+          </div>
+        )
+      } else if (this.state.userExists && this.state.loggedInStatus === "LOGGED_IN" && !this.state.userProfileVisible) {
+        return <GameFinder />
+      }
     }
 
 
     return (
       <div className="App">
-        <button onClick={this.showUserEditor}>Edit User Profile</button>
 
       {this.state.loggedInStatus === "NOT_LOGGED_IN" ?
         <Login 
@@ -127,7 +121,12 @@ export default class App extends Component {
         <Logout handleSuccessfulLogout={this.handleSuccessfulLogout}/>
       }
 
-      {contentManager()}
+      {this.state.loggedInStatus === "LOGGED_IN" ?
+        <button onClick={this.showUserProfile}>Show User Profile</button>
+        : null
+      }
+
+      {profileManager()}
 
 
 

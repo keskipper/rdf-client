@@ -2,8 +2,6 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Locator from './locator';
 
-import UserViewer from './user-viewer';
-
 
 const UserEditor = (props) => {
     const [ user, setUser ] = useState({
@@ -88,7 +86,7 @@ const UserEditor = (props) => {
       }
       ).then(response => {
         console.log("server response: ",response);
-
+   
         setUser({
           firstName: "",
           lastName: "",
@@ -100,8 +98,12 @@ const UserEditor = (props) => {
           age: "",
           userLat: "",
           userLng: "",
-          userInDatabase: true
+          userInDatabase: true,
+          currentUser: response.data
         })
+        props.toggleEditMode();
+        props.updateViewerUser();
+        
 
       }).catch(error => {
           console.log("error in handleSubmit(): ", error)
@@ -111,8 +113,6 @@ const UserEditor = (props) => {
 
   return (
     <div>
-      {/* <UserViewer user={user.currentUser}/> */}
-
       <div className="user-form-wrapper">
         <div className="user-form-header">
           Update profile:
