@@ -7,7 +7,6 @@ import UserViewer from './user-viewer';
 
 const UserEditor = (props) => {
     const [ user, setUser ] = useState({
-      
       firstName: "",
       lastName: "",
       derbyName: "",
@@ -24,9 +23,9 @@ const UserEditor = (props) => {
 
 
     useEffect(() => {
-      // KNOWNBUG this doesn't populate until the user starts typing
       if(user.userInDatabase) {
-        setUser({
+        setUser(prevUser => ({
+          ...prevUser,
           firstName: user.currentUser.firstName,
           lastName: user.currentUser.lastName,
           derbyName: user.currentUser.derbyName,
@@ -36,33 +35,34 @@ const UserEditor = (props) => {
           age: user.currentUser.age,
           userLat: user.currentUser.userLat,
           userLng: user.currentUser.userLng
-        })       
+        }))   
       }
     },[]);
 
 
-    const buildForm = () => {
-      
+    const buildBodyObject = () => {
+      let bodyObj = "";
 
-      // console.log("Form data: ", formData);
-      // return formData;
+      bodyObj = {
+        "firstName": user.firstName,
+        "lastName": user.lastName,
+        "derbyName": user.derbyName,
+        "phone": user.phone,
+        "jerseyNumber": user.jerseyNumber,
+        "gender": user.gender,
+        "age": user.age
+      }
 
-
-    //   {
-    //     "firstName": "Katherine",
-    //     "lastName": "Skipper",
-    //     "derbyName": "Criminal Wrecker",
-    //     "phone": "6038011463",
-    //     "jerseyNumber": 16,
-    //     "gender": "female",
-    //     "age": 34
-    // }
+      return bodyObj;
     }
 
 
-    function handleLocation(lat, lng) {      
-      user.userLat = lat.toFixed(4);
-      user.userLng = lng.toFixed(4);
+    function handleLocation(lat, lng) {  
+      setUser(prevUser => ({
+        ...prevUser,
+        userLat: lat.toFixed(4),
+        userLng: lng.toFixed(4)
+      }))
     }
 
 
@@ -71,21 +71,23 @@ const UserEditor = (props) => {
       
       let verb = "";
       let url = "http://localhost:8080/api/users/";
-      if(user.userInDatabase){ 
+      if(props.userExists){ 
+        console.log("user id:", user.currentUser.id);
         verb = "PUT";
         url = `http://localhost:8080/api/users/${user.currentUser.id}`;
       }
-      if(!user.userInDatabase){
+      if(!props.userExists){
+        console.log("user not in database");
         verb = "POST";
       }
 
       axios({
         method: verb,
         url,
-        data: buildForm()
+        data: buildBodyObject()
       }
       ).then(response => {
-        console.log("response: ",response);
+        console.log("server response: ",response);
 
         setUser({
           firstName: "",
@@ -97,14 +99,13 @@ const UserEditor = (props) => {
           gender: "",
           age: "",
           userLat: "",
-          userLng: ""
+          userLng: "",
+          userInDatabase: true
         })
 
-    }).catch(error => {
-        console.log("error in handleSubmit(): ", error)
-    });
-
-
+      }).catch(error => {
+          console.log("error in handleSubmit(): ", error)
+      });
     }
 
 

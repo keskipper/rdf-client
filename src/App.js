@@ -104,6 +104,7 @@ export default class App extends Component {
             email={this.props.email}
             userExists={this.state.userExists}
             user={this.state.user}
+            id={this.state.user.id}
             showUserEditor={this.showUserEditor}
             hideUserEditor={this.hideUserEditor}
             />
