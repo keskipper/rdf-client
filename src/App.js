@@ -108,6 +108,16 @@ export default class App extends Component {
       }
     }
 
+    const navigationManager = () => {
+      if(this.state.loggedInStatus === "LOGGED_IN" && this.state.userProfileVisible === false) {
+        return <button onClick={this.showUserProfile}>Show User Profile</button>
+      } else if(this.state.loggedInStatus === "LOGGED_IN" && this.state.userProfileVisible === true){
+        return <button onClick={this.hideUserProfile}>Hide User Profile</button>
+      } else if(this.state.loggedInStatus === "NOT_LOGGED IN") {
+        return null;
+      }
+    }
+
 
     return (
       <div className="app-wrapper">
@@ -121,10 +131,7 @@ export default class App extends Component {
 
           <div className="navigation-right">
             <div className="navigation-item">
-              {this.state.loggedInStatus === "LOGGED_IN" ?
-                <button onClick={this.showUserProfile}>Show User Profile</button>
-                : null
-              }
+                {navigationManager()}
             </div>
 
             <div className="navigation-item">

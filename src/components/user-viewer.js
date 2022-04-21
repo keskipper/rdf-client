@@ -66,31 +66,31 @@ const UserViewer = (props) => {
             <div className="user-view-header">
                 <h1>Current Information</h1>
             </div>
-            <div className="user-view-large">
-                {viewer.user.derbyName}
+            <div className="user-view-item">
+                <h2>{viewer.user.derbyName}
+                &nbsp;#{viewer.user.jerseyNumber}</h2>
             </div>
-            <div className="user-view-small">
-                #{viewer.user.jerseyNumber}
-            </div>
-            <div className="user-view-medium">
+            <div className="user-view-item">
                 {viewer.user.firstName} {viewer.user.lastName}
             </div>
-            <div className="user-view-small">
+            <div className="user-view-item">
                 {viewer.user.age} years old
             </div>
-            <div className="user-view-small">
+            <div className="user-view-item">
                 {viewer.user.gender}
             </div>
-            <div className="user-view-small">
+            <div className="user-view-item">
                 {viewer.user.email}
                 </div>
-            <div className="user-view-small">
+            <div className="user-view-item">
                 {viewer.user.phone}
             </div>
-            <div className="user-view-small">
+            <div className="user-view-item">
                 {viewer.user.location}
             </div>
-            <button onClick={toggleEditMode}>Edit Profile</button>
+            <div className="user-view-item">
+                <button onClick={toggleEditMode}>Edit Profile</button>
+            </div>
         </div>
 
         

@@ -2,12 +2,14 @@
 
 .app-wrapper {
     background-color: $yellow;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Rubik', sans-serif;
 }
 
 @import './navigation.scss';
 @import './home.scss';
+@import './user-viewer.scss';
