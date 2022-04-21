@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Locator from './locator';
 
 import UserViewer from './user-viewer';
@@ -7,6 +7,7 @@ import UserViewer from './user-viewer';
 
 const UserEditor = (props) => {
     const [ user, setUser ] = useState({
+      
       firstName: "",
       lastName: "",
       derbyName: "",
@@ -22,28 +23,40 @@ const UserEditor = (props) => {
     })
 
 
-    const populate = () => {
-      //put user's current info into input boxes for potential editing
-      
-
-    }
+    useEffect(() => {
+      // KNOWNBUG this doesn't populate until the user starts typing
+      if(user.userInDatabase) {
+        setUser({
+          firstName: user.currentUser.firstName,
+          lastName: user.currentUser.lastName,
+          derbyName: user.currentUser.derbyName,
+          phone: user.currentUser.phone,
+          jerseyNumber: user.currentUser.jerseyNumber,
+          gender: user.currentUser.gender,
+          age: user.currentUser.age,
+          userLat: user.currentUser.userLat,
+          userLng: user.currentUser.userLng
+        })       
+      }
+    },[]);
 
 
     const buildForm = () => {
-      let formData = new FormData();
+      
 
-      formData.append("firstName", user.firstName);
-      formData.append("lastName", user.lastName);
-      formData.append("derbyName", user.derbyName);
-      formData.append("email", user.email);
-      formData.append("phone", user.phone);
-      formData.append("jerseyNumber", user.jerseyNumber);
-      formData.append("gender", user.gender);
-      formData.append("age", user.age);
-      formData.append("userLat", user.userLat);
-      formData.append("userLng", user.userLng);
+      // console.log("Form data: ", formData);
+      // return formData;
 
-      return formData;
+
+    //   {
+    //     "firstName": "Katherine",
+    //     "lastName": "Skipper",
+    //     "derbyName": "Criminal Wrecker",
+    //     "phone": "6038011463",
+    //     "jerseyNumber": 16,
+    //     "gender": "female",
+    //     "age": 34
+    // }
     }
 
 
@@ -54,19 +67,50 @@ const UserEditor = (props) => {
 
 
     const handleSubmit = (event) => {
-      //check for empty form fields, prompt user to fix if any NN fields are empty
-
-      //make axios post call to create/update user with data: buildForm()
-      //.then empty state
-      //.catch error
-
       event.preventDefault();
+      
+      let verb = "";
+      let url = "http://localhost:8080/api/users/";
+      if(user.userInDatabase){ 
+        verb = "PUT";
+        url = `http://localhost:8080/api/users/${user.currentUser.id}`;
+      }
+      if(!user.userInDatabase){
+        verb = "POST";
+      }
+
+      axios({
+        method: verb,
+        url,
+        data: buildForm()
+      }
+      ).then(response => {
+        console.log("response: ",response);
+
+        setUser({
+          firstName: "",
+          lastName: "",
+          derbyName: "",
+          email: props.email,
+          phone: "",
+          jerseyNumber: "",
+          gender: "",
+          age: "",
+          userLat: "",
+          userLng: ""
+        })
+
+    }).catch(error => {
+        console.log("error in handleSubmit(): ", error)
+    });
+
+
     }
 
 
   return (
     <div>
-      <UserViewer user={user.currentUser}/>
+      {/* <UserViewer user={user.currentUser}/> */}
 
       <div className="user-form-wrapper">
         <div className="user-form-header">
@@ -151,16 +195,7 @@ const UserEditor = (props) => {
           </div>
 
           <div className="user-form-item">
-            <input 
-              onChange={(event) => {setUser(prevUser => ({
-                ...prevUser, email: event.target.value
-              }))}} 
-              type="text"
-              name="email"
-              placeholder="Email address (required)"
-              maxLength={100}
-              required
-              value={user.email || ""}/>
+              To change your email address, sign in with another Google account.
           </div>
 
           <div className="user-form-item">
@@ -178,6 +213,7 @@ const UserEditor = (props) => {
           <div className="user-form-item">
             <Locator handleLocation={handleLocation} />
           </div>
+          {/* KNOWNBUG: if user presses locator button before filling out required form elements, HTML form validation will trigger. */}
 
           <div className="user-form-item">
             <button type='submit' className="btn">Save Profile</button>
