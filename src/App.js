@@ -30,7 +30,6 @@ export default class App extends Component {
   }
 
   handleSuccessfulLogin(props) {
-    //console.log("props: ", props);
     this.setState({
       loggedInStatus: "LOGGED_IN",
       email: props
@@ -52,7 +51,7 @@ export default class App extends Component {
             userProfileVisible: true
           })
         } else {
-          console.log("User id", response.data.id, "logged in.");
+          console.log("User id", response.data.id, "with email", this.state.email, "logged in.");
           //open game search component
           this.setState({
             userExists: true,
@@ -74,7 +73,9 @@ export default class App extends Component {
 
   handleSuccessfulLogout(){
     this.setState({
-      loggedInStatus: "NOT_LOGGED_IN"
+      loggedInStatus: "NOT_LOGGED_IN",
+      userProfileVisible: false,
+      user: {}
     })
   }
 
@@ -95,7 +96,7 @@ export default class App extends Component {
         return (
           <div>
             <UserViewer
-              email={this.props.email}
+              email={this.state.email}
               userExists={this.state.userExists}
               user={this.state.user}
               showUserProfile={this.showUserProfile}

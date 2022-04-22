@@ -34,6 +34,7 @@ const UserEditor = (props) => {
           userLat: user.currentUser.userLat,
           userLng: user.currentUser.userLng
         }))   
+        
       }
     },[]);
 
@@ -46,9 +47,12 @@ const UserEditor = (props) => {
         "lastName": user.lastName,
         "derbyName": user.derbyName,
         "phone": user.phone,
+        "email": user.email,
         "jerseyNumber": user.jerseyNumber,
         "gender": user.gender,
-        "age": user.age
+        "age": user.age,
+        "userLat": user.userLat,
+        "userLng": user.userLng
       }
 
       return bodyObj;
@@ -70,7 +74,6 @@ const UserEditor = (props) => {
       let verb = "";
       let url = "http://localhost:8080/api/users/";
       if(props.userExists){ 
-        console.log("user id:", user.currentUser.id);
         verb = "PUT";
         url = `http://localhost:8080/api/users/${user.currentUser.id}`;
       }
@@ -86,27 +89,29 @@ const UserEditor = (props) => {
       }
       ).then(response => {
         console.log("server response: ",response);
-   
-        setUser({
-          firstName: "",
-          lastName: "",
-          derbyName: "",
-          email: props.email,
-          phone: "",
-          jerseyNumber: "",
-          gender: "",
-          age: "",
-          userLat: "",
-          userLng: "",
-          userInDatabase: true,
-          currentUser: response.data
-        })
-        props.toggleEditMode();
-        props.updateViewerUser();
-        
+
+        if(response.status === 200) {
+          setUser({
+            firstName: "",
+            lastName: "",
+            derbyName: "",
+            email: props.email,
+            phone: "",
+            jerseyNumber: "",
+            gender: "",
+            age: "",
+            userLat: "",
+            userLng: "",
+            userInDatabase: true,
+            userExists: true,
+            currentUser: response.data
+          })
+          props.hideEditor();
+          props.updateViewerUser(user.email);
+        }
 
       }).catch(error => {
-          console.log("error in handleSubmit(): ", error)
+          console.log("error in handleSubmit(): ", error.response.data)
       });
     }
 
@@ -115,7 +120,7 @@ const UserEditor = (props) => {
     <div>
       <div className="user-form-wrapper">
         <div className="user-form-header">
-          Update profile:
+          Profile info:
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -176,9 +181,10 @@ const UserEditor = (props) => {
               }))}} 
               name="gender"
               value={user.gender} >
-                <option>female</option>
-                <option>male</option>
-                <option>expansive</option>
+                <option value="" selected>Select one</option>
+                <option value="female">female</option>
+                <option value="male">male</option>
+                <option value="expansive">expansive</option>
             </select>
           </div>
 
@@ -196,7 +202,8 @@ const UserEditor = (props) => {
           </div>
 
           <div className="user-form-item">
-              To change your email address, sign in with another Google account.
+            Email: {user.email}
+            <div className="tinyNote">To change your email address, sign in with another Google account.</div>
           </div>
 
           <div className="user-form-item">
@@ -214,7 +221,7 @@ const UserEditor = (props) => {
           <div className="user-form-item">
             <Locator handleLocation={handleLocation} />
           </div>
-          {/* KNOWNBUG: if user presses locator button before filling out required form elements, HTML form validation will trigger. */}
+          {/* KNOWNBUG: if user presses locator button before filling out required form elements, form submit will trigger. */}
 
           <div className="user-form-item">
             <button type='submit' className="btn">Save Profile</button>

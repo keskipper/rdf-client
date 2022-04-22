@@ -6,6 +6,7 @@ import UserEditor from './user-editor';
 const UserViewer = (props) => {
     const [ viewer, setViewer ] = useState({
         user: props.user,
+        email: props.email,
         userExists: props.userExists,
         editMode: props.editMode
     })
@@ -19,19 +20,28 @@ const UserViewer = (props) => {
     }
 
 
-    function updateViewerUser() {
+    function hideEditor() {
+        setViewer(prevViewer => ({
+            ...prevViewer,
+            editMode: false,
+            userExists: true
+        }))
+    }
+
+
+    function updateViewerUser(props) {
         axios({
             method: 'post',
             url: "http://localhost:8080/api/users/email",
             data: {
-              email: viewer.user.email
+              email: props
             }
           }
         ).then(response => {
           if(response.data.message === "NOTFOUND") {
-            console.log("user not found");
+            console.log("user not found with email", viewer.user.email);
           } else {
-            setViewer( prevViewer => ({
+            setViewer(prevViewer => ({
                 ...prevViewer,
                 user: response.data
             }))
@@ -43,21 +53,22 @@ const UserViewer = (props) => {
     }
 
 
-    if(viewer.editMode) {
-        if(!viewer.userExists || viewer.editMode === true) {
-            return (
-                <UserEditor 
-                email={viewer.user.email}
-                userExists={viewer.userExists}
-                user={viewer.user}
-                showUserProfile={props.showUserProfile}
-                hideUserProfile={props.hideUserProfile}
-                toggleEditMode={toggleEditMode}
-                updateViewerUser={updateViewerUser}
-                />
-            )
-        }
+
+    if(!viewer.userExists || viewer.editMode === true) {
+        return (
+            <UserEditor 
+            email={viewer.email}
+            userExists={viewer.userExists}
+            user={viewer.user}
+            showUserProfile={props.showUserProfile}
+            hideUserProfile={props.hideUserProfile}
+            toggleEditMode={toggleEditMode}
+            hideEditor={hideEditor}
+            updateViewerUser={updateViewerUser}
+            />
+        )
     }
+
 
 
   return (
