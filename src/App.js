@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import './style/main.scss';
 
 import Login from './components/login';
 import Logout from './components/logout';
-
+import Icons from './helpers/icons';
 import UserViewer from './components/user-viewer';
 import GameFinder from './components/game-finder';
+
+import skate from './static/skate.webp';
 
 
 export default class App extends Component {
   constructor(props) {
     super(props);
+
+    Icons();
 
     this.state = {
       loggedInStatus: "NOT_LOGGED_IN",
@@ -111,7 +116,7 @@ export default class App extends Component {
 
     const navigationManager = () => {
       if(this.state.loggedInStatus === "LOGGED_IN" && this.state.userProfileVisible === false) {
-        return <button onClick={this.showUserProfile}>Show User Profile</button>
+        return <button onClick={this.showUserProfile}><FontAwesomeIcon icon="fa-user" /> Profile</button>
       } else if(this.state.loggedInStatus === "LOGGED_IN" && this.state.userProfileVisible === true){
         return <button onClick={this.hideUserProfile}>Hide User Profile</button>
       } else if(this.state.loggedInStatus === "NOT_LOGGED IN") {
@@ -125,10 +130,9 @@ export default class App extends Component {
         <div className="navigation-wrapper">
           <div className="navigation-left">
             <div className="navigation-item">
-              <button>Logo</button>
+              <img src={skate} />
               </div>
           </div>
-
 
           <div className="navigation-right">
             <div className="navigation-item">

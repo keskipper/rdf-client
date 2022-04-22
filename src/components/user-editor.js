@@ -180,8 +180,9 @@ const UserEditor = (props) => {
                 ...prevUser, gender: event.target.value
               }))}} 
               name="gender"
+              required
               value={user.gender} >
-                <option value="" selected>Select one</option>
+                <option value="">Select one</option>
                 <option value="female">female</option>
                 <option value="male">male</option>
                 <option value="expansive">expansive</option>

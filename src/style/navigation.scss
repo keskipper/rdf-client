@@ -15,5 +15,12 @@
     .navigation-item {
         display: flex;
         margin: 5px;
+
+        img {
+            height: 40px;
+            background-color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+        }
     }
 }
