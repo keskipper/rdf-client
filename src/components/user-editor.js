@@ -182,7 +182,11 @@ const UserEditor = (props) => {
               name="gender"
               required
               value={user.gender} >
+<<<<<<< HEAD
                 <option value="">Select one</option>
+=======
+                <option value="" selected>Select one</option>
+>>>>>>> ee08c77d9e32ef1cb9419235e92fe6764b17f9f0
                 <option value="female">female</option>
                 <option value="male">male</option>
                 <option value="expansive">expansive</option>
