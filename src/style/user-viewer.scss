@@ -10,9 +10,9 @@
         flex-direction: column;
         align-items: center;
 
-        .user-view-header {
-            color: $brown;
-        }
+        border: 2px solid $lightbrown;
+        border-radius: 5px;
+        padding: 20px;
 
         .user-view-item {
             color: $lightbrown;

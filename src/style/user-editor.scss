@@ -1,0 +1,15 @@
+.user-form-wrapper {
+
+    border: 2px solid $lightbrown;
+    border-radius: 5px;
+    padding: 20px;
+
+    .user-form-item {
+        margin: 5px;
+        
+
+        .tiny-note {
+            font-size: 10px;
+        }
+    }
+}

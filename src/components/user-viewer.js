@@ -65,6 +65,7 @@ const UserViewer = (props) => {
             toggleEditMode={toggleEditMode}
             hideEditor={hideEditor}
             updateViewerUser={updateViewerUser}
+            handleSuccessfulLogout={props.handleSuccessfulLogout}
             />
         )
     }
@@ -74,8 +75,8 @@ const UserViewer = (props) => {
   return (
     <div className="user-view">
         <div className="user-view-wrapper">
-            <div className="user-view-header">
-                <h1>Current Information</h1>
+            <div className="user-view-item">
+                <h1>Player Profile</h1>
             </div>
             <div className="user-view-item">
                 <h2>{viewer.user.derbyName}
@@ -99,8 +100,9 @@ const UserViewer = (props) => {
             <div className="user-view-item">
                 {viewer.user.location}
             </div>
+            <br/>
             <div className="user-view-item">
-                <button onClick={toggleEditMode}>Edit Profile</button>
+                <button className="btn btn-theme" onClick={toggleEditMode}>Edit Profile</button>
             </div>
         </div>
 

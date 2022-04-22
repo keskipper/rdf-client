@@ -9,6 +9,7 @@ import Logout from './components/logout';
 import Icons from './helpers/icons';
 import UserViewer from './components/user-viewer';
 import GameFinder from './components/game-finder';
+import Home from './components/home';
 
 import skate from './static/skate.webp';
 
@@ -106,19 +107,22 @@ export default class App extends Component {
               user={this.state.user}
               showUserProfile={this.showUserProfile}
               hideUserProfile={this.hideUserProfile}
+              handleSuccessfulLogout={this.handleSuccessfulLogout}
             />
           </div>
         )
       } else if (this.state.userExists && this.state.loggedInStatus === "LOGGED_IN" && !this.state.userProfileVisible) {
         return <GameFinder />
+      } else if (this.state.loggedInStatus === "NOT_LOGGED_IN") {
+        return <Home />
       }
     }
 
     const navigationManager = () => {
       if(this.state.loggedInStatus === "LOGGED_IN" && this.state.userProfileVisible === false) {
-        return <button onClick={this.showUserProfile}><FontAwesomeIcon icon="fa-user" /> Profile</button>
+        return <button className="btn btn-theme" onClick={this.showUserProfile}><FontAwesomeIcon icon="fa-user" /> Profile</button>
       } else if(this.state.loggedInStatus === "LOGGED_IN" && this.state.userProfileVisible === true){
-        return <button onClick={this.hideUserProfile}>Hide User Profile</button>
+        return <button className="btn btn-theme" onClick={this.hideUserProfile}>Hide Profile</button>
       } else if(this.state.loggedInStatus === "NOT_LOGGED IN") {
         return null;
       }

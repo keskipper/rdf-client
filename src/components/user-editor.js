@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import Locator from './locator';
 
 
 const UserEditor = (props) => {
@@ -16,7 +15,8 @@ const UserEditor = (props) => {
       userLat: "",
       userLng: "",
       userInDatabase: props.userExists,
-      currentUser: props.user
+      currentUser: props.user,
+      status: ""
     })
 
 
@@ -34,9 +34,38 @@ const UserEditor = (props) => {
           userLat: user.currentUser.userLat,
           userLng: user.currentUser.userLng
         }))   
-        
       }
     },[]);
+
+
+
+    function getLocation(event) {
+      event.preventDefault();
+      if (!navigator.geolocation) {
+        setUser(prevUser => ({
+          ...prevUser,
+          status: 'Geolocation is not supported by your browser.'
+        }))
+      } else {
+        setUser(prevUser => ({
+          ...prevUser,
+          status: 'Locating...'
+        }))
+
+        navigator.geolocation.getCurrentPosition((position) => {
+            setUser(prevUser => ({
+              userLat: position.coords.latitude.toFixed(4),
+              userLng: position.coords.longitude.toFixed(4),
+              status: `${position.coords.latitude}, ${position.coords.longitude}`
+            }))
+        }, () => {
+          setUser(prevUser => ({
+            ...prevUser,
+            status: 'Unable to retrieve your location.'
+          }))
+        });
+      }
+    }
 
 
     const buildBodyObject = () => {
@@ -59,20 +88,12 @@ const UserEditor = (props) => {
     }
 
 
-    function handleLocation(lat, lng) {  
-      setUser(prevUser => ({
-        ...prevUser,
-        userLat: lat.toFixed(4),
-        userLng: lng.toFixed(4)
-      }))
-    }
-
-
     const handleSubmit = (event) => {
       event.preventDefault();
       
       let verb = "";
       let url = "http://localhost:8080/api/users/";
+
       if(props.userExists){ 
         verb = "PUT";
         url = `http://localhost:8080/api/users/${user.currentUser.id}`;
@@ -88,7 +109,7 @@ const UserEditor = (props) => {
         data: buildBodyObject()
       }
       ).then(response => {
-        console.log("server response: ",response);
+        console.log("server response: ", response);
 
         if(response.status === 200) {
           setUser({
@@ -109,7 +130,42 @@ const UserEditor = (props) => {
           props.hideEditor();
           props.updateViewerUser(user.email);
         }
+      }).catch(error => {
+          console.log("error in handleSubmit(): ", error.response.data)
+      });
+    }
 
+
+    const handleDelete = (event) => {
+      event.preventDefault();
+      console.log("user email", user.email);
+
+
+      axios({
+        method: "delete",
+        url: `http://localhost:8080/api/users/${user.currentUser.id}`
+      }
+      ).then(response => {
+        console.log("server response: ", response);
+
+        if(response.status === 200) {
+          setUser({
+            firstName: "",
+            lastName: "",
+            derbyName: "",
+            email: props.email,
+            phone: "",
+            jerseyNumber: "",
+            gender: "",
+            age: "",
+            userLat: "",
+            userLng: "",
+            userInDatabase: false,
+            userExists: false,
+            currentUser: {}
+          })
+          props.handleSuccessfulLogout();
+        }
       }).catch(error => {
           console.log("error in handleSubmit(): ", error.response.data)
       });
@@ -119,12 +175,13 @@ const UserEditor = (props) => {
   return (
     <div>
       <div className="user-form-wrapper">
-        <div className="user-form-header">
-          Profile info:
+        <div className="user-form-item">
+          <h1>Player Profile</h1>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form>
           <div className="user-form-item">
+            Legal first name<br/>
             <input 
               onChange={(event) => {setUser(prevUser => ({
                 ...prevUser, firstName: event.target.value
@@ -138,6 +195,7 @@ const UserEditor = (props) => {
           </div>
 
           <div className="user-form-item">
+            Legal last name<br/>
             <input 
               onChange={(event) => {setUser(prevUser => ({
                 ...prevUser, lastName: event.target.value
@@ -151,6 +209,7 @@ const UserEditor = (props) => {
           </div>
 
           <div className="user-form-item">
+            Derby name<br/>
             <input 
               onChange={(event) => {setUser(prevUser => ({
                 ...prevUser, derbyName: event.target.value
@@ -163,6 +222,7 @@ const UserEditor = (props) => {
           </div>
 
           <div className="user-form-item">
+            Jersey number<br/>
             <input 
               onChange={(event) => {setUser(prevUser => ({
                 ...prevUser, jerseyNumber: event.target.value
@@ -175,6 +235,7 @@ const UserEditor = (props) => {
           </div>
 
           <div className="user-form-item">
+            Gender<br/>
             <select 
               onChange={(event) => {setUser(prevUser => ({
                 ...prevUser, gender: event.target.value
@@ -190,6 +251,7 @@ const UserEditor = (props) => {
           </div>
 
           <div className="user-form-item">
+            Age<br/>
             <input 
               onChange={(event) => {setUser(prevUser => ({
                 ...prevUser, age: event.target.value
@@ -203,11 +265,13 @@ const UserEditor = (props) => {
           </div>
 
           <div className="user-form-item">
-            Email: {user.email}
-            <div className="tinyNote">To change your email address, sign in with another Google account.</div>
+            Email<br/>
+            {user.email}
+            <div className="tiny-note">To change your email address, sign in with another Google account.</div>
           </div>
 
           <div className="user-form-item">
+            Phone<br/>
             <input 
               onChange={(event) => {setUser(prevUser => ({
                 ...prevUser, phone: event.target.value
@@ -220,12 +284,14 @@ const UserEditor = (props) => {
           </div>
 
           <div className="user-form-item">
-            <Locator handleLocation={handleLocation} />
+            Location: {user.status}<br/>
+            <button onClick={getLocation} type='submit' className='btn btn-theme'>Locate me!</button>
           </div>
-          {/* KNOWNBUG: if user presses locator button before filling out required form elements, form submit will trigger. */}
+          {/* KNOWNBUG: if user presses locator button before filling out required form elements, form validation will trigger. */}
 
           <div className="user-form-item">
-            <button type='submit' className="btn">Save Profile</button>
+            <button onClick={handleSubmit} type='submit' className="btn btn-theme">Save Profile</button>&nbsp;&nbsp;
+            <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Profile</button>
           </div>
         </form>
 
