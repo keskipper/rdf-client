@@ -35,6 +35,7 @@ const UserEditor = (props) => {
           userLng: user.currentUser.userLng
         }))   
       }
+
     },[]);
 
 
@@ -54,6 +55,7 @@ const UserEditor = (props) => {
 
         navigator.geolocation.getCurrentPosition((position) => {
             setUser(prevUser => ({
+              ...prevUser,
               userLat: position.coords.latitude.toFixed(4),
               userLng: position.coords.longitude.toFixed(4),
               status: `${position.coords.latitude}, ${position.coords.longitude}`
@@ -179,10 +181,11 @@ const UserEditor = (props) => {
           <h1>Player Profile</h1>
         </div>
 
-        <form>
+        <form id="user-edit-form" autoComplete='off'>
           <div className="user-form-item">
             Legal first name<br/>
             <input 
+              role="presentation"
               onChange={(event) => {setUser(prevUser => ({
                 ...prevUser, firstName: event.target.value
               }))}} 
@@ -197,6 +200,7 @@ const UserEditor = (props) => {
           <div className="user-form-item">
             Legal last name<br/>
             <input 
+              role="presentation"
               onChange={(event) => {setUser(prevUser => ({
                 ...prevUser, lastName: event.target.value
               }))}} 
@@ -211,6 +215,7 @@ const UserEditor = (props) => {
           <div className="user-form-item">
             Derby name<br/>
             <input 
+              role="presentation"
               onChange={(event) => {setUser(prevUser => ({
                 ...prevUser, derbyName: event.target.value
               }))}} 
@@ -224,6 +229,7 @@ const UserEditor = (props) => {
           <div className="user-form-item">
             Jersey number<br/>
             <input 
+              role="presentation"
               onChange={(event) => {setUser(prevUser => ({
                 ...prevUser, jerseyNumber: event.target.value
               }))}} 
@@ -253,6 +259,7 @@ const UserEditor = (props) => {
           <div className="user-form-item">
             Age<br/>
             <input 
+              role="presentation"
               onChange={(event) => {setUser(prevUser => ({
                 ...prevUser, age: event.target.value
               }))}} 
@@ -273,6 +280,7 @@ const UserEditor = (props) => {
           <div className="user-form-item">
             Phone<br/>
             <input 
+              role="presentation"
               onChange={(event) => {setUser(prevUser => ({
                 ...prevUser, phone: event.target.value
               }))}} 
@@ -285,12 +293,12 @@ const UserEditor = (props) => {
 
           <div className="user-form-item">
             Location: {user.status}<br/>
-            <button onClick={getLocation} type='submit' className='btn btn-theme'>Locate me!</button>
+            <button onClick={getLocation} type='button' className='btn btn-theme'>Locate me!</button>
           </div>
           {/* KNOWNBUG: if user presses locator button before filling out required form elements, form validation will trigger. */}
 
           <div className="user-form-item">
-            <button onClick={handleSubmit} type='submit' className="btn btn-theme">Save Profile</button>&nbsp;&nbsp;
+            <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="user-edit-form">Save Profile</button>&nbsp;&nbsp;
             <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Profile</button>
           </div>
         </form>
