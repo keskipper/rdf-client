@@ -1,5 +1,5 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 
 const UserEditor = (props) => {
@@ -139,9 +139,7 @@ const UserEditor = (props) => {
 
 
     const handleDelete = (event) => {
-      event.preventDefault();
-      console.log("user email", user.email);
-
+      //event.preventDefault();
 
       axios({
         method: "delete",
@@ -167,6 +165,7 @@ const UserEditor = (props) => {
             currentUser: {}
           })
           props.handleSuccessfulLogout();
+          props.hideUserProfile();
         }
       }).catch(error => {
           console.log("error in handleSubmit(): ", error.response.data)
@@ -295,11 +294,14 @@ const UserEditor = (props) => {
             Location: {user.status}<br/>
             <button onClick={getLocation} type='button' className='btn btn-theme'>Locate me!</button>
           </div>
-          {/* KNOWNBUG: if user presses locator button before filling out required form elements, form validation will trigger. */}
 
           <div className="user-form-item">
             <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="user-edit-form">Save Profile</button>&nbsp;&nbsp;
+            {user.userInDatabase ?
             <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Profile</button>
+            : null
+            }
+            
           </div>
         </form>
 

@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import './style/main.scss';
-
 import Login from './components/login';
 import Logout from './components/logout';
 import Icons from './helpers/icons';
 import UserViewer from './components/user-viewer';
 import GameFinder from './components/game-finder';
+import GameBuilder from './components/game-builder';
 import Home from './components/home';
 
+import './style/main.scss';
 import skate from './static/skate.webp';
 
 
@@ -39,8 +39,7 @@ export default class App extends Component {
     this.setState({
       loggedInStatus: "LOGGED_IN",
       email: props
-    }, () => {
-      //check for user existing in db
+    }, () => {//check for user existing in db
       axios({
           method: 'post',
           url: "http://localhost:8080/api/users/email",
@@ -96,7 +95,7 @@ export default class App extends Component {
 
   render() {
 
-    const contentManager = () => {
+    const contentManager = () => {      
 
       if ((!this.state.userExists && this.state.loggedInStatus === "LOGGED_IN") || (this.state.userProfileVisible)) {
         return (
@@ -112,7 +111,10 @@ export default class App extends Component {
           </div>
         )
       } else if (this.state.userExists && this.state.loggedInStatus === "LOGGED_IN" && !this.state.userProfileVisible) {
-        return <GameFinder />
+        return <div> 
+          <GameBuilder />
+          <GameFinder />
+          </div>
       } else if (this.state.loggedInStatus === "NOT_LOGGED_IN") {
         return <Home />
       }
@@ -134,7 +136,7 @@ export default class App extends Component {
         <div className="navigation-wrapper">
           <div className="navigation-left">
             <div className="navigation-item">
-              <img src={skate} />
+              <img src={skate} alt="rollerskate logo" />
               </div>
           </div>
 
