@@ -55,6 +55,20 @@ function GameSearch(props) {
   }
 
 
+  const searchResults = () => {
+    return(
+      <div>
+        {games.gameItems.length} games found!<br/>
+        {games.gameItems[0].title}
+        <ul>
+          {games.gameItems.map(d => (<li key={d.id}>{d.title}</li>))} 
+        </ul>
+
+      </div>
+    )
+  }
+
+
   return (
     <div className="game-search-wrapper">
       <div className="form-wrapper">
@@ -91,12 +105,15 @@ function GameSearch(props) {
         </form>
       </div>
 
+      <h2>Search results</h2>
       <div className="search-results">
-          <h2>Search results</h2>
-          Result: {games.gameItems.length} games found
-          <ul>
-            {/* Test item{games.gameItems[1]} */}
-          </ul>
+          
+          {games.gameItems.length > 0 ?
+            searchResults()
+            : null
+          }
+
+
         </div>
     </div>
   )
