@@ -6,7 +6,7 @@ import Login from './components/login';
 import Logout from './components/logout';
 import Icons from './helpers/icons';
 import UserViewer from './components/user-viewer';
-import GameFinder from './components/game-finder';
+import GameSearch from './components/game-search';
 import GameBuilder from './components/game-builder';
 import Home from './components/home';
 
@@ -35,10 +35,10 @@ export default class App extends Component {
     this.hideUserProfile = this.hideUserProfile.bind(this);
   }
 
-  handleSuccessfulLogin(props) {
+  handleSuccessfulLogin(email) {
     this.setState({
       loggedInStatus: "LOGGED_IN",
-      email: props
+      email: email,
     }, () => {//check for user existing in db
       axios({
           method: 'post',
@@ -113,7 +113,7 @@ export default class App extends Component {
       } else if (this.state.userExists && this.state.loggedInStatus === "LOGGED_IN" && !this.state.userProfileVisible) {
         return <div> 
           <GameBuilder />
-          <GameFinder />
+          <GameSearch />
           </div>
       } else if (this.state.loggedInStatus === "NOT_LOGGED_IN") {
         return <Home />

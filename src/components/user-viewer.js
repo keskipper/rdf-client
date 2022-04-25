@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { LocationIq } from 'locationiq';
 
 import UserEditor from './user-editor';
 
@@ -8,7 +9,8 @@ const UserViewer = (props) => {
         user: props.user,
         email: props.email,
         userExists: props.userExists,
-        editMode: props.editMode
+        editMode: props.editMode,
+        userLocString: ""
     })
 
 
@@ -26,6 +28,11 @@ const UserViewer = (props) => {
             editMode: false,
             userExists: true
         }))
+    }
+
+
+    function locateUser() {
+        
     }
 
 

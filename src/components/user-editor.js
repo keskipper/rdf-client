@@ -175,13 +175,13 @@ const UserEditor = (props) => {
 
   return (
     <div>
-      <div className="user-form-wrapper">
-        <div className="user-form-item">
+      <div className="form-wrapper">
+        <div className="form-item">
           <h1>Player Profile</h1>
         </div>
 
         <form id="user-edit-form" autoComplete='off'>
-          <div className="user-form-item">
+          <div className="form-item">
             Legal first name<br/>
             <input 
               role="presentation"
@@ -196,7 +196,7 @@ const UserEditor = (props) => {
               value={user.firstName}/>
           </div>
 
-          <div className="user-form-item">
+          <div className="form-item">
             Legal last name<br/>
             <input 
               role="presentation"
@@ -211,7 +211,7 @@ const UserEditor = (props) => {
               value={user.lastName}/>  
           </div>
 
-          <div className="user-form-item">
+          <div className="form-item">
             Derby name<br/>
             <input 
               role="presentation"
@@ -225,7 +225,7 @@ const UserEditor = (props) => {
               value={user.derbyName}/>
           </div>
 
-          <div className="user-form-item">
+          <div className="form-item">
             Jersey number<br/>
             <input 
               role="presentation"
@@ -239,7 +239,7 @@ const UserEditor = (props) => {
               value={user.jerseyNumber}/>
           </div>
 
-          <div className="user-form-item">
+          <div className="form-item">
             Gender<br/>
             <select 
               onChange={(event) => {setUser(prevUser => ({
@@ -255,7 +255,7 @@ const UserEditor = (props) => {
             </select>
           </div>
 
-          <div className="user-form-item">
+          <div className="form-item">
             Age<br/>
             <input 
               role="presentation"
@@ -270,13 +270,13 @@ const UserEditor = (props) => {
               value={user.age}/>  
           </div>
 
-          <div className="user-form-item">
+          <div className="form-item">
             Email<br/>
             {user.email}
             <div className="tiny-note">To change your email address, sign in with another Google account.</div>
           </div>
 
-          <div className="user-form-item">
+          <div className="form-item">
             Phone<br/>
             <input 
               role="presentation"
@@ -290,12 +290,12 @@ const UserEditor = (props) => {
               value={user.phone}/>
           </div>
 
-          <div className="user-form-item">
+          <div className="form-item">
             Location: {user.status}<br/>
             <button onClick={getLocation} type='button' className='btn btn-theme'>Locate me!</button>
           </div>
 
-          <div className="user-form-item">
+          <div className="form-item">
             <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="user-edit-form">Save Profile</button>&nbsp;&nbsp;
             {user.userInDatabase ?
             <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Profile</button>

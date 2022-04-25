@@ -14,15 +14,14 @@ function GameBuilder(props) {
         venueName: "",
         date: "",
         time: "",
-        organizer1: "",
-        organizer2: "",
-        organizer3: ""
+        organizer: "",
+        gameInDatabase: false
       })
 
 
 
       function handleSubmit(){
-
+        console.log(game.date, game.time);
       }
 
 
@@ -34,14 +33,14 @@ function GameBuilder(props) {
 
   return (
     <div>
-      <div className="game-form-wrapper">
-        <div className="game-form-item">
+      <div className="form-wrapper">
+        <div className="form-item">
           <h1>Create Game</h1>
         </div>
 
         <form id="game-edit-form">
-          <div className="game-form-item">
-            Title<br/>
+          <div className="form-item">
+          <label htmlFor="title">Title</label><br/>
             <input 
               role="presentation"
               onChange={(event) => {setGame(prevGame => ({
@@ -55,8 +54,8 @@ function GameBuilder(props) {
               value={game.title}/>
           </div>
 
-          <div className="game-form-item">
-            Description<br/>
+          <div className="form-item">
+          <label htmlFor="description">Description</label><br/>
             <input 
               role="presentation"
               onChange={(event) => {setGame(prevGame => ({
@@ -70,8 +69,8 @@ function GameBuilder(props) {
               value={game.description}/>  
           </div>
 
-          <div className="game-form-item">
-            Venue name<br/>
+          <div className="form-item">
+          <label htmlFor="venueName">Venue name</label><br/>
             <input 
               role="presentation"
               onChange={(event) => {setGame(prevGame => ({
@@ -84,38 +83,58 @@ function GameBuilder(props) {
               value={game.venueName}/>
           </div>
 
-          <div className="game-form-item">
-            Date<br/>
+          <div className="form-item">
+            <label htmlFor="date">Date</label><br/>
+            <input
+                onChange={(event) => {setGame(prevGame => ({
+                ...prevGame, date: event.target.value
+                }))}} 
+                type="date"
+                name="date"
+                value={game.date}
+             />
           </div>
 
-          <div className="game-form-item">
+          <div className="form-item">
             Time<br/>
+            <input 
+                onChange={(event) => {setGame(prevGame => ({
+                ...prevGame, time: event.target.value
+                }))}} 
+                type="time"
+                name="time"
+                value={game.time}
+            />
           </div>
 
-          <div className="game-form-item">
+          <div className="form-item">
             Address 1<br/>
           </div>
 
-          <div className="game-form-item">
+          <div className="form-item">
             Address 2<br/>
           </div>
 
-          <div className="game-form-item">
+          <div className="form-item">
             City<br/>
           </div>
 
-          <div className="game-form-item">
+          <div className="form-item">
             State<br/>
           </div>
 
-          <div className="game-form-item">
+          <div className="form-item">
             Zip<br/>
           </div>
           
 
-          <div className="game-form-item">
+          <div className="form-item">
             <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="game-edit-form">Save Game</button>&nbsp;&nbsp;
+            {game.gameInDatabase?
             <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Game</button>
+            : null
+            }
+            
           </div>
         </form>
 

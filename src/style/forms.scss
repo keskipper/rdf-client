@@ -2,3 +2,19 @@
     padding: 20px;
     margin: 20px;
 }
+
+.form-wrapper {
+
+    border: 2px solid $lightbrown;
+    border-radius: 5px;
+    padding: 20px;
+
+    .form-item {
+        margin: 5px;
+        padding: 3px;
+
+        .tiny-note {
+            font-size: 10px;
+        }
+    }
+}

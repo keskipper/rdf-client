@@ -11,8 +11,9 @@ function Login(props) {
   const onSuccess = (res) => {
     //console.log('Login Success: currentUser:', res.profileObj);
     const email = res.profileObj.email;
+    const userImg = res.profileObj.imageUrl;
     refreshTokenSetup(res);
-    props.handleSuccessfulLogin(email);
+    props.handleSuccessfulLogin(email, userImg);
   };
 
   const onFailure = (res) => {
