@@ -112,8 +112,11 @@ export default class App extends Component {
         )
       } else if (this.state.userExists && this.state.loggedInStatus === "LOGGED_IN" && !this.state.userProfileVisible) {
         return <div> 
-          <GameBuilder />
-          <GameSearch />
+          {/* <GameBuilder /> */}
+          <GameSearch 
+            userLat={this.state.user.userLat}
+            userLng={this.state.user.userLng}
+          />
           </div>
       } else if (this.state.loggedInStatus === "NOT_LOGGED_IN") {
         return <Home />
