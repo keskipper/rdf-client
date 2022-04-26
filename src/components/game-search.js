@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 
+import GameSearchItem from './game-search-item';
+
 function GameSearch(props) {
   const [ games, setGames ] = useState({
     gameItems: [],
@@ -33,7 +35,6 @@ function GameSearch(props) {
     //   ...prevGames,
     //   currentPage: prevGames.currentPage + 1
     // }));
-    console.log("miles in state: ",games.miles);
     axios({
       method: "post",
       url: "http://localhost:8080/api/games/limitbydistance",
@@ -43,7 +44,7 @@ function GameSearch(props) {
         "userLng": props.userLng
       }
     }).then(response => {
-      console.log(response.data);
+      //console.log(response.data);
       setGames(prevGames => ({
         ...prevGames,
         gameItems: response.data
@@ -51,7 +52,6 @@ function GameSearch(props) {
     }).catch(error => {
       console.log("error in getGames(): ", error.response.data)
     });
-    console.log(Object.keys(games.gameItems));
   }
 
 
@@ -59,11 +59,13 @@ function GameSearch(props) {
     return(
       <div>
         {games.gameItems.length} games found!<br/>
-        {games.gameItems[0].title}
-        <ul>
-          {games.gameItems.map(d => (<li key={d.id}>{d.title}</li>))} 
-        </ul>
 
+          {games.gameItems.map(g => (
+            <GameSearchItem
+              key={g.id}
+              game={g}
+            />
+          ))} 
       </div>
     )
   }

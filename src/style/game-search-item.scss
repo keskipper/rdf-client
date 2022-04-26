@@ -1,0 +1,65 @@
+.game-search-item-wrapper {
+    width: 40vw;
+    border: 2px solid $lightbrown;
+    border-radius: 5px;
+    margin: 20px;
+    background-color: $lightyellow;
+
+    .game-search-item {
+        display: flex;
+
+        .game-search-left {
+            padding: 15px;
+
+            img {
+                width: 100px;
+                height: 100px;
+                border: 8px solid white;
+                border-radius: 60px;
+            }
+        }
+
+        .game-search-right {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            color: $brown;
+
+            .game-search-title {
+                font-size: 20px;
+                font-weight: 800;
+
+                .game-search-subtitle {
+                    font-size: 12px;
+                    font-weight: 200;
+                }
+            }
+
+            .game-search-info {
+                display: flex;
+                flex-direction: column;
+
+                .game-search-info-top {
+                    padding: 5px 0px 5px 0px;
+
+                }
+
+                .game-search-info-bottom {
+                    padding: 5px 0px 5px 0px;
+                    font-size: 14px;
+
+                    .open {
+                        color: green;
+                        font-weight: 700;
+                    }
+
+                    .closed {
+                        color: red;
+                        font-weight: 700;
+                    }
+
+                }
+            }
+        }
+    }
+}
