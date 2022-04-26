@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import ReverseGeocoder from './reverse-geocoder';
+
 
 const UserEditor = (props) => {
     const [ user, setUser ] = useState({
@@ -58,7 +60,7 @@ const UserEditor = (props) => {
               ...prevUser,
               userLat: position.coords.latitude.toFixed(4),
               userLng: position.coords.longitude.toFixed(4),
-              status: `${position.coords.latitude}, ${position.coords.longitude}`
+              status: `${position.coords.latitude.toFixed(4)}, ${position.coords.longitude.toFixed(4)}`
             }))
         }, () => {
           setUser(prevUser => ({
@@ -174,7 +176,7 @@ const UserEditor = (props) => {
 
 
   return (
-    <div>
+    <div className="user-editor-wrapper">
       <div className="form-wrapper">
         <div className="form-item">
           <h1>Player Profile</h1>
@@ -291,11 +293,17 @@ const UserEditor = (props) => {
           </div>
 
           <div className="form-item">
-            Location: {user.status}<br/>
-            <button onClick={getLocation} type='button' className='btn btn-theme'>Locate me!</button>
+            <div className="locate-me">
+              <div className="locate-me-top">
+                <button onClick={getLocation} type='button' className='btn btn-theme'>Locate me!</button>
+              </div>
+              <div className="locate-me-bottom">
+                Location: {user.status} <ReverseGeocoder lat={user.userLat} lng={user.userLng} />
+              </div>
+            </div>
           </div>
 
-          <div className="form-item">
+          <div className="form-item-buttons">
             <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="user-edit-form">Save Profile</button>&nbsp;&nbsp;
             {user.userInDatabase ?
             <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Profile</button>

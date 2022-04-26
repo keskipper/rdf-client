@@ -64,7 +64,7 @@ function GameBuilder(props) {
               type="textbox"
               name="description"
               placeholder="Game description (required)"
-              maxLength={255}
+              maxLength={500}
               required
               value={game.description}/>  
           </div>

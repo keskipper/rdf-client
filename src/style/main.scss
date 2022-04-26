@@ -13,30 +13,17 @@
 
     h1, h2, h3, h4, h5, h6 {
         color: $brown;
+        margin: 12px; 
     }
 
-    .btn {
-        border-radius: 3px;
-        font-family: 'Rubik', sans-serif;
-        padding: 5px;
-    }
 
-    .btn-theme {
-        color: $brown;
-        background-color: $lightyellow;
-        border: 2px solid $yellow;
-    }
-
-    .btn-delete {
-        color: white;
-        background-color: red;
-        border: 2px solid black;
-    }
 }
 
+@import './buttons.scss';
 @import './navigation.scss';
+@import './game-search.scss';
 @import './forms.scss';
 @import './game-search-item.scss';
 @import './home.scss';
-@import './search-bar.scss';
+@import './user-editor.scss';
 @import './user-viewer.scss';

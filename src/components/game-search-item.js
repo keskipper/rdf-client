@@ -25,9 +25,6 @@ function GameSearchItem(props) {
               <div className="game-search-info">
                 <div className="game-search-info-top">
                   {formatDate(props.game.date)}
-                  
-                  <br/>
-                  
 
                 </div>
                   <div className="game-search-info-bottom">
@@ -36,7 +33,9 @@ function GameSearchItem(props) {
                       :
                       <div className="closed">Roster space closed</div>
                     }
+                    <br/>
 
+                    {props.game.description}
 
                   </div>
               </div>

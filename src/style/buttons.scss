@@ -1,3 +1,21 @@
-@mixin button-styles {
-    color: $lightbrown;
+.btn {
+    border-radius: 3px;
+    font-family: 'Rubik', sans-serif;
+    padding: 7px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.btn-theme {
+    color: $brown;
+    background-color: $lightyellow;
+    border: 2px solid $yellow;
+}
+
+.btn-delete {
+    color: white;
+    background-color: red;
+    border: 2px solid black;
 }

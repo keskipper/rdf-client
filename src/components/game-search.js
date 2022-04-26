@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 
 import GameSearchItem from './game-search-item';
+import ReverseGeocoder from './reverse-geocoder';
 
 function GameSearch(props) {
   const [ games, setGames ] = useState({
@@ -74,38 +75,42 @@ function GameSearch(props) {
   return (
     <div className="game-search-wrapper">
       <div className="form-wrapper">
-        <h2>Find games!</h2>
-        <form id="game-search">
-          within&nbsp;
-          <input
-            onChange={(event) => {setGames(prevGames => ({
-              ...prevGames, miles: event.target.value
-            }))}} 
-            type="text"
-            maxLength={4}
-            name="miles"
-            value={games.miles}
-          />
-          &nbsp;miles
-          <div>
-            of my location<br/>
-            ({props.userLat}, {props.userLng})
-          </div>
+        <div className="game-search-header">
 
-          <div className="form-item">
-            <button className="btn btn-theme" type="submit" onClick={getGames}><FontAwesomeIcon icon="fa-magnifying-glass" /> Search</button>
-          </div>
-          
-          {/* <div className="searchBar">
-            <label htmlFor=''>Search <FontAwesomeIcon icon="fa-magnifying-glass" /></label><br/>
+          <h2>Find games!</h2>
+          <form id="game-search">
+            within&nbsp;
             <input
+              onChange={(event) => {setGames(prevGames => ({
+                ...prevGames, miles: event.target.value
+              }))}} 
               type="text"
-              placeholder='Find games!'
-              name="searchBar"
+              maxLength={3}
+              name="miles"
+              value={games.miles}
             />
-          </div> */}
-        </form>
+            &nbsp;miles of my location 
+              <ReverseGeocoder lat={props.userLat} lng={props.userLng} />
+
+            <div className="search-form-button">
+
+              <div className="form-item">
+                <button className="btn btn-theme" type="submit" onClick={getGames}><FontAwesomeIcon icon="fa-magnifying-glass" /> Search</button>
+              </div>
+            </div>
+
+          
+            {/* <div className="searchBar">
+              <label htmlFor=''>Search <FontAwesomeIcon icon="fa-magnifying-glass" /></label><br/>
+              <input
+                type="text"
+                placeholder='Find games!'
+                name="searchBar"
+              />
+            </div> */}
+          </form>
       </div>
+
 
       <h2>Search results</h2>
       <div className="search-results">
@@ -117,6 +122,7 @@ function GameSearch(props) {
 
 
         </div>
+      </div>
     </div>
   )
 }
