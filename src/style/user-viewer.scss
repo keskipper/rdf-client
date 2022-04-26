@@ -14,8 +14,22 @@
         border-radius: 5px;
         padding: 20px;
 
+        .user-view-info {
+            display: flex;
+            margin: 10px;
+
+            img {
+                width: 100px;
+                margin: 20px;
+            }
+        }
+
         .user-view-item {
             color: $lightbrown;
+
+            h2 {
+                margin-left: 0;
+            }
         }
 
     }

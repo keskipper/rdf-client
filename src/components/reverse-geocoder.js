@@ -30,9 +30,9 @@ function ReverseGeocoder(props) {
     }, [])
 
   return (
-    <div>
+    <div className="reverse-geocoder-result">
         {address.locString
-        ? address.locString
+        ? '('+address.locString+')'
         : 'Error getting location name.'
         }
     </div>

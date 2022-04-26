@@ -77,7 +77,7 @@ function GameSearch(props) {
       <div className="form-wrapper">
         <div className="game-search-header">
 
-          <h2>Find games!</h2>
+          <h1>Find games!</h1>
           <form id="game-search">
             within&nbsp;
             <input

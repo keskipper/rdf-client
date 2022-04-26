@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 import UserEditor from './user-editor';
+import player from '../static/player.jpg';
 
 const UserViewer = (props) => {
     const [ viewer, setViewer ] = useState({
@@ -79,29 +80,41 @@ const UserViewer = (props) => {
             <div className="user-view-item">
                 <h1>Player Profile</h1>
             </div>
-            <div className="user-view-item">
-                <h2>{viewer.user.derbyName}
-                &nbsp;#{viewer.user.jerseyNumber}</h2>
-            </div>
-            <div className="user-view-item">
-                {viewer.user.firstName} {viewer.user.lastName}
-            </div>
-            <div className="user-view-item">
-                {viewer.user.age} years old
-            </div>
-            <div className="user-view-item">
-                {viewer.user.gender}
-            </div>
-            <div className="user-view-item">
-                {viewer.user.email}
+
+
+
+            <div className="user-view-info">
+                <div className="user-view-left">
+                    <img src={player} />
                 </div>
-            <div className="user-view-item">
-                {viewer.user.phone}
+
+                <div className="user-view-right">
+
+                    <div className="user-view-item">
+                        <h2>{viewer.user.derbyName}
+                        &nbsp;#{viewer.user.jerseyNumber}</h2>
+                    </div>
+                    <div className="user-view-item">
+                        {viewer.user.firstName} {viewer.user.lastName}
+                    </div>
+                    <div className="user-view-item">
+                        {viewer.user.age} years old
+                    </div>
+                    <div className="user-view-item">
+                        {viewer.user.gender}
+                    </div>
+                    <div className="user-view-item">
+                        {viewer.user.email}
+                        </div>
+                    <div className="user-view-item">
+                        {viewer.user.phone}
+                    </div>
+                    <div className="user-view-item">
+                        {viewer.user.location}
+                    </div>
+                </div>
             </div>
-            <div className="user-view-item">
-                {viewer.user.location}
-            </div>
-            <br/>
+
             <div className="user-view-item">
                 <button className="btn btn-theme" onClick={toggleEditMode}>Edit Profile</button>
             </div>
