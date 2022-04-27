@@ -19,6 +19,13 @@
         justify-content: center;
         margin-top: 10px;
     }
+
+    .search-results {
+        .search-results-top {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
 }
 
 .searchBar {

@@ -37,7 +37,6 @@ const UserEditor = (props) => {
           userLng: user.currentUser.userLng
         }))   
       }
-
     },[]);
 
 
@@ -47,7 +46,7 @@ const UserEditor = (props) => {
       if (!navigator.geolocation) {
         setUser(prevUser => ({
           ...prevUser,
-          status: 'Geolocation is not supported by your browser.'
+          status: "Your browser doesn't want us to find you. (Geolocation is not supported.)"
         }))
       } else {
         setUser(prevUser => ({
@@ -65,7 +64,7 @@ const UserEditor = (props) => {
         }, () => {
           setUser(prevUser => ({
             ...prevUser,
-            status: 'Unable to retrieve your location.'
+            status: "We couldn't locate you. Are you missing?."
           }))
         });
       }

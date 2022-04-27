@@ -58,8 +58,17 @@ function GameSearch(props) {
 
   const searchResults = () => {
     return(
-      <div>
-        {games.gameItems.length} games found!<br/>
+      <div className="search-results">
+        <div className="search-results-top">
+          <div className="search-results-top-left">
+            {games.gameItems.length} games found!
+          </div>
+          <div className="search-results-top-right">
+            <button className="btn btn-theme" type='button'>Sort by date</button>
+          </div>
+          
+        </div>
+        
 
           {games.gameItems.map(g => (
             <GameSearchItem
