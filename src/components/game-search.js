@@ -82,45 +82,54 @@ function GameSearch(props) {
 
 
   return (
-    <div className="game-search-wrapper">
-      <div className="form-wrapper">
-        <div className="game-search-header">
+    <div className="game-search">
+      <div className="game-search-wrapper">
+        <div className="form-wrapper">
+          <div className="game-search-header">
 
-          <h1>Find games!</h1>
-          <form id="game-search">
-            within&nbsp;
-            <input
-              onChange={(event) => {setGames(prevGames => ({
-                ...prevGames, miles: event.target.value
-              }))}} 
-              type="text"
-              maxLength={3}
-              name="miles"
-              value={games.miles}
-            />
-            &nbsp;miles of my location 
-              <ReverseGeocoder lat={props.userLat} lng={props.userLng} />
-
-            <div className="search-form-button">
-
-              <div className="form-item">
-                <button className="btn btn-theme" type="submit" onClick={getGames}><FontAwesomeIcon icon="fa-magnifying-glass" /> Search</button>
+            <h1>Find games!</h1>
+            <form id="game-search">
+              <div>
+                within&nbsp;
+                <input
+                  onChange={(event) => {setGames(prevGames => ({
+                    ...prevGames, miles: event.target.value
+                  }))}} 
+                  type="text"
+                  maxLength={3}
+                  name="miles"
+                  value={games.miles}
+                />
+                &nbsp;miles of my location
               </div>
-            </div>
-          </form>
-      </div>
+
+              <div className="location">
+                <ReverseGeocoder lat={props.userLat} lng={props.userLng} />
+              </div>
+                
+              <div className="search-form-button">
+
+                <div className="form-item">
+                  <button className="btn btn-theme" type="submit" onClick={getGames}><FontAwesomeIcon icon="fa-magnifying-glass" /> Search</button>
+                </div>
+              </div>
+            </form>
+        </div>
 
 
-      <h2>Search results</h2>
-      <div className="search-results">          
-          {games.gameItems.length > 0 ?
-            searchResults()
-            : null
-          }
+        <h2>Search results</h2>
+        <div className="search-results">          
+            {games.gameItems.length > 0 ?
+              searchResults()
+              : null
+            }
 
+          </div>
         </div>
       </div>
+
     </div>
+    
   )
 }
 
