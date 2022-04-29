@@ -5,6 +5,13 @@
 
     &:hover {
         cursor: pointer;
+        box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.5);
+        transition: 0.5s ease-in-out;
+    }
+
+    &:active {
+        color: white;     
+        transition: 1s ease-out;   
     }
 }
 

@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Login from './components/login';
-import Logout from './components/logout';
 import Icons from './helpers/icons';
 import UserViewer from './components/user-viewer';
 import GameSearch from './components/game-search';
-import GameBuilder from './components/game-builder';
+// import GameBuilder from './components/game-builder';
 import Home from './components/home';
+import Footer from './components/footer';
 
 import './style/main.scss';
-import skate from './static/skate.webp';
+import Navigation from './components/navigation';
 
 
 export default class App extends Component {
@@ -123,53 +121,25 @@ export default class App extends Component {
       }
     }
 
-    const navigationManager = () => {
-      if(this.state.loggedInStatus === "LOGGED_IN" && this.state.userProfileVisible === false) {
-        return <button className="btn btn-theme" onClick={this.showUserProfile}><FontAwesomeIcon icon="fa-user" /> Profile</button>
-      } else if(this.state.loggedInStatus === "LOGGED_IN" && this.state.userProfileVisible === true){
-        return <button className="btn btn-theme" onClick={this.hideUserProfile}>Hide Profile</button>
-      } else if(this.state.loggedInStatus === "NOT_LOGGED IN") {
-        return null;
-      }
-    }
-
 
     return (
       <div className="app-wrapper">
-        <div className="navigation-wrapper">
-          <div className="navigation-left">
-            <div className="navigation-item">
-              <img src={skate} alt="rollerskate logo" />
-              </div>
-          </div>
-
-          <div className="navigation-right">
-            <div className="navigation-item">
-                {navigationManager()}
-            </div>
-
-            <div className="navigation-item">
-              {this.state.loggedInStatus === "NOT_LOGGED_IN" ?
-              <Login 
-                handleSuccessfulLogin={this.handleSuccessfulLogin}
-                handleUnsuccessfulLogin={this.handleUnsuccessfulLogin}
-              />
-              :
-              <Logout handleSuccessfulLogout={this.handleSuccessfulLogout}/>
-              }
-            </div>
-          </div>          
-        </div>
+        <Navigation
+          loggedInStatus={this.state.loggedInStatus}
+          userProfileVisible={this.state.userProfileVisible}
+          handleSuccessfulLogin={this.handleSuccessfulLogin}
+          handleSuccessfulLogout={this.handleSuccessfulLogout}
+          showUserProfile={this.showUserProfile}
+          hideUserProfile={this.hideUserProfile}
+        />
 
         <div className="home-wrapper">
           <div className="content">
             {contentManager()}
           </div>
         </div>
-      
 
-
-
+        <Footer />
     </div>
     );
   }

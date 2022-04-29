@@ -9,34 +9,12 @@ function GameSearch(props) {
   const [ games, setGames ] = useState({
     gameItems: [],
     miles: 50,
-    totalCount: 0,
-    currentPage: 0,
-    isLoading: true,
     orderBy: "date"
   })
 
 
-  // useEffect(() => {
-  //   const listener = event => {
-  //     if (event.code === "Enter" || event.code === "NumpadEnter") {
-  //       //console.log("Enter key was pressed. Run your function.");
-  //       event.preventDefault();
-  //       getGames();
-  //     }
-  //   };
-  //   document.addEventListener("keydown", listener);
-  //   return () => {
-  //     document.removeEventListener("keydown", listener);
-  //   };
-  // }, []);
-
-
   function getGames(event) {
     event.preventDefault();
-    // setGames(prevGames => ({
-    //   ...prevGames,
-    //   currentPage: prevGames.currentPage + 1
-    // }));
     axios({
       method: "post",
       url: "http://localhost:8080/api/games/limitbydistance",
@@ -65,7 +43,6 @@ function GameSearch(props) {
     } else {
       sortBy = "date"
     }
-    console.log(sortBy)
     setGames(prevGames => ({
       ...prevGames,
       orderBy: sortBy
@@ -130,28 +107,16 @@ function GameSearch(props) {
                 <button className="btn btn-theme" type="submit" onClick={getGames}><FontAwesomeIcon icon="fa-magnifying-glass" /> Search</button>
               </div>
             </div>
-
-          
-            {/* <div className="searchBar">
-              <label htmlFor=''>Search <FontAwesomeIcon icon="fa-magnifying-glass" /></label><br/>
-              <input
-                type="text"
-                placeholder='Find games!'
-                name="searchBar"
-              />
-            </div> */}
           </form>
       </div>
 
 
       <h2>Search results</h2>
-      <div className="search-results">
-          
+      <div className="search-results">          
           {games.gameItems.length > 0 ?
             searchResults()
             : null
           }
-
 
         </div>
       </div>

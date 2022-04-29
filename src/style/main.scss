@@ -8,8 +8,8 @@
     flex-direction: column;
     align-items: center;
     font-family: 'Rubik', sans-serif;
-
-
+    margin-top: 55px;
+    margin-bottom: 28px;
 
     h1, h2, h3, h4, h5, h6 {
         color: $brown;
@@ -22,6 +22,7 @@
 @import './buttons.scss';
 @import './navigation.scss';
 @import './game-search.scss';
+@import './footer.scss';
 @import './forms.scss';
 @import './game-search-item.scss';
 @import './home.scss';

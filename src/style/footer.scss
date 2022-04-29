@@ -1,0 +1,15 @@
+.footer-wrapper {
+    background-color: $brown;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: $lightyellow;
+    position: fixed;
+    bottom: 0;
+    height: 30px;
+
+    .footer-content {
+        padding: 5px;
+
+    }
+}

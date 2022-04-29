@@ -175,145 +175,147 @@ const UserEditor = (props) => {
 
 
   return (
-    <div className="user-editor-wrapper">
-      <div className="form-wrapper">
-        <div className="form-item">
-          <h1>Player Profile</h1>
-        </div>
-
-        <form id="user-edit-form" autoComplete='off'>
+    <div className="user-editor">
+      <div className="user-editor-wrapper">
+        <div className="form-wrapper">
           <div className="form-item">
-            Legal first name<br/>
-            <input 
-              role="presentation"
-              onChange={(event) => {setUser(prevUser => ({
-                ...prevUser, firstName: event.target.value
-              }))}} 
-              type="text"
-              name="firstName"
-              placeholder="Legal first name (required)"
-              maxLength={45}
-              required
-              value={user.firstName}/>
+            <h1>Player Profile</h1>
           </div>
 
-          <div className="form-item">
-            Legal last name<br/>
-            <input 
-              role="presentation"
-              onChange={(event) => {setUser(prevUser => ({
-                ...prevUser, lastName: event.target.value
-              }))}} 
-              type="text"
-              name="lastName"
-              placeholder="Legal last name (required)"
-              maxLength={45}
-              required
-              value={user.lastName}/>  
-          </div>
+          <form id="user-edit-form" autoComplete='off'>
+            <div className="form-item">
+              Legal first name<br/>
+              <input 
+                role="presentation"
+                onChange={(event) => {setUser(prevUser => ({
+                  ...prevUser, firstName: event.target.value
+                }))}} 
+                type="text"
+                name="firstName"
+                placeholder="Legal first name (required)"
+                maxLength={45}
+                required
+                value={user.firstName}/>
+            </div>
 
-          <div className="form-item">
-            Derby name<br/>
-            <input 
-              role="presentation"
-              onChange={(event) => {setUser(prevUser => ({
-                ...prevUser, derbyName: event.target.value
-              }))}} 
-              type="text"
-              name="derbyName"
-              placeholder="Derby name"
-              maxLength={45}
-              value={user.derbyName}/>
-          </div>
+            <div className="form-item">
+              Legal last name<br/>
+              <input 
+                role="presentation"
+                onChange={(event) => {setUser(prevUser => ({
+                  ...prevUser, lastName: event.target.value
+                }))}} 
+                type="text"
+                name="lastName"
+                placeholder="Legal last name (required)"
+                maxLength={45}
+                required
+                value={user.lastName}/>  
+            </div>
 
-          <div className="form-item">
-            Jersey number<br/>
-            <input 
-              role="presentation"
-              onChange={(event) => {setUser(prevUser => ({
-                ...prevUser, jerseyNumber: event.target.value
-              }))}} 
-              type="text"
-              name="jerseyNumber"
-              placeholder="Preferred jersey number"
-              maxLength={4}
-              value={user.jerseyNumber}/>
-          </div>
+            <div className="form-item">
+              Derby name<br/>
+              <input 
+                role="presentation"
+                onChange={(event) => {setUser(prevUser => ({
+                  ...prevUser, derbyName: event.target.value
+                }))}} 
+                type="text"
+                name="derbyName"
+                placeholder="Derby name"
+                maxLength={45}
+                value={user.derbyName}/>
+            </div>
 
-          <div className="form-item">
-            Gender<br/>
-            <select 
-              onChange={(event) => {setUser(prevUser => ({
-                ...prevUser, gender: event.target.value
-              }))}} 
-              name="gender"
-              required
-              value={user.gender} >
-                <option value="">Select one</option>
-                <option value="female">female</option>
-                <option value="male">male</option>
-                <option value="expansive">expansive</option>
-            </select>
-          </div>
+            <div className="form-item">
+              Jersey number<br/>
+              <input 
+                role="presentation"
+                onChange={(event) => {setUser(prevUser => ({
+                  ...prevUser, jerseyNumber: event.target.value
+                }))}} 
+                type="text"
+                name="jerseyNumber"
+                placeholder="Preferred jersey number"
+                maxLength={4}
+                value={user.jerseyNumber}/>
+            </div>
 
-          <div className="form-item">
-            Age<br/>
-            <input 
-              role="presentation"
-              onChange={(event) => {setUser(prevUser => ({
-                ...prevUser, age: event.target.value
-              }))}} 
-              type="text"
-              name="age"
-              placeholder="Age (required)"
-              maxLength={3}
-              required
-              value={user.age}/>  
-          </div>
+            <div className="form-item">
+              Gender<br/>
+              <select 
+                onChange={(event) => {setUser(prevUser => ({
+                  ...prevUser, gender: event.target.value
+                }))}} 
+                name="gender"
+                required
+                value={user.gender} >
+                  <option value="">Select one</option>
+                  <option value="female">female</option>
+                  <option value="male">male</option>
+                  <option value="expansive">expansive</option>
+              </select>
+            </div>
 
-          <div className="form-item">
-            Email<br/>
-            {user.email}
-            <div className="tiny-note">To change your email address, sign in with another Google account.</div>
-          </div>
+            <div className="form-item">
+              Age<br/>
+              <input 
+                role="presentation"
+                onChange={(event) => {setUser(prevUser => ({
+                  ...prevUser, age: event.target.value
+                }))}} 
+                type="text"
+                name="age"
+                placeholder="Age (required)"
+                maxLength={3}
+                required
+                value={user.age}/>  
+            </div>
 
-          <div className="form-item">
-            Phone<br/>
-            <input 
-              role="presentation"
-              onChange={(event) => {setUser(prevUser => ({
-                ...prevUser, phone: event.target.value
-              }))}} 
-              type="text"
-              name="phone"
-              placeholder="Phone number"
-              maxLength={10}
-              value={user.phone}/>
-          </div>
+            <div className="form-item">
+              Email<br/>
+              {user.email}
+              <div className="tiny-note">To change your email address, sign in with another Google account.</div>
+            </div>
 
-          <div className="form-item">
-            <div className="locate-me">
-              <div className="locate-me-top">
-                <button onClick={getLocation} type='button' className='btn btn-theme'>Locate me!</button>
-              </div>
-              <div className="locate-me-bottom">
-                Location: {user.status} <ReverseGeocoder lat={user.userLat} lng={user.userLng} />
+            <div className="form-item">
+              Phone (numbers only)<br/>
+              <input 
+                role="presentation"
+                onChange={(event) => {setUser(prevUser => ({
+                  ...prevUser, phone: event.target.value
+                }))}} 
+                type="text"
+                name="phone"
+                placeholder="Phone number"
+                maxLength={10}
+                value={user.phone}/>
+            </div>
+
+            <div className="form-item">
+              <div className="locate-me">
+                <div className="locate-me-top">
+                  <button onClick={getLocation} type='button' className='btn btn-theme'>Locate me!</button>
+                </div>
+                <div className="locate-me-bottom">
+                  Location: {user.status} <ReverseGeocoder lat={user.userLat} lng={user.userLng} />
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="form-item-buttons">
-            <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="user-edit-form">Save Profile</button>&nbsp;&nbsp;
-            {user.userInDatabase ?
-            <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Profile</button>
-            : null
-            }
-            
-          </div>
-        </form>
+            <div className="form-item-buttons">
+              <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="user-edit-form">Save Profile</button>&nbsp;&nbsp;
+              {user.userInDatabase ?
+              <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Profile</button>
+              : null
+              }
+              
+            </div>
+          </form>
+
+        </div>
 
       </div>
-
     </div>
   )
 }

@@ -9,9 +9,26 @@
     .content {
         display: flex;
         background-color: white;
-        height: 100vh;
         width: 90%;
         justify-content: center;
+    }
 
+    .home {
+        margin-top: 10%;
+
+        .home-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            img {
+                width: 200px;
+            }
+
+            .welcome {
+                font-weight: 900;
+                font-size: 25px;                
+            }
+        }
     }
 }
