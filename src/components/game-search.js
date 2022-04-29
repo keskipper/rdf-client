@@ -11,7 +11,8 @@ function GameSearch(props) {
     miles: 50,
     totalCount: 0,
     currentPage: 0,
-    isLoading: true
+    isLoading: true,
+    orderBy: "date"
   })
 
 
@@ -42,7 +43,8 @@ function GameSearch(props) {
       data: {
         "miles": games.miles,
         "userLat": props.userLat,
-        "userLng": props.userLng
+        "userLng": props.userLng,
+        "orderField": games.orderBy
       }
     }).then(response => {
       //console.log(response.data);
@@ -56,6 +58,26 @@ function GameSearch(props) {
   }
 
 
+  function changeSort(){
+    let sortBy;
+    if(games.orderBy === "date"){
+      sortBy = "distance"
+    } else {
+      sortBy = "date"
+    }
+    console.log(sortBy)
+    setGames(prevGames => ({
+      ...prevGames,
+      orderBy: sortBy
+    }))
+  }
+
+
+  useEffect(() => {
+    getGames(window.event);
+  }, [games.orderBy])
+
+
   const searchResults = () => {
     return(
       <div className="search-results">
@@ -64,11 +86,12 @@ function GameSearch(props) {
             {games.gameItems.length} games found!
           </div>
           <div className="search-results-top-right">
-            <button className="btn btn-theme" type='button'>Sort by date</button>
+            {games.orderBy === "date"
+            ? <button className="btn btn-theme" type='button' onClick={changeSort}>Sort by distance</button>
+            : <button className="btn btn-theme" type='button' onClick={changeSort}>Sort by date</button>
+            }
           </div>
-          
         </div>
-        
 
           {games.gameItems.map(g => (
             <GameSearchItem

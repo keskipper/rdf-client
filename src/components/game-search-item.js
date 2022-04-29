@@ -33,6 +33,7 @@ function GameSearchItem(props) {
                       :
                       <div className="closed">Roster space closed</div>
                     }
+                    <div className="distance-away">{(props.game.distance/1609).toFixed(1)} miles from you</div>
                     <br/>
 
                     {props.game.description}
