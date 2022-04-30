@@ -303,11 +303,12 @@ const UserEditor = (props) => {
               </div>
             </div>
 
-            <div className="form-item-buttons">
-              <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="user-edit-form">Save Profile</button>&nbsp;&nbsp;
-              {user.userInDatabase ?
-              <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Profile</button>
-              : null
+            <div className="button-row">
+              <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="user-edit-form">Save Profile</button>
+              <button onClick={props.toggleEditMode} type='submit' className="btn btn-theme">Cancel</button>
+              {user.userInDatabase
+              ? <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Profile</button>
+              : <button type='button' className="btn btn-disabled">Delete Profile</button>
               }
               
             </div>

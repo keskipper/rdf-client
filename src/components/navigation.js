@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Login from './login';
 import Logout from './logout';
 
-import skate from '../static/skate.webp'
+import skate from '../static/skate-wings.png'
 
 function Navigation(props) {
 

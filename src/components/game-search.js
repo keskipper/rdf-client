@@ -9,7 +9,8 @@ function GameSearch(props) {
   const [ games, setGames ] = useState({
     gameItems: [],
     miles: 50,
-    orderBy: "date"
+    orderBy: "date",
+    rendered: 0
   })
 
 
@@ -51,7 +52,13 @@ function GameSearch(props) {
 
 
   useEffect(() => {
-    getGames(window.event);
+    if(games.rendered >= 1) {
+      getGames(window.event);
+    }
+    setGames(prevGames => ({
+      ...prevGames,
+      rendered: prevGames.rendered + 1
+    }))
   }, [games.orderBy])
 
 
@@ -113,21 +120,24 @@ function GameSearch(props) {
                   <button className="btn btn-theme" type="submit" onClick={getGames}><FontAwesomeIcon icon="fa-magnifying-glass" /> Search</button>
                 </div>
               </div>
+
+              <div className="new-game-btn">
+                <button className="btn btn-theme" type='button' onClick={props.toggleCreateMode}><FontAwesomeIcon icon="fa-solid fa-circle-plus" /> Create new game</button>
+              </div>
             </form>
         </div>
 
 
         <h2>Search results</h2>
         <div className="search-results">          
-            {games.gameItems.length > 0 ?
-              searchResults()
+            {games.gameItems.length > 0 
+              ? searchResults()
               : null
             }
 
           </div>
         </div>
-      </div>
-
+      </div>  
     </div>
     
   )

@@ -15,6 +15,11 @@
     }
 }
 
+.button-row {
+    display: flex;
+    justify-content: space-between;
+}
+
 .btn-theme {
     color: $brown;
     background-color: $lightyellow;
@@ -25,4 +30,16 @@
     color: white;
     background-color: red;
     border: 2px solid black;
+}
+
+.btn-disabled {
+    color: #919191;
+    background-color: #c6c6c6;
+    border: 2px solid #919191;
+    cursor: not-allowed;
+
+    &:hover {
+        cursor: not-allowed;
+        box-shadow: none;
+    }
 }

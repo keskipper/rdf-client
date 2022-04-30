@@ -4,7 +4,7 @@ import axios from 'axios';
 import Icons from './helpers/icons';
 import UserViewer from './components/user-viewer';
 import GameSearch from './components/game-search';
-// import GameBuilder from './components/game-builder';
+import GameBuilder from './components/game-builder';
 import Home from './components/home';
 import Footer from './components/footer';
 
@@ -23,7 +23,8 @@ export default class App extends Component {
       email: "",
       userExists: false,
       userProfileVisible: false,
-      user: {}
+      user: {},
+      createMode: false
     }
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
@@ -31,6 +32,7 @@ export default class App extends Component {
     this.handleSuccessfulLogout = this.handleSuccessfulLogout.bind(this);
     this.showUserProfile = this.showUserProfile.bind(this);
     this.hideUserProfile = this.hideUserProfile.bind(this);
+    this.toggleCreateMode = this.toggleCreateMode.bind(this);
   }
 
   handleSuccessfulLogin(email) {
@@ -90,6 +92,11 @@ export default class App extends Component {
     this.setState({ userProfileVisible: false })
   }
 
+  toggleCreateMode(){
+    let newMode = !this.state.createMode;
+    this.setState({ createMode: newMode })
+  }
+
 
   render() {
 
@@ -110,11 +117,18 @@ export default class App extends Component {
         )
       } else if (this.state.userExists && this.state.loggedInStatus === "LOGGED_IN" && !this.state.userProfileVisible) {
         return <div> 
-          {/* <GameBuilder /> */}
-          <GameSearch 
+          {this.state.createMode === false
+          ? <GameSearch 
+            toggleCreateMode={this.toggleCreateMode}
+            showUserProfile={this.showUserProfile}
             userLat={this.state.user.userLat}
             userLng={this.state.user.userLng}
           />
+          : <GameBuilder 
+            toggleCreateMode={this.toggleCreateMode}
+          />
+          }
+
           </div>
       } else if (this.state.loggedInStatus === "NOT_LOGGED_IN") {
         return <Home />
