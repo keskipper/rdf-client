@@ -119,12 +119,12 @@ export default class App extends Component {
         return <div> 
           {this.state.createMode === false
           ? <GameSearch 
-            toggleCreateMode={this.toggleCreateMode}
-            showUserProfile={this.showUserProfile}
+            toggleCreateMode={this.toggleCreateMode}            
             userLat={this.state.user.userLat}
             userLng={this.state.user.userLng}
           />
           : <GameBuilder 
+            userId={this.state.user.id}
             toggleCreateMode={this.toggleCreateMode}
           />
           }

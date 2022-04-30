@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
 
 function GameBuilder(props) {
     const [ game, setGame ] = useState({
@@ -15,13 +16,85 @@ function GameBuilder(props) {
         date: "",
         time: "",
         organizer: "",
+        hostingLeague: "",
+        gameGender: "e",
         gameInDatabase: false
       })
 
 
 
-      function handleSubmit(){
-        console.log(game.date, game.time);
+      const buildBodyObject = () => {
+        let bodyObj = "";
+        let dateTime = game.date + " " + game.time;
+  
+        bodyObj = {
+          "title": game.title,
+          "description": game.description,
+          "gameLat": "",
+          "gameLng": "",
+          "address1": game.address1,
+          "address2": game.address2 || "",
+          "city": game.city,
+          "state": game.state,
+          "zip": game.zip,
+          "venueName": game.venueName,
+          "date": dateTime,
+          "organizer": props.userId,
+          "hostingLeague": game.hostingLeague,
+          "gameGender": game.gameGender || "e",
+        }
+  
+        return bodyObj;
+      }
+
+
+
+      function handleSubmit(event){
+        event.preventDefault();
+
+        let verb = "";
+        let url = "http://localhost:8080/api/games/";
+
+        if(props.gameInDatabase){ 
+          verb = "PUT";
+          // url = `http://localhost:8080/api/games/${IDIDID}`;
+        }
+        if(!props.gameInDatabase){
+          verb = "POST";
+        }
+
+
+        axios({
+          method: verb,
+          url,
+          data: buildBodyObject()
+        }
+        ).then(response => {
+          console.log("server response: ", response);
+  
+          if(response.status === 200) {
+            setGame({
+              title: "",
+              description: "",
+              gameLat: "",
+              gameLng: "",
+              address1: "",
+              address2: "",
+              city: "",
+              state: "",
+              zip: "",
+              venueName: "",
+              date: "",
+              time: "",
+              hostingLeague: "",
+              gameGender: "e",
+              gameInDatabase: true
+            })
+            props.toggleCreateMode();
+          }
+        }).catch(error => {
+            console.log("error in game-builder handleSubmit(): ", error.response.data)
+        });
       }
 
 
@@ -72,17 +145,33 @@ function GameBuilder(props) {
             </div>
 
             <div className="form-item">
-            <label htmlFor="venueName">Venue name</label><br/>
+            <label htmlFor="hostingLeague">Hosting league</label><br/>
               <input 
                 role="presentation"
                 onChange={(event) => {setGame(prevGame => ({
-                  ...prevGame, venueName: event.target.value
+                  ...prevGame, hostingLeague: event.target.value
                 }))}} 
-                type="text"
-                name="venueName"
-                placeholder="Venue name"
+                type="textbox"
+                name="hostingLeague"
+                placeholder="Hosting league"
                 maxLength={100}
-                value={game.venueName}/>
+                value={game.hostingLeague}/>  
+            </div>
+
+            <div className="form-item">
+            <label htmlFor="gameGender">Gender</label><br/>
+              <select 
+                onChange={(event) => {setGame(prevGame => ({
+                  ...prevGame, gameGender: event.target.value
+                }))}} 
+                name="gameGender"
+                required
+                value={game.game} >
+                  <option value="">Select one</option>
+                  <option value="female">female</option>
+                  <option value="male">male</option>
+                  <option value="expansive">expansive</option>
+              </select>
             </div>
 
             <div className="form-item">
@@ -110,23 +199,91 @@ function GameBuilder(props) {
             </div>
 
             <div className="form-item">
-              Address 1<br/>
+            <label htmlFor="venueName">Venue name</label><br/>
+              <input 
+                role="presentation"
+                onChange={(event) => {setGame(prevGame => ({
+                  ...prevGame, venueName: event.target.value
+                }))}} 
+                type="text"
+                name="venueName"
+                placeholder="Venue name"
+                maxLength={100}
+                value={game.venueName}/>
             </div>
 
             <div className="form-item">
-              Address 2<br/>
+            <label htmlFor="address1">Address 1</label><br/>
+              <input 
+                role="presentation"
+                onChange={(event) => {setGame(prevGame => ({
+                  ...prevGame, address1: event.target.value
+                }))}} 
+                type="text"
+                name="address1"
+                placeholder="Address 1"
+                maxLength={45}
+                required
+                value={game.address1}/>
             </div>
 
             <div className="form-item">
-              City<br/>
+            <label htmlFor="address1">Address 2</label><br/>
+              <input 
+                role="presentation"
+                onChange={(event) => {setGame(prevGame => ({
+                  ...prevGame, address2: event.target.value
+                }))}} 
+                type="text"
+                name="address2"
+                placeholder="Address 2"
+                maxLength={45}
+                value={game.address2}/>
             </div>
 
             <div className="form-item">
-              State<br/>
+            <label htmlFor="city">City</label><br/>
+              <input 
+                role="presentation"
+                onChange={(event) => {setGame(prevGame => ({
+                  ...prevGame, city: event.target.value
+                }))}} 
+                type="text"
+                name="city"
+                placeholder="City"
+                maxLength={45}
+                required
+                value={game.city}/>
             </div>
 
             <div className="form-item">
-              Zip<br/>
+            <label htmlFor="state">State</label><br/>
+              <input 
+                role="presentation"
+                onChange={(event) => {setGame(prevGame => ({
+                  ...prevGame, state: event.target.value
+                }))}} 
+                type="text"
+                name="state"
+                placeholder="State"
+                maxLength={2}
+                required
+                value={game.state}/>
+            </div>
+
+            <div className="form-item">
+            <label htmlFor="zip">Zip</label><br/>
+              <input 
+                role="presentation"
+                onChange={(event) => {setGame(prevGame => ({
+                  ...prevGame, zip: event.target.value
+                }))}} 
+                type="number"
+                name="zip"
+                placeholder="Zip code"
+                maxLength={5}
+                required
+                value={game.zip}/>
             </div>
             
 

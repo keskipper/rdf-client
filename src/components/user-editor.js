@@ -184,7 +184,7 @@ const UserEditor = (props) => {
 
           <form id="user-edit-form" autoComplete='off'>
             <div className="form-item">
-              Legal first name<br/>
+              <label htmlFor="firstName">Legal first name</label><br/> 
               <input 
                 role="presentation"
                 onChange={(event) => {setUser(prevUser => ({
@@ -199,7 +199,7 @@ const UserEditor = (props) => {
             </div>
 
             <div className="form-item">
-              Legal last name<br/>
+              <label htmlFor="lastName">Legal last name</label><br/> 
               <input 
                 role="presentation"
                 onChange={(event) => {setUser(prevUser => ({
@@ -214,7 +214,7 @@ const UserEditor = (props) => {
             </div>
 
             <div className="form-item">
-              Derby name<br/>
+              <label htmlFor="derbyName">Derby name</label><br/> 
               <input 
                 role="presentation"
                 onChange={(event) => {setUser(prevUser => ({
@@ -228,7 +228,7 @@ const UserEditor = (props) => {
             </div>
 
             <div className="form-item">
-              Jersey number<br/>
+              <label htmlFor="jerseyNumber">Jersey number</label><br/> 
               <input 
                 role="presentation"
                 onChange={(event) => {setUser(prevUser => ({
@@ -242,7 +242,7 @@ const UserEditor = (props) => {
             </div>
 
             <div className="form-item">
-              Gender<br/>
+              <label htmlFor="gender">Gender</label><br/>
               <select 
                 onChange={(event) => {setUser(prevUser => ({
                   ...prevUser, gender: event.target.value
@@ -258,7 +258,7 @@ const UserEditor = (props) => {
             </div>
 
             <div className="form-item">
-              Age<br/>
+              <label htmlFor="age">Age</label><br/> 
               <input 
                 role="presentation"
                 onChange={(event) => {setUser(prevUser => ({
@@ -279,13 +279,13 @@ const UserEditor = (props) => {
             </div>
 
             <div className="form-item">
-              Phone (numbers only)<br/>
+              <label htmlFor="phone">Phone</label><br/> 
               <input 
                 role="presentation"
                 onChange={(event) => {setUser(prevUser => ({
                   ...prevUser, phone: event.target.value
                 }))}} 
-                type="text"
+                type="tel"
                 name="phone"
                 placeholder="Phone number"
                 maxLength={10}
