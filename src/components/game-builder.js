@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import LocationSearch from './location-search';
+import convertRegion from '../helpers/convert-region';
+
 function GameBuilder(props) {
     const [ game, setGame ] = useState({
         id: "",
@@ -54,21 +57,24 @@ function GameBuilder(props) {
       },[]);
 
 
-
       const buildBodyObject = () => {
         let bodyObj = "";
         let dateTime = game.date + " " + game.time;
         console.log("dateTime:", dateTime);
+
+        let state = convertRegion(game.state, "TO_ABBREVIATED");
+        let gameLat = Number(game.gameLat).toFixed(4);
+        let gameLng = Number(game.gameLng).toFixed(4);
   
         bodyObj = {
           "title": game.title,
           "description": game.description,
-          "gameLat": game.gameLat,
-          "gameLng": game.gameLng,
+          "gameLat": gameLat,
+          "gameLng": gameLng,
           "address1": game.address1,
           "address2": game.address2 || "",
           "city": game.city,
-          "state": game.state,
+          "state": state,
           "zip": game.zip,
           "venueName": game.venueName,
           "date": dateTime,
@@ -101,7 +107,6 @@ function GameBuilder(props) {
           data: buildBodyObject()
         }
         ).then(response => {
-          console.log("server response: ", response);
   
           if(response.status === 200) {
             setGame({
@@ -132,6 +137,23 @@ function GameBuilder(props) {
               errorText: error.response.data.message
             }))
         });
+      }
+
+
+      function passPlace(place){
+        let address1 = place.address.house_number || "";
+        address1 += place.address.road;
+        setGame(prevGame => ({
+          ...prevGame,
+          venueName: place.address.name,
+          address1: address1,
+          address2: "",
+          city: place.address.city,
+          state: place.address.state,
+          zip: place.address.postcode,
+          gameLat: place.lat,
+          gameLng: place.lon
+        }))
       }
 
 
@@ -239,19 +261,7 @@ function GameBuilder(props) {
               />
             </div>
 
-            <div className="form-item">
-            <label htmlFor="venueName">Venue name</label><br/>
-              <input 
-                role="presentation"
-                onChange={(event) => {setGame(prevGame => ({
-                  ...prevGame, venueName: event.target.value
-                }))}} 
-                type="text"
-                name="venueName"
-                placeholder="Venue name"
-                maxLength={100}
-                value={game.venueName}/>
-            </div>
+            <LocationSearch passPlace={passPlace} />
 
             <div className="form-item">
             <label htmlFor="address1">Address 1</label><br/>
@@ -327,11 +337,32 @@ function GameBuilder(props) {
                 value={game.zip}/>
             </div>
 
+            <div className="form-item">
+              <label htmlFor="gameLat">Lat</label><br />
+              <input 
+                  disabled
+                  type="text"
+                  name="gameLat"
+                  placeholder="Latitude"
+                  value={game.gameLat}
+              />
+            </div>
+
+            <div className="form-item">
+              <label htmlFor="gameLng">Lng</label><br />
+              <input 
+                  disabled
+                  type="text"
+                  name="gameLng"
+                  placeholder="Longitude"
+                  value={game.gameLng}
+              />
+            </div>
+
             <div className="errorDisplay">
                 {game.errorText}
             </div>
             
-
             <div className="form-item">
               <div className="button-row">
                 <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="game-edit-form">Save Game</button>
