@@ -25,9 +25,8 @@ function GameBuilder(props) {
       })
 
 
-
       useEffect(() => {        
-        if(game.currentGame) {
+        if(game.currentGame.id) {
 
           let date = game.currentGame.date.substring(0, 10);
           let time = game.currentGame.date.substring(11, 19);
@@ -59,12 +58,13 @@ function GameBuilder(props) {
       const buildBodyObject = () => {
         let bodyObj = "";
         let dateTime = game.date + " " + game.time;
+        console.log("dateTime:", dateTime);
   
         bodyObj = {
           "title": game.title,
           "description": game.description,
-          "gameLat": "",
-          "gameLng": "",
+          "gameLat": game.gameLat,
+          "gameLng": game.gameLng,
           "address1": game.address1,
           "address2": game.address2 || "",
           "city": game.city,
@@ -95,8 +95,6 @@ function GameBuilder(props) {
           verb = "POST";
         }
 
-        console.log("verb:", verb);
-
         axios({
           method: verb,
           url,
@@ -107,6 +105,7 @@ function GameBuilder(props) {
   
           if(response.status === 200) {
             setGame({
+              id: "",
               title: "",
               description: "",
               gameLat: "",
@@ -123,6 +122,7 @@ function GameBuilder(props) {
               gameGender: "e",
               gameInDatabase: true
             })
+            props.clearGame();
             props.toggleCreateMode();
           }
         }).catch(error => {
@@ -134,6 +134,11 @@ function GameBuilder(props) {
         });
       }
 
+
+      function handleCancel(){
+        props.clearGame();
+        props.toggleCreateMode();
+      }
 
 
       function handleDelete(){
@@ -147,7 +152,7 @@ function GameBuilder(props) {
 
         <div className="form-wrapper">
           <div className="form-item">
-            <h1>Create Game</h1>
+            <h1>Create/Edit Game</h1>
           </div>
 
           <form id="game-edit-form">
@@ -204,7 +209,6 @@ function GameBuilder(props) {
                 name="gameGender"
                 required
                 value={game.gameGender} >
-                  <option value="">Select one</option>
                   <option value="female">female</option>
                   <option value="male">male</option>
                   <option value="expansive">expansive</option>
@@ -331,7 +335,7 @@ function GameBuilder(props) {
             <div className="form-item">
               <div className="button-row">
                 <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="game-edit-form">Save Game</button>
-                <button onClick={props.toggleCreateMode} type='button' className="btn btn-theme">Cancel</button>
+                <button onClick={handleCancel} type='button' className="btn btn-theme">Cancel</button>
                 {game.gameInDatabase
                 ? <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Game</button>
                 : <button type='button' className="btn btn-disabled">Delete Game</button>

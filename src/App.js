@@ -34,6 +34,7 @@ export default class App extends Component {
     this.toggleUserProfile = this.toggleUserProfile.bind(this);
     this.toggleCreateMode = this.toggleCreateMode.bind(this);
     this.editGame = this.editGame.bind(this);
+    this.clearGame = this.clearGame.bind(this);
   }
 
   handleSuccessfulLogin(email) {
@@ -101,6 +102,10 @@ export default class App extends Component {
     })
   }
 
+  clearGame(){
+    this.setState({ gameToEdit: {} })
+  }
+
   render() {
 
     const contentManager = () => {      
@@ -131,6 +136,7 @@ export default class App extends Component {
             userId={this.state.user.id}
             toggleCreateMode={this.toggleCreateMode}
             gameToEdit={this.state.gameToEdit}
+            clearGame={this.clearGame}
           />
           }
 

@@ -10,7 +10,6 @@ function GameSearchItem(props) {
     return moment(datetime).utc().format('MMMM DD YYYY, h:mm a');
   }
 
-
   function triggerEdit(){
     props.editGame(props.game);
   }
@@ -39,7 +38,8 @@ function GameSearchItem(props) {
               </div>
               <div className="game-search-info">
                 <div className="game-search-info-top">
-                  {formatDate(props.game.date)}
+                  {formatDate(props.game.date)}<br/>
+                  {props.game.date}
 
                 </div>
                   <div className="game-search-info-bottom">
