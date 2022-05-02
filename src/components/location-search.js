@@ -75,7 +75,7 @@ function LocationSearch(props) {
         <div className="form-item">
             {place.placeList.map(p => (
                 <PlaceListItem
-                  key={p.id}
+                  key={p.place_id}
                   place={p}
                   selectPlace={selectPlace}
                 />

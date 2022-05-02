@@ -134,7 +134,7 @@ function GameSearch(props) {
         <div className="search-results">          
             {games.gameItems.length > 0 
               ? searchResults()
-              : null
+              : "No games found."
             }
 
           </div>

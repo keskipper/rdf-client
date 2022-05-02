@@ -26,7 +26,10 @@ function ReverseGeocoder(props) {
     }
 
     useEffect(() => {
-        getCommonName();
+        if((lat && lng) && (lat != "00.0000") && (lng != "00.0000")){
+            getCommonName();
+        }
+
     }, [])
 
   return (

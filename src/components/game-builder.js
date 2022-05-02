@@ -62,7 +62,9 @@ function GameBuilder(props) {
         let dateTime = game.date + " " + game.time;
         console.log("dateTime:", dateTime);
 
-        let state = convertRegion(game.state, "TO_ABBREVIATED");
+        let state;
+        if(game.state){state = convertRegion(game.state, "TO_ABBREVIATED");}
+        
         let gameLat = Number(game.gameLat).toFixed(4);
         let gameLng = Number(game.gameLng).toFixed(4);
   
@@ -71,11 +73,11 @@ function GameBuilder(props) {
           "description": game.description,
           "gameLat": gameLat,
           "gameLng": gameLng,
-          "address1": game.address1,
+          "address1": game.address1 || "",
           "address2": game.address2 || "",
-          "city": game.city,
-          "state": state,
-          "zip": game.zip,
+          "city": game.city || "",
+          "state": state || "",
+          "zip": game.zip || "",
           "venueName": game.venueName,
           "date": dateTime,
           "organizer": props.userId,
@@ -84,7 +86,6 @@ function GameBuilder(props) {
         }
         return bodyObj;
       }
-
 
 
       function handleSubmit(event){
@@ -142,15 +143,17 @@ function GameBuilder(props) {
 
       function passPlace(place){
         let address1 = place.address.house_number || "";
+        if(address1.length > 0){address1 += " "}
         address1 += place.address.road;
+
         setGame(prevGame => ({
           ...prevGame,
           venueName: place.address.name,
-          address1: address1,
+          address1: address1 || "",
           address2: "",
-          city: place.address.city,
-          state: place.address.state,
-          zip: place.address.postcode,
+          city: place.address.city || "",
+          state: place.address.state || "",
+          zip: place.address.postcode || "",
           gameLat: place.lat,
           gameLng: place.lon
         }))
