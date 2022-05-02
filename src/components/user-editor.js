@@ -40,7 +40,6 @@ const UserEditor = (props) => {
     },[]);
 
 
-
     function getLocation(event) {
       event.preventDefault();
       if (!navigator.geolocation) {
@@ -64,7 +63,7 @@ const UserEditor = (props) => {
         }, () => {
           setUser(prevUser => ({
             ...prevUser,
-            status: "We couldn't locate you. Are you missing?."
+            status: "We couldn't locate you. Are you missing?"
           }))
         });
       }
@@ -273,8 +272,12 @@ const UserEditor = (props) => {
             </div>
 
             <div className="form-item">
-              Email<br/>
-              {user.email}
+            <label htmlFor="email">Email</label><br/> 
+              <input
+                name="email"
+                disabled
+                value={user.email}
+              />
               <div className="tiny-note">To change your email address, sign in with another Google account.</div>
             </div>
 

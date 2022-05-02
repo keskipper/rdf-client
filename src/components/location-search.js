@@ -5,7 +5,7 @@ import PlaceListItem from './place-list-item';
 
 function LocationSearch(props) {
     const [ place, setPlace ] = useState({
-        venueName: "",
+        venueName: props.venueName,
         rendered: 0,
         placeList: []
     })
@@ -72,7 +72,7 @@ function LocationSearch(props) {
             />
         </div>
 
-        <div className="form-item">
+        <div className="locations-list">
             {place.placeList.map(p => (
                 <PlaceListItem
                   key={p.place_id}

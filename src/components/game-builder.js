@@ -264,7 +264,7 @@ function GameBuilder(props) {
               />
             </div>
 
-            <LocationSearch passPlace={passPlace} />
+            <LocationSearch passPlace={passPlace} venueName={game.venueName} />
 
             <div className="form-item">
             <label htmlFor="address1">Address 1</label><br/>

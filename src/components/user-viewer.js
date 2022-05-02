@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import UserEditor from './user-editor';
 import player from '../static/player.jpg';
+import ReverseGeocoder from './reverse-geocoder';
 
 const UserViewer = (props) => {
     const [ viewer, setViewer ] = useState({
@@ -12,7 +13,7 @@ const UserViewer = (props) => {
         editMode: props.editMode,
         userLocString: ""
     })
-
+    
 
     function toggleEditMode() {
         setViewer(prevViewer => ({
@@ -109,13 +110,14 @@ const UserViewer = (props) => {
                         {viewer.user.phone}
                     </div>
                     <div className="user-view-item">
-                        {viewer.user.location}
+                        <ReverseGeocoder lat={viewer.user.userLat} lng={viewer.user.userLng} />
                     </div>
                 </div>
             </div>
 
-            <div className="user-view-item">
-                <button className="btn btn-theme" onClick={toggleEditMode}>Edit Profile</button>
+            <div className="user-view-buttons">
+                <div><button className="btn btn-theme" onClick={toggleEditMode}>Edit Profile</button>&nbsp;&nbsp;&nbsp;
+                <button className="btn btn-theme" onClick={props.toggleUserProfile}>Close</button></div>
             </div>
         </div>
 

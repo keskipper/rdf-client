@@ -11,7 +11,6 @@ function ReverseGeocoder(props) {
     const lng = props.lng;
     const endpoint = "https://us1.locationiq.com/v1/reverse.php?key=pk.cdd03354d0919d4f569728b50bfb3552&lat="+lat+"&lon="+lng+"&format=json";
 
-
     const getCommonName = () => {
         axios({
             method: verb,
@@ -29,14 +28,13 @@ function ReverseGeocoder(props) {
         if((lat && lng) && (lat != "00.0000") && (lng != "00.0000")){
             getCommonName();
         }
-
     }, [])
 
   return (
     <div>
         {address.locString
-        ? '('+address.locString+')'
-        : '(Error getting location name.)'
+        ? address.locString
+        : 'Error getting location name.'
         }
     </div>
   )

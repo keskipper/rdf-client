@@ -6,7 +6,7 @@ function PlaceListItem(props) {
     }
 
   return (
-    <div onClick={selectPlace}>
+    <div onClick={selectPlace} className="place-list-item">
         {props.place.address.name} ({props.place.address.road}, {props.place.address.city}, {props.place.address.state} {props.place.address.postcode})
     </div>
   )

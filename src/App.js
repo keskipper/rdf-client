@@ -51,21 +51,17 @@ export default class App extends Component {
         }
       ).then(response => {
         if(response.data.message === "NOTFOUND") {
-          console.log("user not found");
-          //open user profile creation component
           this.setState({
             userExists: false,
             userProfileVisible: true
           })
         } else {
-          console.log("User id", response.data.id, "with email", this.state.email, "logged in.");
-          //open game search component
+          //console.log("User id", response.data.id, "with email", this.state.email, "logged in.");          
           this.setState({
             userExists: true,
             user: response.data
           })
-        }
-        
+        } 
       }).catch(error => {
         console.log("Error in App.js handleSuccessfulLogin(): ", error)
       })
