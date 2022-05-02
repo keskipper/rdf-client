@@ -7,7 +7,8 @@ function LocationSearch(props) {
     const [ place, setPlace ] = useState({
         venueName: props.venueName,
         rendered: 0,
-        placeList: []
+        placeList: [],
+        show: false
     })
 
 
@@ -48,7 +49,8 @@ function LocationSearch(props) {
     function selectPlace(place){
         setPlace(prevPlace => ({
             ...prevPlace,
-            venueName: place.address.name
+            venueName: place.address.name,
+            show: false
         }));
         props.passPlace(place);
     }
@@ -62,7 +64,7 @@ function LocationSearch(props) {
             <input 
                 role="presentation"
                 onChange={(event) => {setPlace(prevPlace => ({
-                    ...prevPlace, venueName: event.target.value
+                    ...prevPlace, venueName: event.target.value, show: true
                 }))}} 
                 type="text"
                 name="venueName"
@@ -72,7 +74,7 @@ function LocationSearch(props) {
             />
         </div>
 
-        <div className="locations-list">
+        <div className="locations-list" style={{ display: place.show? "block" : "none" }}>
             {place.placeList.map(p => (
                 <PlaceListItem
                   key={p.place_id}
