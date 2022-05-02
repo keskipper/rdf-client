@@ -24,15 +24,16 @@ export default class App extends Component {
       userExists: false,
       userProfileVisible: false,
       user: {},
-      createMode: false
+      createMode: false,
+      gameToEdit: {}
     }
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
     this.handleUnsuccessfulLogin = this.handleUnsuccessfulLogin.bind(this);
     this.handleSuccessfulLogout = this.handleSuccessfulLogout.bind(this);
-    this.showUserProfile = this.showUserProfile.bind(this);
-    this.hideUserProfile = this.hideUserProfile.bind(this);
+    this.toggleUserProfile = this.toggleUserProfile.bind(this);
     this.toggleCreateMode = this.toggleCreateMode.bind(this);
+    this.editGame = this.editGame.bind(this);
   }
 
   handleSuccessfulLogin(email) {
@@ -84,19 +85,21 @@ export default class App extends Component {
     })
   }
 
-  showUserProfile(){
-    this.setState({ userProfileVisible: true })
-  }
-
-  hideUserProfile(){
-    this.setState({ userProfileVisible: false })
+  toggleUserProfile(){
+    let newMode = !this.state.userProfileVisible;
+    this.setState({ userProfileVisible: newMode });
   }
 
   toggleCreateMode(){
     let newMode = !this.state.createMode;
-    this.setState({ createMode: newMode })
+    this.setState({ createMode: newMode });
   }
 
+  editGame(props){
+    this.setState({ gameToEdit: props }, () => {
+      this.toggleCreateMode();
+    })
+  }
 
   render() {
 
@@ -109,8 +112,7 @@ export default class App extends Component {
               email={this.state.email}
               userExists={this.state.userExists}
               user={this.state.user}
-              showUserProfile={this.showUserProfile}
-              hideUserProfile={this.hideUserProfile}
+              toggleUserProfile={this.toggleUserProfile}
               handleSuccessfulLogout={this.handleSuccessfulLogout}
             />
           </div>
@@ -122,10 +124,13 @@ export default class App extends Component {
             toggleCreateMode={this.toggleCreateMode}            
             userLat={this.state.user.userLat}
             userLng={this.state.user.userLng}
+            userId={this.state.user.id}
+            editGame={this.editGame}
           />
           : <GameBuilder 
             userId={this.state.user.id}
             toggleCreateMode={this.toggleCreateMode}
+            gameToEdit={this.state.gameToEdit}
           />
           }
 
@@ -143,8 +148,7 @@ export default class App extends Component {
           userProfileVisible={this.state.userProfileVisible}
           handleSuccessfulLogin={this.handleSuccessfulLogin}
           handleSuccessfulLogout={this.handleSuccessfulLogout}
-          showUserProfile={this.showUserProfile}
-          hideUserProfile={this.hideUserProfile}
+          toggleUserProfile={this.toggleUserProfile}
         />
 
         <div className="home-wrapper">

@@ -166,7 +166,7 @@ const UserEditor = (props) => {
             currentUser: {}
           })
           props.handleSuccessfulLogout();
-          props.hideUserProfile();
+          props.toggleUserProfile();
         }
       }).catch(error => {
           console.log("error in handleSubmit(): ", error.response.data)

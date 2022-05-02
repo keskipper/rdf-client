@@ -26,7 +26,6 @@ function GameSearch(props) {
         "orderField": games.orderBy
       }
     }).then(response => {
-      //console.log(response.data);
       setGames(prevGames => ({
         ...prevGames,
         gameItems: response.data
@@ -81,6 +80,9 @@ function GameSearch(props) {
             <GameSearchItem
               key={g.id}
               game={g}
+              userId={props.userId}
+              toggleCreateMode={props.toggleCreateMode}
+              editGame={props.editGame}
             />
           ))} 
       </div>

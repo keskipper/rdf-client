@@ -62,8 +62,7 @@ const UserViewer = (props) => {
             email={viewer.email}
             userExists={viewer.userExists}
             user={viewer.user}
-            showUserProfile={props.showUserProfile}
-            hideUserProfile={props.hideUserProfile}
+            toggleUserProfile={props.toggleUserProfile}
             toggleEditMode={toggleEditMode}
             hideEditor={hideEditor}
             updateViewerUser={updateViewerUser}

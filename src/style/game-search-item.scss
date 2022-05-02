@@ -10,6 +10,9 @@
 
         .game-search-left {
             padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
 
             img {
                 width: 100px;

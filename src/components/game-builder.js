@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function GameBuilder(props) {
     const [ game, setGame ] = useState({
+        id: "",
         title: "",
         description: "",
         gameLat: "",
@@ -15,11 +16,43 @@ function GameBuilder(props) {
         venueName: "",
         date: "",
         time: "",
-        organizer: "",
+        organizer: props.userId,
         hostingLeague: "",
-        gameGender: "e",
-        gameInDatabase: false
+        gameGender: "expansive",
+        gameInDatabase: false,
+        currentGame: props.gameToEdit,
+        errorText: ""
       })
+
+
+
+      useEffect(() => {        
+        if(game.currentGame) {
+
+          let date = game.currentGame.date.substring(0, 10);
+          let time = game.currentGame.date.substring(11, 19);
+
+          setGame(prevGame => ({
+            ...prevGame,
+            id: game.currentGame.id,
+            title: game.currentGame.title,
+            description: game.currentGame.description,
+            gameLat: game.currentGame.gameLat,
+            gameLng: game.currentGame.gameLng,
+            address1: game.currentGame.address1,
+            address2: game.currentGame.address2,
+            city: game.currentGame.city,
+            state: game.currentGame.state,
+            zip: game.currentGame.zip,
+            venueName: game.currentGame.venueName,
+            date: date,
+            time: time,
+            hostingLeague: game.currentGame.hostingLeague,
+            gameGender: game.currentGame.gameGender,
+            gameInDatabase: true
+          }))   
+        }
+      },[]);
 
 
 
@@ -41,9 +74,8 @@ function GameBuilder(props) {
           "date": dateTime,
           "organizer": props.userId,
           "hostingLeague": game.hostingLeague,
-          "gameGender": game.gameGender || "e",
+          "gameGender": game.gameGender || "expansive",
         }
-  
         return bodyObj;
       }
 
@@ -55,14 +87,15 @@ function GameBuilder(props) {
         let verb = "";
         let url = "http://localhost:8080/api/games/";
 
-        if(props.gameInDatabase){ 
+        if(game.gameInDatabase){ 
           verb = "PUT";
-          // url = `http://localhost:8080/api/games/${IDIDID}`;
+          url = `http://localhost:8080/api/games/${game.id}`;
         }
-        if(!props.gameInDatabase){
+        if(!game.gameInDatabase){
           verb = "POST";
         }
 
+        console.log("verb:", verb);
 
         axios({
           method: verb,
@@ -94,6 +127,10 @@ function GameBuilder(props) {
           }
         }).catch(error => {
             console.log("error in game-builder handleSubmit(): ", error.response.data)
+            setGame(prevGame => ({
+              ...prevGame,
+              errorText: error.response.data.message
+            }))
         });
       }
 
@@ -166,7 +203,7 @@ function GameBuilder(props) {
                 }))}} 
                 name="gameGender"
                 required
-                value={game.game} >
+                value={game.gameGender} >
                   <option value="">Select one</option>
                   <option value="female">female</option>
                   <option value="male">male</option>
@@ -284,6 +321,10 @@ function GameBuilder(props) {
                 maxLength={5}
                 required
                 value={game.zip}/>
+            </div>
+
+            <div className="errorDisplay">
+                {game.errorText}
             </div>
             
 
