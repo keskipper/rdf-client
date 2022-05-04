@@ -8,14 +8,17 @@ function LocationSearch(props) {
         venueName: props.venueName,
         rendered: 0,
         placeList: [],
-        show: false
+        show: false,
+        timeOfLastSearch: Date.now()
     })
 
 
     function search(event){
         event.preventDefault();
+        let diff = Number(Date.now()) - Number(place.timeOfLastSearch);
 
-        if(place.venueName.length >= 3){
+        if(place.venueName.length >= 3 && diff > 1000){
+            setPlace(prevPlace => ({ ...prevPlace, timeOfLastSearch: Date.now() }))
             const endpoint = `https://api.locationiq.com/v1/autocomplete.php?key=pk.cdd03354d0919d4f569728b50bfb3552&q=${place.venueName}`;
 
             axios({

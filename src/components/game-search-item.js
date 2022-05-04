@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import helmet from '../static/helmet-icon.png';
@@ -7,7 +8,7 @@ function GameSearchItem(props) {
 
   function formatDate(datetime) {
     let localDate = new Date(datetime);
-    return localDate.toString().substring(0, 24);
+    return moment(localDate).format('ddd MMMM Do YYYY, h:mm a');
   }
 
   function triggerEdit(){

@@ -85,7 +85,7 @@ const UserViewer = (props) => {
 
             <div className="user-view-info">
                 <div className="user-view-left">
-                    <img src={player} />
+                    <img alt="roller derby player silhouette" src={player} />
                 </div>
 
                 <div className="user-view-right">
