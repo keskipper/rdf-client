@@ -39,7 +39,6 @@ const UserEditor = (props) => {
           userLng: user.currentUser.userLng
         }))   
       }
-      console.log(user.currentUser);
     },[]);
 
 

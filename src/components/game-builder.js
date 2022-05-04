@@ -22,6 +22,9 @@ function GameBuilder(props) {
         time: "",
         organizer: props.userId,
         hostingLeague: "",
+        timezoneOffset: "",
+        timezoneAbbr: "",
+        timezoneString: "",
         gameGender: "expansive",
         gameInDatabase: false,
         currentGame: props.gameToEdit,
@@ -29,11 +32,41 @@ function GameBuilder(props) {
       })
 
 
-      useEffect(() => {        
-        if(game.currentGame.id) {
 
-          let date = game.currentGame.date.substring(0, 10);
-          let time = game.currentGame.date.substring(11, 19);
+      function formatISODate(localeString){        
+        const splitDate = localeString.split("/");
+        let day = splitDate[0];
+        if(day.length < 2){ day = "0" + day }
+        let month = splitDate[1];
+        if(month.length < 2){ month = "0" + month }
+        let year = splitDate[2].substring(0,4);
+        return year + "-" + month + "-" +day;
+      }
+
+
+      function formatISOTime(localeString){
+        const splitTime = localeString.split(", ");
+        let time = splitTime[1];
+        let ampm = splitTime[1].substring(splitTime[1].length-2, splitTime[1].length);
+
+        if(time.length < 11){ time = "0" + time }
+        time = time.substring(0, 5);
+
+        if(ampm === "PM"){
+          let afternoonTime = Number(time.substring(0,2)) + 12;
+          afternoonTime = afternoonTime + time.substring(2, 5);          
+          return afternoonTime;
+        }
+        else { return time; }
+      }
+
+
+
+      useEffect(() => {
+        if(game.currentGame.id) {
+          const dateTime = new Date(game.currentGame.date).toLocaleString('en-US', { timeZone: game.currentGame.timezoneString });
+          let date = formatISODate(dateTime);
+          let time = formatISOTime(dateTime);
 
           setGame(prevGame => ({
             ...prevGame,
@@ -52,6 +85,9 @@ function GameBuilder(props) {
             time: time,
             hostingLeague: game.currentGame.hostingLeague,
             gameGender: game.currentGame.gameGender,
+            timezoneOffset: game.currentGame.timezoneOffset,
+            timezoneAbbr: game.currentGame.timezoneAbbr,
+            timezoneString: game.currentGame.timezoneString,
             gameInDatabase: true
           }))   
         }
@@ -60,8 +96,7 @@ function GameBuilder(props) {
 
       const buildBodyObject = () => {
         let bodyObj = "";
-        let tempTime = game.date + "T" + game.time;
-        let dateTime = new Date(tempTime).toUTCString();
+        let time = game.date + "T" + game.time;
 
         let state;
         if(game.state.length > 2){state = convertRegion(game.state, "TO_ABBREVIATED");}
@@ -80,10 +115,12 @@ function GameBuilder(props) {
           "state": state || "",
           "zip": game.zip || "",
           "venueName": game.venueName,
-          "date": dateTime,
           "organizer": props.userId,
           "hostingLeague": game.hostingLeague,
           "gameGender": game.gameGender || "expansive",
+          "timezoneOffset": game.timezoneOffset,
+          "timezoneAbbr": game.timezoneAbbr,
+          "timezoneString": game.timezoneString
         }
         return bodyObj;
       }
@@ -127,6 +164,9 @@ function GameBuilder(props) {
               time: "",
               hostingLeague: "",
               gameGender: "e",
+              timezoneOffset: "",
+              timezoneAbbr: "",
+              timezoneString: "",
               gameInDatabase: true
             })
             props.clearGame();
@@ -158,6 +198,17 @@ function GameBuilder(props) {
           gameLat: place.lat,
           gameLng: place.lon
         }))
+      }
+
+
+      function passTimezone(timezone){
+        setGame(prevGame => ({
+          ...prevGame,
+          timezoneOffset: timezone.offset_sec/3600,
+          timezoneAbbr: timezone.short_name,
+          timezoneString: timezone.name
+        }))
+        console.log("timezone:", timezone);
       }
 
 
@@ -254,7 +305,7 @@ function GameBuilder(props) {
             </div>
 
             <div className="form-item">
-              Time<br/>
+              Time ({game.timezoneAbbr})<br/>
               <input 
                   onChange={(event) => {setGame(prevGame => ({
                   ...prevGame, time: event.target.value
@@ -265,7 +316,7 @@ function GameBuilder(props) {
               />
             </div>
 
-            <LocationSearch passPlace={passPlace} venueName={game.venueName} />
+            <LocationSearch passPlace={passPlace} passTimezone={passTimezone} venueName={game.venueName} />
 
             <div className="form-item">
             <label htmlFor="address1">Address 1</label><br/>

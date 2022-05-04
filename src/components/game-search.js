@@ -105,7 +105,7 @@ function GameSearch(props) {
                     ...prevGames, miles: event.target.value
                   }))}} 
                   type="text"
-                  maxLength={3}
+                  maxLength={4}
                   name="miles"
                   value={games.miles}
                 />

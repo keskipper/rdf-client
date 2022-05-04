@@ -25,7 +25,6 @@ function LocationSearch(props) {
                 method: "get",
                 url: endpoint
             }).then(response => {
-                console.log(response.data);
                 setPlace(prevPlace => ({
                     ...prevPlace, placeList: response.data
                 }))
@@ -55,7 +54,23 @@ function LocationSearch(props) {
             venueName: place.address.name,
             show: false
         }));
+        getTimeZone(place.lat, place.lon);
         props.passPlace(place);
+    }
+
+
+
+    function getTimeZone(lat, lon){
+        const endpoint = `https://us1.locationiq.com/v1/timezone.php?key=pk.cdd03354d0919d4f569728b50bfb3552&lat=${lat}&lon=${lon}`;
+
+        axios({
+            method: "get",
+            url: endpoint
+        }).then(response => {
+            props.passTimezone(response.data.timezone);
+        }).catch(error => {
+            console.log("Error in LocationSearch getTimeZone(): ", error)
+        })
     }
 
 
