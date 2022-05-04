@@ -16,6 +16,7 @@ const UserEditor = (props) => {
       age: "",
       userLat: "",
       userLng: "",
+      birthdate: "",
       userInDatabase: props.userExists,
       currentUser: props.user,
       status: ""
@@ -33,10 +34,12 @@ const UserEditor = (props) => {
           jerseyNumber: user.currentUser.jerseyNumber,
           gender: user.currentUser.gender,
           age: user.currentUser.age,
+          birthdate: user.currentUser.birthdate,
           userLat: user.currentUser.userLat,
           userLng: user.currentUser.userLng
         }))   
       }
+      console.log(user.currentUser);
     },[]);
 
 
@@ -83,7 +86,8 @@ const UserEditor = (props) => {
         "gender": user.gender,
         "age": user.age,
         "userLat": user.userLat,
-        "userLng": user.userLng
+        "userLng": user.userLng,
+        "birthdate": user.birthdate
       }
 
       return bodyObj;
@@ -125,6 +129,7 @@ const UserEditor = (props) => {
             age: "",
             userLat: "",
             userLng: "",
+            birthdate: "",
             userInDatabase: true,
             userExists: true,
             currentUser: response.data
@@ -160,6 +165,7 @@ const UserEditor = (props) => {
             age: "",
             userLat: "",
             userLng: "",
+            birthdate: "",
             userInDatabase: false,
             userExists: false,
             currentUser: {}
@@ -257,18 +263,16 @@ const UserEditor = (props) => {
             </div>
 
             <div className="form-item">
-              <label htmlFor="age">Age</label><br/> 
+              <label htmlFor="birthdate">Birthdate</label><br/> 
               <input 
                 role="presentation"
                 onChange={(event) => {setUser(prevUser => ({
-                  ...prevUser, age: event.target.value
+                  ...prevUser, birthdate: event.target.value
                 }))}} 
-                type="text"
-                name="age"
-                placeholder="Age (required)"
-                maxLength={3}
+                type="date"
+                name="birthdate"
                 required
-                value={user.age}/>  
+                value={user.birthdate}/>  
             </div>
 
             <div className="form-item">

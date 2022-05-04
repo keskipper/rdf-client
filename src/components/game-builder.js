@@ -59,7 +59,8 @@ function GameBuilder(props) {
 
       const buildBodyObject = () => {
         let bodyObj = "";
-        let dateTime = game.date + "T" + game.time + "Z";
+        let tempTime = game.date + "T" + game.time;
+        let dateTime = new Date(tempTime).toUTCString();
 
         let state;
         if(game.state.length > 2){state = convertRegion(game.state, "TO_ABBREVIATED");}
@@ -83,7 +84,6 @@ function GameBuilder(props) {
           "hostingLeague": game.hostingLeague,
           "gameGender": game.gameGender || "expansive",
         }
-        console.log("bodyObj:", bodyObj);
         return bodyObj;
       }
 

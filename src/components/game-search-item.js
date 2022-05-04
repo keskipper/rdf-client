@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import helmet from '../static/helmet-icon.png';
@@ -7,7 +6,8 @@ import helmet from '../static/helmet-icon.png';
 function GameSearchItem(props) {
 
   function formatDate(datetime) {
-    return moment(datetime).utc().format('MMMM DD YYYY, h:mm a');
+    let localDate = new Date(datetime);
+    return localDate.toString().substring(0, 24);
   }
 
   function triggerEdit(){
@@ -39,7 +39,6 @@ function GameSearchItem(props) {
               <div className="game-search-info">
                 <div className="game-search-info-top">
                   {formatDate(props.game.date)}<br/>
-                  {props.game.date}
 
                 </div>
                   <div className="game-search-info-bottom">

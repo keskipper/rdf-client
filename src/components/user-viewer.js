@@ -107,7 +107,7 @@ const UserViewer = (props) => {
                         {viewer.user.email}
                         </div>
                     <div className="user-view-item">
-                        {viewer.user.phone}
+                        {viewer.user.phone.substring(0, 3)}-{viewer.user.phone.substring(3, 6)}-{viewer.user.phone.substring(6, 10)}
                     </div>
                     <div className="user-view-item">
                         <ReverseGeocoder lat={viewer.user.userLat} lng={viewer.user.userLng} />
