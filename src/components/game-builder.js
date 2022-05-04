@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import LocationSearch from './location-search';
 import convertRegion from '../helpers/convert-region';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 
 function GameBuilder(props) {
@@ -22,7 +23,6 @@ function GameBuilder(props) {
         time: "",
         organizer: props.userId,
         hostingLeague: "",
-        timezoneOffset: "",
         timezoneAbbr: "",
         timezoneString: "",
         gameGender: "expansive",
@@ -33,12 +33,12 @@ function GameBuilder(props) {
 
 
 
-      function formatISODate(localeString){        
+      function formatISODate(localeString){    
         const splitDate = localeString.split("/");
-        let day = splitDate[0];
-        if(day.length < 2){ day = "0" + day }
-        let month = splitDate[1];
+        let month = splitDate[0];
         if(month.length < 2){ month = "0" + month }
+        let day = splitDate[1];
+        if(day.length < 2){ day = "0" + day }
         let year = splitDate[2].substring(0,4);
         return year + "-" + month + "-" +day;
       }
@@ -52,7 +52,7 @@ function GameBuilder(props) {
         if(time.length < 11){ time = "0" + time }
         time = time.substring(0, 5);
 
-        if(ampm === "PM"){
+        if(ampm === "PM" && time.substring(0, 2) !== "12"){
           let afternoonTime = Number(time.substring(0,2)) + 12;
           afternoonTime = afternoonTime + time.substring(2, 5);          
           return afternoonTime;
@@ -85,7 +85,6 @@ function GameBuilder(props) {
             time: time,
             hostingLeague: game.currentGame.hostingLeague,
             gameGender: game.currentGame.gameGender,
-            timezoneOffset: game.currentGame.timezoneOffset,
             timezoneAbbr: game.currentGame.timezoneAbbr,
             timezoneString: game.currentGame.timezoneString,
             gameInDatabase: true
@@ -118,7 +117,6 @@ function GameBuilder(props) {
           "organizer": props.userId,
           "hostingLeague": game.hostingLeague,
           "gameGender": game.gameGender || "expansive",
-          "timezoneOffset": game.timezoneOffset,
           "timezoneAbbr": game.timezoneAbbr,
           "timezoneString": game.timezoneString
         }
@@ -164,7 +162,6 @@ function GameBuilder(props) {
               time: "",
               hostingLeague: "",
               gameGender: "e",
-              timezoneOffset: "",
               timezoneAbbr: "",
               timezoneString: "",
               gameInDatabase: true
@@ -204,11 +201,9 @@ function GameBuilder(props) {
       function passTimezone(timezone){
         setGame(prevGame => ({
           ...prevGame,
-          timezoneOffset: timezone.offset_sec/3600,
           timezoneAbbr: timezone.short_name,
           timezoneString: timezone.name
         }))
-        console.log("timezone:", timezone);
       }
 
 
@@ -218,8 +213,40 @@ function GameBuilder(props) {
       }
 
 
-      function handleDelete(){
+      function handleDelete(event){
+        event.preventDefault();
 
+        axios ({
+          method: "delete",
+          url: `http://localhost:8080/api/games/${game.id}`
+        }).then(response => {
+          if(response.status === 200) {
+            setGame({
+              id: "",
+              title: "",
+              description: "",
+              gameLat: "",
+              gameLng: "",
+              address1: "",
+              address2: "",
+              city: "",
+              state: "",
+              zip: "",
+              venueName: "",
+              date: "",
+              time: "",
+              hostingLeague: "",
+              gameGender: "e",
+              timezoneAbbr: "",
+              timezoneString: "",
+              gameInDatabase: false
+            })
+            props.clearGame();
+            props.toggleCreateMode();
+          }
+        }).catch(error => {
+          console.log("error in handleDelete(): ", error.message);
+        })
       }
 
 
@@ -423,7 +450,7 @@ function GameBuilder(props) {
                 <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="game-edit-form">Save Game</button>
                 <button onClick={handleCancel} type='button' className="btn btn-theme">Cancel</button>
                 {game.gameInDatabase
-                ? <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Game</button>
+                ? <button onClick={handleDelete} type='submit' form="none" className="btn btn-delete">Delete Game</button>
                 : <button type='button' className="btn btn-disabled">Delete Game</button>
                 }
               </div>

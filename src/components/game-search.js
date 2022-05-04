@@ -105,7 +105,7 @@ function GameSearch(props) {
                     ...prevGames, miles: event.target.value
                   }))}} 
                   type="text"
-                  maxLength={4}
+                  maxLength={3}
                   name="miles"
                   value={games.miles}
                 />
@@ -131,6 +131,7 @@ function GameSearch(props) {
 
 
         <h2>Search results</h2>
+        {games.status}
         <div className="search-results">          
             {games.gameItems.length > 0 
               ? searchResults()
