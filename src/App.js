@@ -108,7 +108,7 @@ export default class App extends Component {
 
   setStatus(newStatus){
     this.setState({ status: newStatus, showStatus: true });
-    setTimeout(() => this.resetStatus(), 10000);
+    setTimeout(() => this.resetStatus(), 7000);
   }
 
   resetStatus(){
