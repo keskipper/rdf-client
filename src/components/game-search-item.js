@@ -46,7 +46,7 @@ function GameSearchItem(props) {
                 </div>
                   <div className="game-search-info-bottom">
                     {props.game.rosterOpen ?
-                      <div className="open">Roster space open (gender: {props.game.gameGender})</div>
+                      <div className="open">Roster space open to {props.game.adult}s (gender: {props.game.gameGender})</div>
                       :
                       <div className="closed">Roster space closed</div>
                     }

@@ -25,7 +25,9 @@ export default class App extends Component {
       userProfileVisible: false,
       user: {},
       createMode: false,
-      gameToEdit: {}
+      gameToEdit: {},
+      status: "status",
+      showStatus: false
     }
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
@@ -35,6 +37,8 @@ export default class App extends Component {
     this.toggleCreateMode = this.toggleCreateMode.bind(this);
     this.editGame = this.editGame.bind(this);
     this.clearGame = this.clearGame.bind(this);
+    this.setStatus = this.setStatus.bind(this);
+    this.resetStatus = this.resetStatus.bind(this);
   }
 
   handleSuccessfulLogin(email) {
@@ -102,6 +106,15 @@ export default class App extends Component {
     this.setState({ gameToEdit: {} })
   }
 
+  setStatus(newStatus){
+    this.setState({ status: newStatus, showStatus: true });
+    setTimeout(() => this.resetStatus(), 10000);
+  }
+
+  resetStatus(){
+    this.setState({ status: "", showStatus: false });
+  }
+
   render() {
 
     const contentManager = () => {      
@@ -127,12 +140,16 @@ export default class App extends Component {
             userLng={this.state.user.userLng}
             userId={this.state.user.id}
             editGame={this.editGame}
+            status={this.state.status}
+            setStatus={this.setStatus}
+            showStatus={this.state.showStatus}
           />
           : <GameBuilder 
             userId={this.state.user.id}
             toggleCreateMode={this.toggleCreateMode}
             gameToEdit={this.state.gameToEdit}
             clearGame={this.clearGame}
+            setStatus={this.setStatus}
           />
           }
 

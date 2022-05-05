@@ -7,6 +7,10 @@
     flex-direction: column;
     align-items: center;
 
+    .form-item-group {
+        display: flex;
+    }
+
     .form-item {
         margin: 5px;
         padding: 3px;

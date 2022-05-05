@@ -8,6 +8,7 @@ import ReverseGeocoder from './reverse-geocoder';
 function GameSearch(props) {
   const [ games, setGames ] = useState({
     gameItems: [],
+    adult: "adult",
     miles: 50,
     orderBy: "date",
     rendered: 0
@@ -16,10 +17,12 @@ function GameSearch(props) {
 
   function getGames(event) {
     event.preventDefault();
+    
     axios({
       method: "post",
       url: "http://localhost:8080/api/games/limitbydistance",
       data: {
+        "adult": games.adult,
         "miles": games.miles,
         "userLat": props.userLat,
         "userLng": props.userLng,
@@ -98,7 +101,21 @@ function GameSearch(props) {
 
             <h1>Find games!</h1>
             <form id="game-search">
-              <div>
+              <div className="search-line">
+                for &nbsp;
+                <select 
+                    onChange={(event) => {setGames(prevGames => ({
+                      ...prevGames, adult: event.target.value
+                    }))}} 
+                    name="adult"
+                    value={games.adult} >
+                      <option value="adult">adult</option>
+                      <option value="junior">junior</option>
+                  </select>
+                &nbsp;skaters
+              </div>
+
+              <div className="search-line">
                 within&nbsp;
                 <input
                   onChange={(event) => {setGames(prevGames => ({
@@ -131,7 +148,7 @@ function GameSearch(props) {
 
 
         <h2>Search results</h2>
-        {games.status}
+        <div className="status" style={{ display: props.showStatus? "block" : "none" }}>{props.status}</div>
         <div className="search-results">          
             {games.gameItems.length > 0 
               ? searchResults()

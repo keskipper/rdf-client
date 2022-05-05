@@ -25,6 +25,7 @@ function GameBuilder(props) {
         hostingLeague: "",
         timezoneAbbr: "",
         timezoneString: "",
+        adult: "adult",
         gameGender: "expansive",
         gameInDatabase: false,
         currentGame: props.gameToEdit,
@@ -87,6 +88,7 @@ function GameBuilder(props) {
             gameGender: game.currentGame.gameGender,
             timezoneAbbr: game.currentGame.timezoneAbbr,
             timezoneString: game.currentGame.timezoneString,
+            adult: game.currentGame.adult,
             gameInDatabase: true
           }))   
         }
@@ -95,7 +97,7 @@ function GameBuilder(props) {
 
       const buildBodyObject = () => {
         let bodyObj = "";
-        let time = game.date + "T" + game.time;
+        let date = game.date + "T" + game.time;
 
         let state;
         if(game.state.length > 2){state = convertRegion(game.state, "TO_ABBREVIATED");}
@@ -113,12 +115,14 @@ function GameBuilder(props) {
           "city": game.city || "",
           "state": state || "",
           "zip": game.zip || "",
+          "date": date,
           "venueName": game.venueName,
           "organizer": props.userId,
           "hostingLeague": game.hostingLeague,
           "gameGender": game.gameGender || "expansive",
           "timezoneAbbr": game.timezoneAbbr,
-          "timezoneString": game.timezoneString
+          "timezoneString": game.timezoneString,
+          "adult": game.adult
         }
         return bodyObj;
       }
@@ -161,9 +165,10 @@ function GameBuilder(props) {
               date: "",
               time: "",
               hostingLeague: "",
-              gameGender: "e",
+              gameGender: "expansive",
               timezoneAbbr: "",
               timezoneString: "",
+              adult: "adult",
               gameInDatabase: true
             })
             props.clearGame();
@@ -236,13 +241,15 @@ function GameBuilder(props) {
               date: "",
               time: "",
               hostingLeague: "",
-              gameGender: "e",
+              gameGender: "expansive",
               timezoneAbbr: "",
               timezoneString: "",
+              adult: "adult",
               gameInDatabase: false
             })
             props.clearGame();
             props.toggleCreateMode();
+            props.setStatus("Game successfully deleted.");
           }
         }).catch(error => {
           console.log("error in handleDelete(): ", error.message);
@@ -282,7 +289,7 @@ function GameBuilder(props) {
                 onChange={(event) => {setGame(prevGame => ({
                   ...prevGame, description: event.target.value
                 }))}} 
-                type="textbox"
+                type="textarea"
                 name="description"
                 placeholder="Game description (required)"
                 maxLength={500}
@@ -304,19 +311,35 @@ function GameBuilder(props) {
                 value={game.hostingLeague}/>  
             </div>
 
-            <div className="form-item">
-            <label htmlFor="gameGender">Gender</label><br/>
-              <select 
-                onChange={(event) => {setGame(prevGame => ({
-                  ...prevGame, gameGender: event.target.value
-                }))}} 
-                name="gameGender"
-                required
-                value={game.gameGender} >
-                  <option value="female">female</option>
-                  <option value="male">male</option>
-                  <option value="expansive">expansive</option>
-              </select>
+            <div className="form-item-group">
+              <div className="form-item">
+                  <label htmlFor="gameGender">Gender</label><br/>
+                  <select 
+                    onChange={(event) => {setGame(prevGame => ({
+                      ...prevGame, gameGender: event.target.value
+                    }))}} 
+                    name="gameGender"
+                    required
+                    value={game.gameGender} >
+                      <option value="female">female</option>
+                      <option value="male">male</option>
+                      <option value="expansive">expansive</option>
+                  </select>
+                </div>
+
+                <div className="form-item">
+                  <label htmlFor="adult">Age</label><br/>
+                  <select 
+                    onChange={(event) => {setGame(prevGame => ({
+                      ...prevGame, adult: event.target.value
+                    }))}} 
+                    name="adult"
+                    required
+                    value={game.adult} >
+                      <option value="adult">adult</option>
+                      <option value="junior">junior</option>
+                  </select>
+              </div>
             </div>
 
             <div className="form-item">
