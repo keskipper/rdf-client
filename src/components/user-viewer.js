@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 
 import UserEditor from './user-editor';
 import player from '../static/player.jpg';
@@ -73,6 +74,11 @@ const UserViewer = (props) => {
     }
 
 
+    function calculateAge(birthdate){
+        return moment().diff(moment(birthdate, 'YYYYMMDD'), 'years');
+    }
+
+
 
   return (
     <div className="user-view">
@@ -98,7 +104,7 @@ const UserViewer = (props) => {
                         {viewer.user.firstName} {viewer.user.lastName}
                     </div>
                     <div className="user-view-item">
-                        {viewer.user.age} years old
+                        {calculateAge(viewer.user.birthdate)} years old
                     </div>
                     <div className="user-view-item">
                         {viewer.user.gender}

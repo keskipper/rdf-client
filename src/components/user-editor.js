@@ -34,7 +34,7 @@ const UserEditor = (props) => {
           jerseyNumber: user.currentUser.jerseyNumber,
           gender: user.currentUser.gender,
           age: user.currentUser.age,
-          birthdate: user.currentUser.birthdate,
+          birthdate: user.currentUser.birthdate.substring(0, 10),
           userLat: user.currentUser.userLat,
           userLng: user.currentUser.userLng
         }))   
