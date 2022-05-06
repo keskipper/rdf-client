@@ -29,20 +29,19 @@ function ProfileGameDisplay(props) {
           url: url,
           data: data
         }).then(response => {
-            console.log(response.data);
           setGames(prevGames => ({
             ...prevGames,
             gameItems: response.data
           }))
         }).catch(error => {
-          console.log("error in profile-game-display getGames(): ", error.response.data)
+          console.log("error in profile-game-display getGames(): ", error)
         });
-      }
+    }
 
 
-      useEffect(() => {
-            getGames(window.event);
-      }, [])
+    useEffect(() => {
+        getGames(window.event);
+    }, [])
 
 
 

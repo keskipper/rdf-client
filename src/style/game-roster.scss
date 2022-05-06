@@ -1,0 +1,33 @@
+.game-roster-wrapper {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .game-roster-container {
+        
+        .roster-line {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            background-color: $lightestyellow;
+            padding: 5px;
+            border: 1px solid white;
+
+            .one {
+                grid-column-start: 1;
+            }
+
+            .two {
+                grid-column-start: 2;
+            }
+
+            .three {
+                grid-column-start: 3;
+            }
+
+            .four {
+                grid-column-start: 4;
+            }
+        }
+    }
+}

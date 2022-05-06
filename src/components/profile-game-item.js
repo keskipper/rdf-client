@@ -1,5 +1,4 @@
 import React from 'react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ProfileGameItem(props) {
 
@@ -16,13 +15,12 @@ function ProfileGameItem(props) {
     }
 
   return (
-    <div className="profile-game-item-wrapper">
+    <div className="profile-game-item-wrapper" onClick={triggerEdit}>
         <div className="profile-game-item">
             
-            <div><button onClick={triggerEdit} type='button' className="btn btn-theme"><FontAwesomeIcon icon="fa-solid fa-pen-to-square" /></button></div>
             <div>
-                <div className="info">{props.game.title}</div>
-                <div className="info">{formatDate(props.game.date)}</div>
+                <div className="info info-top">{props.game.title}</div>
+                <div className="info info-bottom">{formatDate(props.game.date)}</div>
             </div>
 
         </div>

@@ -1,20 +1,28 @@
 .profile-game-item-wrapper {
-    padding: 15px 25px 15px 25px;
+    padding: 15px 50px 15px 50px;
+    margin: 5px;
     background-color: $lightestyellow;
-    border: 2px solid white;
+    border-top: 2px solid $yellow;
+    border-bottom: 2px solid $yellow;
     border-radius: 5px;
+
+    &:hover {
+        cursor: pointer;
+        box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.5);
+        transition: 0.5s ease-in-out;
+    }
 
     .profile-game-item {
         display: flex;
-        justify-content: space-between;
+        justify-content: left;
         align-items: center;
-
-        button {
-            margin-right: 10px;
-        }
         
         .info {
             padding: 2px;
+        }
+
+        .info-top {
+            font-weight: 700;
         }
     }
 }

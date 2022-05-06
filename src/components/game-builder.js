@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import LocationSearch from './location-search';
 import convertRegion from '../helpers/convert-region';
+import GameRoster from './game-roster';
 
 
 function GameBuilder(props) {
@@ -497,8 +498,13 @@ function GameBuilder(props) {
               
             </div>
           </form>
-
+            <div> 
+                {game.gameInDatabase
+                ? <GameRoster id={game.id} />
+                : null}
+            </div>
         </div>
+        
       </div>
 
     </div>
