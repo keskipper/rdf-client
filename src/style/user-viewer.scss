@@ -3,7 +3,7 @@
     flex-direction: column;
     width: 50vw;
     padding: 10px;
-    height: 100vh;
+    min-height: 100vh;
 
     .user-view-wrapper {
         display: flex;
@@ -29,6 +29,31 @@
 
             h2 {
                 margin-left: 0;
+            }
+        }
+
+        .my-games-wrapper {
+            padding-top: 25px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .my-games-list {
+                width: 100%;
+                display: flex;
+                justify-content: space-evenly;
+            }
+
+            .my-games-layout {
+                display: flex;
+                width: 100%;
+
+                .my-games-list {
+                    display: flex;
+                    margin: 5px 25px 5px 25px;
+                    
+                }
             }
         }
     }

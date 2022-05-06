@@ -1,5 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from 'react-router-dom';
+
 import Login from './login';
 import Logout from './logout';
 
@@ -9,7 +11,9 @@ function Navigation(props) {
 
 const navigationManager = () => {
     if(props.loggedInStatus === "LOGGED_IN" && props.userProfileVisible === false) {
-            return <button className="btn btn-theme" onClick={props.toggleUserProfile}><FontAwesomeIcon icon="fa-user" /> Profile</button>
+            return (
+                <button className="btn btn-theme" onClick={props.toggleUserProfile}><FontAwesomeIcon icon="fa-user" /> Profile</button>
+            )
         } else if(props.loggedInStatus === "LOGGED_IN" && props.userProfileVisible === true){
             return <button className="btn btn-theme" onClick={props.toggleUserProfile}>Hide Profile</button>
         } else if(props.loggedInStatus === "NOT_LOGGED IN") {
@@ -21,7 +25,9 @@ const navigationManager = () => {
     <div className="navigation-wrapper">
         <div className="navigation-left">
             <div className="navigation-item">
-                <img src={skate} alt="rollerskate logo" />
+                <Link to='/'>
+                    <img src={skate} alt="rollerskate logo" />
+                </Link>
             </div>
         </div>
 

@@ -5,6 +5,7 @@ import moment from 'moment';
 import UserEditor from './user-editor';
 import player from '../static/player.jpg';
 import ReverseGeocoder from './reverse-geocoder';
+import ProfileGameDisplay from './profile-game-display';
 
 const UserViewer = (props) => {
     const [ viewer, setViewer ] = useState({
@@ -83,8 +84,9 @@ const UserViewer = (props) => {
   return (
     <div className="user-view">
         <div className="user-view-wrapper">
+            <h1>Player Profile</h1>
             <div className="user-view-item">
-                <h1>Player Profile</h1>
+                
             </div>
 
 
@@ -124,6 +126,30 @@ const UserViewer = (props) => {
             <div className="user-view-buttons">
                 <div><button className="btn btn-theme" onClick={toggleEditMode}>Edit Profile</button>&nbsp;&nbsp;&nbsp;
                 <button className="btn btn-theme" onClick={props.toggleUserProfile}>Close</button></div>
+            </div>
+
+
+            <div className="my-games-wrapper">
+                <h1>My Games</h1>
+                <div className="my-games-layout">
+                    <div className="my-games-list">
+                        <div className="center">
+                            <ProfileGameDisplay 
+                            userType="organizer" 
+                            userId={viewer.user.id}
+                            editGame={props.editGame}
+                            />
+                        </div>
+
+                        <div className="center">
+                            <ProfileGameDisplay 
+                            userType="skater" 
+                            userId={viewer.user.id}
+                            editGame={props.editGame}
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

@@ -41,6 +41,7 @@ export default class App extends Component {
     this.resetStatus = this.resetStatus.bind(this);
   }
 
+
   handleSuccessfulLogin(email) {
     this.setState({
       loggedInStatus: "LOGGED_IN",
@@ -97,7 +98,7 @@ export default class App extends Component {
   }
 
   editGame(props){
-    this.setState({ gameToEdit: props }, () => {
+    this.setState({ gameToEdit: props, userProfileVisible: false }, () => {
       this.toggleCreateMode();
     })
   }
@@ -128,6 +129,7 @@ export default class App extends Component {
               user={this.state.user}
               toggleUserProfile={this.toggleUserProfile}
               handleSuccessfulLogout={this.handleSuccessfulLogout}
+              editGame={this.editGame}
             />
           </div>
         )

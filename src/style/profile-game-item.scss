@@ -1,0 +1,20 @@
+.profile-game-item-wrapper {
+    padding: 15px 25px 15px 25px;
+    background-color: $lightestyellow;
+    border: 2px solid white;
+    border-radius: 5px;
+
+    .profile-game-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        button {
+            margin-right: 10px;
+        }
+        
+        .info {
+            padding: 2px;
+        }
+    }
+}

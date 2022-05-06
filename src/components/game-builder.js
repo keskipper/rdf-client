@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import LocationSearch from './location-search';
 import convertRegion from '../helpers/convert-region';
-import { faL } from '@fortawesome/free-solid-svg-icons';
 
 
 function GameBuilder(props) {
@@ -23,6 +22,7 @@ function GameBuilder(props) {
         time: "",
         organizer: props.userId,
         hostingLeague: "",
+        rosterOpen: "open",
         timezoneAbbr: "",
         timezoneString: "",
         adult: "adult",
@@ -85,6 +85,7 @@ function GameBuilder(props) {
             date: date,
             time: time,
             hostingLeague: game.currentGame.hostingLeague,
+            rosterOpen: game.currentGame.rosterOpen,
             gameGender: game.currentGame.gameGender,
             timezoneAbbr: game.currentGame.timezoneAbbr,
             timezoneString: game.currentGame.timezoneString,
@@ -119,6 +120,7 @@ function GameBuilder(props) {
           "venueName": game.venueName,
           "organizer": props.userId,
           "hostingLeague": game.hostingLeague,
+          "rosterOpen": game.rosterOpen,
           "gameGender": game.gameGender || "expansive",
           "timezoneAbbr": game.timezoneAbbr,
           "timezoneString": game.timezoneString,
@@ -165,6 +167,7 @@ function GameBuilder(props) {
               date: "",
               time: "",
               hostingLeague: "",
+              rosterOpen: "open",
               gameGender: "expansive",
               timezoneAbbr: "",
               timezoneString: "",
@@ -241,6 +244,7 @@ function GameBuilder(props) {
               date: "",
               time: "",
               hostingLeague: "",
+              rosterOpen: "open",
               gameGender: "expansive",
               timezoneAbbr: "",
               timezoneString: "",
@@ -325,9 +329,9 @@ function GameBuilder(props) {
                       <option value="male">male</option>
                       <option value="expansive">expansive</option>
                   </select>
-                </div>
+              </div>
 
-                <div className="form-item">
+              <div className="form-item">
                   <label htmlFor="adult">Age</label><br/>
                   <select 
                     onChange={(event) => {setGame(prevGame => ({
@@ -338,6 +342,19 @@ function GameBuilder(props) {
                     value={game.adult} >
                       <option value="adult">adult</option>
                       <option value="junior">junior</option>
+                  </select>
+              </div>
+
+              <div className="form-item">
+                  <label htmlFor="rosterOpen">Roster</label><br/>
+                  <select 
+                    onChange={(event) => {setGame(prevGame => ({
+                      ...prevGame, rosterOpen: event.target.value
+                    }))}} 
+                    name="rosterOpen"
+                    value={game.rosterOpen} >
+                      <option value="open">open</option>
+                      <option value="closed">closed</option>
                   </select>
               </div>
             </div>
