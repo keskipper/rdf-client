@@ -15,7 +15,7 @@
 
     .profile-game-item {
         display: flex;
-        justify-content: left;
+        justify-content: space-between;
         align-items: center;
         
         .info {
@@ -24,6 +24,11 @@
 
         .info-top {
             font-weight: 700;
+        }
+
+        img {
+            width: 40px;
+            margin: 3px;
         }
     }
 }

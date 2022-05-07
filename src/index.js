@@ -7,6 +7,7 @@ import {
   Route,
 } from "react-router-dom";
 import App from './App';
+import GameSearch from './components/game-search';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

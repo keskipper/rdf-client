@@ -1,5 +1,7 @@
 import React from 'react';
 
+import zebra from '../static/zebra.png';
+
 function ProfileGameItem(props) {
 
     function formatDate(datetime) {
@@ -22,7 +24,10 @@ function ProfileGameItem(props) {
                 <div className="info info-top">{props.game.title}</div>
                 <div className="info info-bottom">{formatDate(props.game.date)}</div>
             </div>
-
+            {props.game.skaterType === "official"
+            ? <img alt="zebra icon indicates skater is officiating" src={zebra} />
+            : null}
+            
         </div>
 
     </div>
