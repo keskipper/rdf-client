@@ -18,7 +18,8 @@ function ProfileGameDisplay(props) {
             url = "http://localhost:8080/api/games/findByOrganizer";
             data = { "organizer": props.userId }
         } else if(props.userType === "skater") {
-
+            url = "http://localhost:8080/api/games/findGamesWhereUserSkates";
+            data = { "email": props.email }
         } else {
             console.log("User type is not recognized.");
             return;
@@ -47,15 +48,14 @@ function ProfileGameDisplay(props) {
 
     function contentManager() {
         if(props.userType === "organizer") {
-
             return (
-                <div>
+                <div className="games-list">
                     <h3>I'm organizing</h3>
                     {games.gameItems.map(g => (
                         <ProfileGameItem
                         key={g.id}
                         game={g}
-                        editGame={props.editGame}
+                        handleClick={props.editGame}
                         />
                     ))} 
     
@@ -65,8 +65,8 @@ function ProfileGameDisplay(props) {
 
         if(props.userType === "skater") {
             return (
-                <div>
-                    <h3>I'm skating</h3>
+                <div className="games-list">
+                    <div><h3>I'm skating</h3></div>
                     {games.gameItems.map(g => (
                         <ProfileGameItem
                         key={g.id}
@@ -79,7 +79,7 @@ function ProfileGameDisplay(props) {
     }
 
   return (
-    <div>
+    <div className="center">
         {contentManager()}
     </div>
   )

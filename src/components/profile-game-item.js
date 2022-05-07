@@ -11,7 +11,7 @@ function ProfileGameItem(props) {
     }
 
     function triggerEdit(){
-        props.editGame(props.game);
+        props.handleClick(props.game);
     }
 
   return (

@@ -48,10 +48,13 @@
             .my-games-layout {
                 display: flex;
                 width: 100%;
+                margin: 5px 25px 5px 25px;
+                justify-content: space-around;
 
-                .my-games-list {
+                .games-list {
                     display: flex;
-                    margin: 5px 25px 5px 25px;
+                    flex-direction: column;
+                    align-items: center;
                     
                 }
             }

@@ -132,23 +132,22 @@ const UserViewer = (props) => {
             <div className="my-games-wrapper">
                 <h1>My Games</h1>
                 <div className="my-games-layout">
-                    <div className="my-games-list">
-                        <div className="center">
+                    
                             <ProfileGameDisplay 
                             userType="organizer" 
                             userId={viewer.user.id}
                             editGame={props.editGame}
                             />
-                        </div>
 
-                        <div className="center">
+
                             <ProfileGameDisplay 
                             userType="skater" 
+                            email={viewer.user.email}
                             userId={viewer.user.id}
                             editGame={props.editGame}
                             />
-                        </div>
-                    </div>
+                    
+                    
                 </div>
             </div>
         </div>
