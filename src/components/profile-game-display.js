@@ -58,7 +58,6 @@ function ProfileGameDisplay(props) {
                         handleClick={props.editGame}
                         />
                     ))} 
-    
                 </div>
             )
         }
@@ -66,7 +65,7 @@ function ProfileGameDisplay(props) {
         if(props.userType === "skater") {
             return (
                 <div className="games-list">
-                    <div><h3>I'm skating</h3></div>
+                    <h3>I'm skating</h3>
                     {games.gameItems.map(g => (
                         <ProfileGameItem
                         key={g.id}
