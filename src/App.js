@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Routes, Route, Outlet, Navigate } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 
 import Icons from './helpers/icons';
 import UserViewer from './components/user-viewer';
@@ -10,6 +10,7 @@ import Home from './components/home';
 import Footer from './components/footer';
 import Error404 from './components/error-404';
 import Game from './components/game';
+import UserEditor from './components/user-editor';
 import { withRouter } from './helpers/withRouter';
 
 import './style/main.scss';
@@ -39,7 +40,8 @@ class App extends Component {
     this.editGame = this.editGame.bind(this);
     this.clearGame = this.clearGame.bind(this);
     this.setStatus = this.setStatus.bind(this);
-    this.resetStatus = this.resetStatus.bind(this);    
+    this.resetStatus = this.resetStatus.bind(this);  
+    this.setUser = this.setUser.bind(this);  
   }
 
 
@@ -103,7 +105,10 @@ class App extends Component {
   resetStatus(){
     this.setState({ status: "", showStatus: false });
   }
-
+  
+  setUser(newUser){
+    this.setStatus({ user: newUser })
+  }
 
   render() {
 
@@ -114,6 +119,7 @@ class App extends Component {
           loggedInStatus={this.state.loggedInStatus}
           handleSuccessfulLogin={this.handleSuccessfulLogin}
           handleSuccessfulLogout={this.handleSuccessfulLogout}
+          user={this.state.user}
         />
 
 
@@ -151,7 +157,7 @@ class App extends Component {
                 />
                 } 
               />
-              <Route path="profile/*" element={
+              <Route path="profile" element={
                 <UserViewer
                   email={this.state.email}
                   userExists={this.state.userExists}
@@ -160,10 +166,19 @@ class App extends Component {
                 />
                 }
               />
+              <Route path="edit" element={
+                <UserEditor 
+                  email={this.state.email}
+                  userExists={this.state.userExists}
+                  user={this.state.user}
+                  setUser={this.setUser}
+                  />
+                  }
+              />
               <Route path="*" element={<Error404 />} />
             </Routes>
 
-            <Outlet />
+              <Outlet />
             
           </div>
         </div>

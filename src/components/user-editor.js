@@ -28,18 +28,33 @@ const UserEditor = (props) => {
 
     useEffect(() => {
       if(user.userInDatabase) {
-        setUser(prevUser => ({
-          ...prevUser,
-          firstName: user.currentUser.firstName,
-          lastName: user.currentUser.lastName,
-          derbyName: user.currentUser.derbyName,
-          phone: user.currentUser.phone,
-          jerseyNumber: user.currentUser.jerseyNumber,
-          gender: user.currentUser.gender,
-          birthdate: user.currentUser.birthdate.substring(0, 10),
-          userLat: user.currentUser.userLat,
-          userLng: user.currentUser.userLng
-        }))   
+        axios({
+          method: 'post',
+          url: "http://localhost:8080/api/users/email",
+          data: {
+            email: user.email
+          }
+        }
+      ).then(response => {
+        if(response.data.message === "NOTFOUND") {
+          console.log("user not found with email", user.email);
+        } else {
+          setUser(prevUser => ({
+            ...prevUser,
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            derbyName: response.data.derbyName,
+            phone: response.data.phone,
+            jerseyNumber: response.data.jerseyNumber,
+            gender: response.data.gender,
+            birthdate: response.data.birthdate.substring(0, 10),
+            userLat: response.data.userLat,
+            userLng: response.data.userLng
+          }))  
+        }
+      }).catch(error => {
+        console.log("Error in user-editor.js useEffect(): ", error)
+      })
       }
     },[]);
 
@@ -121,7 +136,6 @@ const UserEditor = (props) => {
             userExists: true,
             currentUser: response.data
           })
-          props.updateViewerUser(user.email);
           navigate("/profile");
         }
       }).catch(error => {

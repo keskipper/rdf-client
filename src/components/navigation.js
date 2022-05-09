@@ -11,17 +11,16 @@ function Navigation(props) {
 
 const navigationManager = () => {
     if(props.loggedInStatus === "LOGGED_IN") {
-            return (
-                <Link to="/profile">
-                <button className="btn btn-theme" onClick={props.toggleUserProfile}><FontAwesomeIcon icon="fa-user" /> Profile</button>
-                </Link>
-            )
-        } else if(props.loggedInStatus === "LOGGED_IN"){
-            return <button className="btn btn-theme" onClick={props.toggleUserProfile}>Hide Profile</button>
+        return (
+            <Link to="/profile">
+            <button className="btn btn-theme"><FontAwesomeIcon icon="fa-user" /> Profile</button>
+            </Link>
+        )
         } else if(props.loggedInStatus === "NOT_LOGGED IN") {
             return null;
         }
     }
+
 
   return (
     <div className="navigation-wrapper">
@@ -30,6 +29,11 @@ const navigationManager = () => {
                 <Link to='/'>
                     <img src={skate} alt="rollerskate logo" />
                 </Link>
+                <div className="nav-user">
+                    {props.user.id
+                    ? props.user.email
+                    : null}                    
+                </div>
             </div>
         </div>
 
