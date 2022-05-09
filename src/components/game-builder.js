@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import LocationSearch from './location-search';
 import convertRegion from '../helpers/convert-region';
@@ -7,6 +8,8 @@ import GameRoster from './game-roster';
 
 
 function GameBuilder(props) {
+    let navigate = useNavigate();
+
     const [ game, setGame ] = useState({
         id: "",
         title: "",
@@ -77,15 +80,15 @@ function GameBuilder(props) {
             description: game.currentGame.description,
             gameLat: game.currentGame.gameLat,
             gameLng: game.currentGame.gameLng,
-            address1: game.currentGame.address1,
-            address2: game.currentGame.address2,
-            city: game.currentGame.city,
-            state: game.currentGame.state,
-            zip: game.currentGame.zip,
-            venueName: game.currentGame.venueName,
+            address1: game.currentGame.address1 || "",
+            address2: game.currentGame.address2 || "",
+            city: game.currentGame.city || "",
+            state: game.currentGame.state || "",
+            zip: game.currentGame.zip || "",
+            venueName: game.currentGame.venueName || "",
             date: date,
             time: time,
-            hostingLeague: game.currentGame.hostingLeague,
+            hostingLeague: game.currentGame.hostingLeague || "",
             rosterOpen: game.currentGame.rosterOpen,
             gameGender: game.currentGame.gameGender,
             timezoneAbbr: game.currentGame.timezoneAbbr,
@@ -176,7 +179,6 @@ function GameBuilder(props) {
               gameInDatabase: true
             })
             props.clearGame();
-            props.toggleCreateMode();
           }
         }).catch(error => {
             console.log("error in game-builder handleSubmit(): ", error.response.data)
@@ -218,7 +220,7 @@ function GameBuilder(props) {
 
       function handleCancel(){
         props.clearGame();
-        props.toggleCreateMode();
+        navigate(-1);
       }
 
 
@@ -253,8 +255,8 @@ function GameBuilder(props) {
               gameInDatabase: false
             })
             props.clearGame();
-            props.toggleCreateMode();
             props.setStatus("Game successfully deleted.");
+            navigate("/");
           }
         }).catch(error => {
           console.log("error in handleDelete(): ", error.message);
@@ -489,7 +491,9 @@ function GameBuilder(props) {
             <div className="form-item">
               <div className="button-row">
                 <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="game-edit-form">Save Game</button>
+
                 <button onClick={handleCancel} type='button' className="btn btn-theme">Cancel</button>
+
                 {game.gameInDatabase
                 ? <button onClick={handleDelete} type='submit' form="none" className="btn btn-delete">Delete Game</button>
                 : <button type='button' className="btn btn-disabled">Delete Game</button>

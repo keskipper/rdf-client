@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import helmet from '../static/helmet-icon.png';
 
 function GameSearchItem(props) {
+  let navigate = useNavigate();
 
   function formatDate(datetime) {
     let date = new Date(datetime).toLocaleString('en-US', { timeZone: props.game.timezoneString });
@@ -13,8 +15,10 @@ function GameSearchItem(props) {
     return date;
   }
 
+
   function triggerEdit(){
     props.editGame(props.game);
+    navigate("/create");
   }
 
   

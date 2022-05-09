@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import { Routes, Route, useNavigate, Link } from 'react-router-dom';
 
 import UserEditor from './user-editor';
 import player from '../static/player.jpg';
@@ -8,21 +9,14 @@ import ReverseGeocoder from './reverse-geocoder';
 import ProfileGameDisplay from './profile-game-display';
 
 const UserViewer = (props) => {
+    let navigate = useNavigate();
+
     const [ viewer, setViewer ] = useState({
         user: props.user,
         email: props.email,
         userExists: props.userExists,
-        editMode: props.editMode,
         userLocString: ""
     })
-    
-
-    function toggleEditMode() {
-        setViewer(prevViewer => ({
-            ...prevViewer,
-            editMode: !prevViewer.editMode
-        }))
-    }
 
 
     function hideEditor() {
@@ -64,12 +58,8 @@ const UserViewer = (props) => {
             <UserEditor 
             email={viewer.email}
             userExists={viewer.userExists}
-            user={viewer.user}
-            toggleUserProfile={props.toggleUserProfile}
-            toggleEditMode={toggleEditMode}
-            hideEditor={hideEditor}
+            user={viewer.user}            
             updateViewerUser={updateViewerUser}
-            handleSuccessfulLogout={props.handleSuccessfulLogout}
             />
         )
     }
@@ -83,13 +73,20 @@ const UserViewer = (props) => {
 
   return (
     <div className="user-view">
+        <Routes>
+            <Route path="edit" element={
+                <UserEditor 
+                email={viewer.email}
+                userExists={viewer.userExists}
+                user={viewer.user}                
+                updateViewerUser={updateViewerUser}
+                />
+                }
+            />
+        </Routes>
+
         <div className="user-view-wrapper">
             <h1>Player Profile</h1>
-            <div className="user-view-item">
-                
-            </div>
-
-
 
             <div className="user-view-info">
                 <div className="user-view-left">
@@ -124,8 +121,13 @@ const UserViewer = (props) => {
             </div>
 
             <div className="user-view-buttons">
-                <div><button className="btn btn-theme" onClick={toggleEditMode}>Edit Profile</button>&nbsp;&nbsp;&nbsp;
-                <button className="btn btn-theme" onClick={props.toggleUserProfile}>Close</button></div>
+                <div>
+                    <Link to="edit">
+                    <button className="btn btn-theme">Edit Profile</button>
+                    </Link>
+                    &nbsp;&nbsp;&nbsp;
+                    <button className="btn btn-theme" onClick={() => {navigate("/")}}>Close</button>
+                </div>
             </div>
 
 

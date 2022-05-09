@@ -10,11 +10,13 @@ import skate from '../static/skate-wings.png'
 function Navigation(props) {
 
 const navigationManager = () => {
-    if(props.loggedInStatus === "LOGGED_IN" && props.userProfileVisible === false) {
+    if(props.loggedInStatus === "LOGGED_IN") {
             return (
+                <Link to="/profile">
                 <button className="btn btn-theme" onClick={props.toggleUserProfile}><FontAwesomeIcon icon="fa-user" /> Profile</button>
+                </Link>
             )
-        } else if(props.loggedInStatus === "LOGGED_IN" && props.userProfileVisible === true){
+        } else if(props.loggedInStatus === "LOGGED_IN"){
             return <button className="btn btn-theme" onClick={props.toggleUserProfile}>Hide Profile</button>
         } else if(props.loggedInStatus === "NOT_LOGGED IN") {
             return null;

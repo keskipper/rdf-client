@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import ReverseGeocoder from './reverse-geocoder';
 
 
 const UserEditor = (props) => {
+    let navigate = useNavigate();
+
     const [ user, setUser ] = useState({
       firstName: "",
       lastName: "",
@@ -13,7 +16,6 @@ const UserEditor = (props) => {
       phone: "",
       jerseyNumber: "",
       gender: "",
-      age: "",
       userLat: "",
       userLng: "",
       birthdate: "",
@@ -33,7 +35,6 @@ const UserEditor = (props) => {
           phone: user.currentUser.phone,
           jerseyNumber: user.currentUser.jerseyNumber,
           gender: user.currentUser.gender,
-          age: user.currentUser.age,
           birthdate: user.currentUser.birthdate.substring(0, 10),
           userLat: user.currentUser.userLat,
           userLng: user.currentUser.userLng
@@ -83,7 +84,6 @@ const UserEditor = (props) => {
         "email": user.email,
         "jerseyNumber": user.jerseyNumber,
         "gender": user.gender,
-        "age": user.age,
         "userLat": user.userLat,
         "userLng": user.userLng,
         "birthdate": user.birthdate
@@ -125,7 +125,6 @@ const UserEditor = (props) => {
             phone: "",
             jerseyNumber: "",
             gender: "",
-            age: "",
             userLat: "",
             userLng: "",
             birthdate: "",
@@ -133,7 +132,6 @@ const UserEditor = (props) => {
             userExists: true,
             currentUser: response.data
           })
-          props.hideEditor();
           props.updateViewerUser(user.email);
         }
       }).catch(error => {
@@ -161,7 +159,6 @@ const UserEditor = (props) => {
             phone: "",
             jerseyNumber: "",
             gender: "",
-            age: "",
             userLat: "",
             userLng: "",
             birthdate: "",
@@ -169,8 +166,7 @@ const UserEditor = (props) => {
             userExists: false,
             currentUser: {}
           })
-          props.handleSuccessfulLogout();
-          props.toggleUserProfile();
+          navigate("/");
         }
       }).catch(error => {
           console.log("error in handleSubmit(): ", error.response.data)
@@ -311,7 +307,9 @@ const UserEditor = (props) => {
 
             <div className="button-row">
               <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="user-edit-form">Save Profile</button>
-              <button onClick={props.toggleEditMode} type='submit' className="btn btn-theme">Cancel</button>
+
+              <button onClick={() => {navigate("/")}} type='submit' className="btn btn-theme">Cancel</button>
+
               {user.userInDatabase
               ? <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Profile</button>
               : <button type='button' className="btn btn-disabled">Delete Profile</button>

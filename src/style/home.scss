@@ -1,34 +1,29 @@
-.home-wrapper {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    background-color: $lightyellow;
-    width: 70vw;
-    align-items: center;
+.home {
+    margin-top: 10%;
+    height: 100vh;
 
-    .content {
+    .home-info {
         display: flex;
-        background-color: white;
-        width: 90%;
-        justify-content: center;
-    }
+        flex-direction: column;
+        align-items: center;
 
-    .home {
-        margin-top: 10%;
-        height: 100vh;
+        img {
+            width: 200px;
+        }
 
-        .home-info {
+        .welcome {
+            font-weight: 900;
+            font-size: 25px;                
+        }
+
+        .home-buttons {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: space-between;
+        }
 
-            img {
-                width: 200px;
-            }
-
-            .welcome {
-                font-weight: 900;
-                font-size: 25px;                
+        .home-options {
+            .status {
+                margin: 10px;
             }
         }
     }

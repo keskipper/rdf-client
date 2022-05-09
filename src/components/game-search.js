@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import GameSearchItem from './game-search-item';
 import ReverseGeocoder from './reverse-geocoder';
@@ -84,7 +85,6 @@ function GameSearch(props) {
               key={g.id}
               game={g}
               userId={props.userId}
-              toggleCreateMode={props.toggleCreateMode}
               editGame={props.editGame}
             />
           ))} 
@@ -141,7 +141,9 @@ function GameSearch(props) {
               </div>
 
               <div className="new-game-btn">
-                <button className="btn btn-theme" type='button' onClick={props.toggleCreateMode}><FontAwesomeIcon icon="fa-solid fa-circle-plus" /> Create new game</button>
+                <Link to="/create">
+                <button className="btn btn-theme" type='button'><FontAwesomeIcon icon="fa-solid fa-circle-plus" /> Create new game</button>
+                </Link>
               </div>
             </form>
         </div>
