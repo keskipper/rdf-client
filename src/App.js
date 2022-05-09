@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet, Navigate } from "react-router-dom";
 
 import Icons from './helpers/icons';
 import UserViewer from './components/user-viewer';
@@ -10,12 +10,13 @@ import Home from './components/home';
 import Footer from './components/footer';
 import Error404 from './components/error-404';
 import Game from './components/game';
+import { withRouter } from './helpers/withRouter';
 
 import './style/main.scss';
 import Navigation from './components/navigation';
 
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);    
 
@@ -38,7 +39,7 @@ export default class App extends Component {
     this.editGame = this.editGame.bind(this);
     this.clearGame = this.clearGame.bind(this);
     this.setStatus = this.setStatus.bind(this);
-    this.resetStatus = this.resetStatus.bind(this);
+    this.resetStatus = this.resetStatus.bind(this);    
   }
 
 
@@ -58,6 +59,8 @@ export default class App extends Component {
         if(response.data.message === "NOTFOUND") {
           this.setState({
             userExists: false
+          }, () => {
+            this.props.navigate("profile");
           })
         } else {
           this.setState({
@@ -171,3 +174,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default withRouter(App);

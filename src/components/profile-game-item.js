@@ -12,12 +12,12 @@ function ProfileGameItem(props) {
         return date;
     }
 
-    function triggerEdit(){
-        props.handleClick(props.game);
+    function handleClick(){
+        props.handleClick(props.game, props.userType);
     }
 
   return (
-    <div className="profile-game-item-wrapper" onClick={triggerEdit}>
+    <div className="profile-game-item-wrapper" onClick={handleClick}>
         <div className="profile-game-item">
             
             <div>

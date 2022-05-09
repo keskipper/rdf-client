@@ -157,7 +157,6 @@ function GameBuilder(props) {
   
           if(response.status === 200) {
             setGame({
-              id: "",
               title: "",
               description: "",
               gameLat: "",
@@ -179,6 +178,7 @@ function GameBuilder(props) {
               gameInDatabase: true
             })
             props.clearGame();
+            navigate(`/games/${game.id}`);
           }
         }).catch(error => {
             console.log("error in game-builder handleSubmit(): ", error.response.data)

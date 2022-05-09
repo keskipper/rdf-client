@@ -70,6 +70,12 @@ const UserViewer = (props) => {
     }
 
 
+    function viewGame(game){
+        let gameId = game.id;
+        navigate(`/games/${gameId}`);
+    }
+
+
 
   return (
     <div className="user-view">
@@ -130,10 +136,9 @@ const UserViewer = (props) => {
                 </div>
             </div>
 
-
             <div className="my-games-wrapper">
-                <h1>My Games</h1>
-                <div className="my-games-layout">
+                <div><h1>My Games</h1></div>
+                <div className="my-games">
                     
                             <ProfileGameDisplay 
                             userType="organizer" 
@@ -141,20 +146,15 @@ const UserViewer = (props) => {
                             editGame={props.editGame}
                             />
 
-
                             <ProfileGameDisplay 
                             userType="skater" 
                             email={viewer.user.email}
                             userId={viewer.user.id}
-                            editGame={props.editGame}
-                            />
-                    
-                    
-                </div>
+                            handleClick={viewGame}
+                            />    
+                </div>                                
             </div>
         </div>
-
-        
     </div>
   )
 }

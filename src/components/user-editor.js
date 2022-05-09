@@ -21,7 +21,8 @@ const UserEditor = (props) => {
       birthdate: "",
       userInDatabase: props.userExists,
       currentUser: props.user,
-      status: ""
+      status: "",
+      error: ""
     })
 
 
@@ -88,7 +89,6 @@ const UserEditor = (props) => {
         "userLng": user.userLng,
         "birthdate": user.birthdate
       }
-
       return bodyObj;
     }
 
@@ -104,7 +104,6 @@ const UserEditor = (props) => {
         url = `http://localhost:8080/api/users/${user.currentUser.id}`;
       }
       if(!props.userExists){
-        console.log("user not in database");
         verb = "POST";
       }
 
@@ -118,30 +117,21 @@ const UserEditor = (props) => {
 
         if(response.status === 200) {
           setUser({
-            firstName: "",
-            lastName: "",
-            derbyName: "",
-            email: props.email,
-            phone: "",
-            jerseyNumber: "",
-            gender: "",
-            userLat: "",
-            userLng: "",
-            birthdate: "",
             userInDatabase: true,
             userExists: true,
             currentUser: response.data
           })
           props.updateViewerUser(user.email);
+          navigate("/profile");
         }
       }).catch(error => {
-          console.log("error in handleSubmit(): ", error.response.data)
+          console.log("error in handleSubmit(): ", error.response);
       });
     }
 
 
     const handleDelete = (event) => {
-      //event.preventDefault();
+      event.preventDefault();
 
       axios({
         method: "delete",
@@ -305,10 +295,14 @@ const UserEditor = (props) => {
               </div>
             </div>
 
+            <div className="errorDisplay">
+              {user.error}
+            </div>
+
             <div className="button-row">
               <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="user-edit-form">Save Profile</button>
 
-              <button onClick={() => {navigate("/")}} type='submit' className="btn btn-theme">Cancel</button>
+              <button onClick={() => {navigate("/profile")}} type='submit' className="btn btn-theme">Cancel</button>
 
               {user.userInDatabase
               ? <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Profile</button>
