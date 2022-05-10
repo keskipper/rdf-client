@@ -18,6 +18,12 @@
 .button-row {
     display: flex;
     justify-content: space-between;
+    padding: 15px;
+
+    .btn {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
 }
 
 .btn-theme {

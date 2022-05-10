@@ -1,19 +1,15 @@
-.user-editor {
-    min-height: 100vh;
+.user-editor-wrapper {
+    display: flex;
+    padding: 10px;
 
-    .user-editor-wrapper {
+    .locate-me {
         display: flex;
-        padding: 10px;
-
-        .locate-me {
-            display: flex;
-            flex-direction: column;
-            padding: 10px 0px 10px 0px;
-            align-items: center;
-            
-            .locate-me-top {
-                padding: 10px;
-            }
+        flex-direction: column;
+        padding: 10px 0px 10px 0px;
+        align-items: center;
+        
+        .locate-me-top {
+            padding: 10px;
         }
     }
 }

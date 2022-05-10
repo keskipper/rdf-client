@@ -14,11 +14,25 @@
 
     h1, h2, h3, h4, h5, h6 {
         color: $brown;
-        margin: 12px; 
+        margin: 8px; 
     }
 
     .errorDisplay {
         color: red;
+    }
+
+    .open {
+        color: green;
+        font-weight: 700;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .closed {
+        color: red;
+        font-weight: 700;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 
     .content-wrapper {
@@ -41,11 +55,14 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                justify-content: center;
+                justify-content: flex-start;
+                margin-top: 15px;
+                margin-bottom: 15px;
         
                 border: 2px solid $lightbrown;
                 border-radius: 5px;
                 padding: 20px;
+                width: 915px;
             }
         }
     }
@@ -60,6 +77,7 @@
 @import './game-search.scss';
 @import './footer.scss';
 @import './forms.scss';
+@import './game.scss';
 @import './game-search-item.scss';
 @import './home.scss';
 @import './location-search.scss';

@@ -179,8 +179,7 @@ const UserEditor = (props) => {
 
 
   return (
-    <div className="user-editor">
-      <div className="user-editor-wrapper">
+      <div className="universal-wrapper">
         <div className="form-wrapper">
           <div className="form-item">
             <h1>Player Profile</h1>
@@ -329,7 +328,6 @@ const UserEditor = (props) => {
         </div>
 
       </div>
-    </div>
   )
 }
 

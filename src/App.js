@@ -28,10 +28,10 @@ class App extends Component {
       email: "",
       userExists: false,
       user: {},
-      createMode: false,
       gameToEdit: {},
       status: "status",
-      showStatus: false
+      showStatus: false,
+      searchResults: []
     }
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
@@ -62,13 +62,14 @@ class App extends Component {
           this.setState({
             userExists: false
           }, () => {
-            this.props.navigate("profile");
+            this.props.navigate("/edit");
           })
         } else {
           this.setState({
             userExists: true,
             user: response.data
-          })
+          });
+          this.props.navigate("/");
         } 
       }).catch(error => {
         console.log("Error in App.js handleSuccessfulLogin(): ", error)
@@ -86,7 +87,8 @@ class App extends Component {
     this.setState({
       loggedInStatus: "NOT_LOGGED_IN",
       user: {}
-    })
+    });
+    this.props.navigate("/");
   }
 
   editGame(props){
@@ -147,7 +149,13 @@ class App extends Component {
                 />
                 }
               />
-              <Route path="games/:gameId" element={<Game />} />
+              <Route path="games/:gameId" element={
+                <Game 
+                  userId={this.state.user.id}
+                  editGame={this.editGame}
+                />
+                } 
+              />
               <Route path="create" element={
                 <GameBuilder 
                   userId={this.state.user.id}
@@ -156,7 +164,7 @@ class App extends Component {
                   setStatus={this.setStatus}
                 />
                 } 
-              />
+              />              
               <Route path="profile" element={
                 <UserViewer
                   email={this.state.email}

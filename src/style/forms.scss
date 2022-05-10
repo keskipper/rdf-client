@@ -1,14 +1,15 @@
 .form-wrapper {
-    border: 2px solid $lightbrown;
-    border-radius: 5px;
-    padding: 20px;
     width: 50vw;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 
     .form-item-group {
         display: flex;
+        background-color: $lightestyellow;
+        margin: 8px;
+        width: 88%;
     }
 
     .form-item {
@@ -22,10 +23,5 @@
         .tiny-note {
             font-size: 10px;
         }
-    }
-
-    .form-item-buttons {
-        display: flex;
-        justify-content: space-evenly;
     }
 }

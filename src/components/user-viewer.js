@@ -96,12 +96,12 @@ const UserViewer = (props) => {
             </div>
         </div>
 
-        <div className="user-view-buttons">
+        <div className="button-row">
             <div>
                 <Link to="/edit">
                     <button className="btn btn-theme">Edit Profile</button>
                 </Link>
-                &nbsp;&nbsp;&nbsp;
+                
                 <button className="btn btn-theme" onClick={() => {navigate("/")}}>Close</button>
             </div>
         </div>

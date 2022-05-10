@@ -1,0 +1,29 @@
+.game-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    min-height: 100vh;
+    max-width: 850px;
+
+    .game-header{
+
+        img {
+            width: 850px;
+        }
+    }
+
+    .game-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .game-content{
+            display: flex;
+            margin: 15px;
+            max-width: 700px;
+        }
+
+    }
+}

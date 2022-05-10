@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import helmet from '../static/helmet-icon.png';
 
 function GameSearchItem(props) {
@@ -16,24 +15,17 @@ function GameSearchItem(props) {
   }
 
 
-  function triggerEdit(){
-    props.editGame(props.game);
-    navigate("/create");
+  function handleClick(){
+    navigate(`/games/${props.game.id}`);
   }
 
   
   return (
-    <div className="game-search-item-wrapper">
+    <div className="game-search-item-wrapper" onClick={handleClick}>
         <div className="game-search-item">
             <div className="game-search-left">
               <div>
                 <img alt="roller derby helmet icon" src={helmet}></img>
-              </div>
-              <div>
-                {props.game.organizer === props.userId
-                  ? <button onClick={triggerEdit} type='button' className="btn btn-theme"><FontAwesomeIcon icon="fa-solid fa-pen-to-square" /></button>
-                  : null
-                }
               </div>
             </div>
             <div className="game-search-right">
@@ -49,11 +41,18 @@ function GameSearchItem(props) {
 
                 </div>
                   <div className="game-search-info-bottom">
-                    {props.game.rosterOpen === "open" ?
-                      <div className="open">Roster space open to {props.game.adult}s (gender: {props.game.gameGender})</div>
+                    {props.game.skaterRoster === "open" ?
+                      <div className="open">Roster space open to {props.game.adult} skaters (gender: {props.game.gameGender})</div>
                       :
-                      <div className="closed">Roster space closed</div>
+                      <div className="closed">Roster space closed for skaters</div>
                     }
+
+                    {props.game.officialRoster === "open" ?
+                      <div className="open">Roster space open to officials</div>
+                      :
+                      <div className="closed">Roster space closed for officials</div>
+                    }
+
                     <div className="distance-away">{(props.game.distance/1609).toFixed(1)} miles from you</div>
                     <br/>
 

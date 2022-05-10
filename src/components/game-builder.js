@@ -26,7 +26,8 @@ function GameBuilder(props) {
         time: "",
         organizer: props.userId,
         hostingLeague: "",
-        rosterOpen: "open",
+        skaterRoster: "open",
+        officialRoster: "open",
         timezoneAbbr: "",
         timezoneString: "",
         adult: "adult",
@@ -89,7 +90,8 @@ function GameBuilder(props) {
             date: date,
             time: time,
             hostingLeague: game.currentGame.hostingLeague || "",
-            rosterOpen: game.currentGame.rosterOpen,
+            skaterRoster: game.currentGame.rosterOpen,
+            officialRoster: game.currentGame.officialRoster,
             gameGender: game.currentGame.gameGender,
             timezoneAbbr: game.currentGame.timezoneAbbr,
             timezoneString: game.currentGame.timezoneString,
@@ -124,7 +126,8 @@ function GameBuilder(props) {
           "venueName": game.venueName,
           "organizer": props.userId,
           "hostingLeague": game.hostingLeague,
-          "rosterOpen": game.rosterOpen,
+          "skaterRoster": game.skaterRoster,
+          "officialRoster": game.officialRoster,
           "gameGender": game.gameGender || "expansive",
           "timezoneAbbr": game.timezoneAbbr,
           "timezoneString": game.timezoneString,
@@ -170,7 +173,8 @@ function GameBuilder(props) {
               date: "",
               time: "",
               hostingLeague: "",
-              rosterOpen: "open",
+              skaterRoster: "open",
+              officialRoster: "open",
               gameGender: "expansive",
               timezoneAbbr: "",
               timezoneString: "",
@@ -247,7 +251,8 @@ function GameBuilder(props) {
               date: "",
               time: "",
               hostingLeague: "",
-              rosterOpen: "open",
+              skaterRoster: "open",
+              officialRoster: "open",
               gameGender: "expansive",
               timezoneAbbr: "",
               timezoneString: "",
@@ -318,6 +323,7 @@ function GameBuilder(props) {
                 value={game.hostingLeague}/>  
             </div>
 
+            <h3>Skaters</h3>
             <div className="form-item-group">
               <div className="form-item">
                   <label htmlFor="gameGender">Gender</label><br/>
@@ -347,15 +353,31 @@ function GameBuilder(props) {
                       <option value="junior">junior</option>
                   </select>
               </div>
+            </div>
 
+            <h3>Roster status</h3>
+            <div className="form-item-group">
               <div className="form-item">
-                  <label htmlFor="rosterOpen">Roster</label><br/>
+                  <label htmlFor="skaterRoster">Skater Roster</label><br/>
                   <select 
                     onChange={(event) => {setGame(prevGame => ({
-                      ...prevGame, rosterOpen: event.target.value
+                      ...prevGame, skaterRoster: event.target.value
                     }))}} 
-                    name="rosterOpen"
-                    value={game.rosterOpen} >
+                    name="skaterRoster"
+                    value={game.skaterRoster} >
+                      <option value="open">open</option>
+                      <option value="closed">closed</option>
+                  </select>
+              </div>
+
+              <div className="form-item">
+                  <label htmlFor="officialRoster">Official Roster</label><br/>
+                  <select 
+                    onChange={(event) => {setGame(prevGame => ({
+                      ...prevGame, officialRoster: event.target.value
+                    }))}} 
+                    name="officialRoster"
+                    value={game.officialRoster} >
                       <option value="open">open</option>
                       <option value="closed">closed</option>
                   </select>

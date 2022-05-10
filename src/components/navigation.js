@@ -13,7 +13,12 @@ const navigationManager = () => {
     if(props.loggedInStatus === "LOGGED_IN") {
         return (
             <Link to="/profile">
-            <button className="btn btn-theme"><FontAwesomeIcon icon="fa-user" /> Profile</button>
+            <button className="btn btn-theme">
+                <FontAwesomeIcon icon="fa-user" />&nbsp;
+                {props.user.derbyName
+                ? props.user.derbyName
+                : `Profile`}
+                </button>
             </Link>
         )
         } else if(props.loggedInStatus === "NOT_LOGGED IN") {
@@ -29,11 +34,6 @@ const navigationManager = () => {
                 <Link to='/'>
                     <img src={skate} alt="rollerskate logo" />
                 </Link>
-                <div className="nav-user">
-                    {props.user.id
-                    ? props.user.email
-                    : null}                    
-                </div>
             </div>
         </div>
 

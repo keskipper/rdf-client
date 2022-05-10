@@ -94,6 +94,7 @@ function GameSearch(props) {
 
 
   return (
+    <div className="universal-wrapper">
     <div className="game-search">
       <div className="game-search-wrapper">
         <div className="form-wrapper">
@@ -161,7 +162,7 @@ function GameSearch(props) {
         </div>
       </div>  
     </div>
-    
+    </div>
   )
 }
 
