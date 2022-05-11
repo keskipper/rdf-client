@@ -14,7 +14,8 @@ function Game(props) {
 
     const [ game, setGame ] = useState({
         game: {},
-        showModal: false
+        showModal: false,
+        userRelation: ""
     })
 
 
@@ -27,15 +28,38 @@ function Game(props) {
             setGame(prevGame => ({
                 ...prevGame,
                 game: response.data
-            }))
+            }));
+            getUserRelation(response.data.id);
         }).catch(error => {
           console.log("Error in game.js getGame(): ", error)
         })
     }
 
 
+    function getUserRelation(gameId){
+        axios({
+            method: 'post',
+            url: `http://localhost:8080/api/jct_users_games/findRelation`,
+            data: {
+                userId: props.userId,
+                gameId: gameId
+            }
+          }
+        ).then(response => {
+            if(response.data.length > 0){
+                setGame(prevGame => ({
+                    ...prevGame,
+                    userRelation: response.data[0].joinType
+                }));
+            }
+        }).catch(error => {
+          console.log("Error in getUserRelation():", error)
+        })
+    }
+
+
     useEffect(() => {
-        getGame();
+        getGame();        
     }, [])
 
 
@@ -70,7 +94,13 @@ function Game(props) {
         setGame(prevGame => ({
             ...prevGame,
             showModal: false
-        }))
+        }));
+        getGame();
+    }
+    
+
+    function handleContact(){
+
     }
 
 
@@ -82,6 +112,17 @@ function Game(props) {
 
     function handleCloseClick(){
         navigate("/search");
+    }
+
+
+    function formatUserRelation(){
+        if(game.userRelation === 'official'){
+            return "a skating official"
+        } else if(game.userRelation === 'player'){
+            return "a player"
+        } else if(game.userRelation === 'nso'){
+            return "an NSO"
+        }
     }
 
 
@@ -106,6 +147,7 @@ function Game(props) {
                             userId={props.userId}
                             game={game.game}
                             handleCloseModal={handleCloseModal}
+                            joinType={game.joinType}
                         />
                     </ReactModal>
 
@@ -130,24 +172,34 @@ function Game(props) {
                     ? <div className="open">Roster is {game.game.officialRoster} for officials</div>
                     : <div className="closed">Roster is {game.game.officialRoster}</div>
                     }
-
-
                 </div>
 
+                {game.userRelation
+                ? <div style={{ color: 'purple', fontWeight: 700, padding: '8px' }}>You are in this game as {formatUserRelation()}!
+                    <br/>If you can't make it, contact the organizer.</div>
+                : null}
+
                 <div className="button-row">
-                    {game.game.skaterRoster === "open" || game.game.officialRoster === "open"
-                    ? <button onClick={handleJoinClick} type='button' className="btn btn-theme">Join game!</button>
+
+                    {(game.game.skaterRoster === "open" || game.game.officialRoster === "open") && !game.userRelation
+                    ? <button onClick={handleJoinClick} type='button' className="btn btn-theme">
+                            <FontAwesomeIcon icon="fa-solid fa-play" /> Join game!</button>
                     : null }
+
+                    <button onClick={handleContact} type='button' className="btn btn-theme">
+                        <FontAwesomeIcon icon="fa-solid fa-envelope" /> Contact organizer
+                    </button>
 
                     {props.userId === game.game.organizer
                     ? <button onClick={handleEditClick} type='button' className="btn btn-theme">
                         <FontAwesomeIcon icon="fa-edit" /> Edit game</button>
-                    : null}
+                    : null }
 
-                    <button onClick={handleCloseClick} type='button' className="btn btn-theme">Close</button>
+                    <button onClick={handleCloseClick} type='button' className="btn btn-theme">
+                        <FontAwesomeIcon icon="fa-solid fa-ban" /> Close
+                    </button>
 
                 </div>
-
             </div>
         </div>
     )
