@@ -15,9 +15,14 @@
     .form-item {
         margin: 5px;
         padding: 3px;
+        max-width: 350px;
 
         input {
             width: 300px;
+        }
+
+        input[type='checkbox'] {
+            width: 20px;
         }
 
         .tiny-note {

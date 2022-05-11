@@ -24,7 +24,7 @@ function ProfileGameItem(props) {
                 <div className="info info-top">{props.game.title}</div>
                 <div className="info info-bottom">{formatDate(props.game.date)}</div>
             </div>
-            {props.game.skaterType === "official"
+            {props.game.joinType === "official" || props.game.joinType === "nso"
             ? <img alt="zebra icon indicates skater is officiating" src={zebra} />
             : null}
             

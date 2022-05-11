@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReactModal from 'react-modal';
+
+import JoinGame from '../modals/join-game';
 
 import Header from '../static/game-header.jpg';
 
@@ -10,7 +13,8 @@ function Game(props) {
     let navigate = useNavigate();
 
     const [ game, setGame ] = useState({
-        game: {}
+        game: {},
+        showModal: false
     })
 
 
@@ -55,7 +59,18 @@ function Game(props) {
 
 
     function handleJoinClick(){
-        
+        setGame(prevGame => ({
+            ...prevGame,
+            showModal: true
+        }))
+    }
+
+
+    function handleCloseModal(){
+        setGame(prevGame => ({
+            ...prevGame,
+            showModal: false
+        }))
     }
 
 
@@ -77,6 +92,23 @@ function Game(props) {
                     <img src={Header} alt="skaters on a rink" />
                 </div>
                 <div className="game-body">
+                    <ReactModal 
+                    isOpen={game.showModal}
+                    contentLabel="Join game"
+                    ariaHideApp={false}            
+                    shouldCloseOnOverlayClick={true}
+                    shouldCloseOnEsc={true}
+                    onRequestClose={handleCloseModal}
+                    className="modal"
+                    overlayClassName="overlay"
+                    >
+                        <JoinGame 
+                            userId={props.userId}
+                            game={game.game}
+                            handleCloseModal={handleCloseModal}
+                        />
+                    </ReactModal>
+
                     <div><h2>{game.game.title}</h2></div>
                     <div>Hosted by {game.game.hostingLeague}</div>
                     <div>{formatDate(game.game.date)}</div><br/>
