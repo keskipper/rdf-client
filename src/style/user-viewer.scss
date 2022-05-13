@@ -10,10 +10,11 @@
     .user-view-info {
         display: flex;
         margin: 10px;
+        align-items: center;
 
         img {
             width: 100px;
-            margin: 20px;
+            margin-right: 20px;
         }
     }
 

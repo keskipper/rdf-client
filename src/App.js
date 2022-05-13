@@ -11,6 +11,7 @@ import Footer from './components/footer';
 import Error404 from './components/error-404';
 import Game from './components/game';
 import UserEditor from './components/user-editor';
+// import { ContactUs } from './components/contact-us';
 import { withRouter } from './helpers/withRouter';
 
 import './style/main.scss';
@@ -42,6 +43,7 @@ class App extends Component {
     this.setStatus = this.setStatus.bind(this);
     this.resetStatus = this.resetStatus.bind(this);  
     this.setUser = this.setUser.bind(this);  
+    this.setSearchResults = this.setSearchResults.bind(this);
   }
 
 
@@ -112,6 +114,10 @@ class App extends Component {
     this.setStatus({ user: newUser })
   }
 
+  setSearchResults(newResults){
+    this.setState({ searchResults: newResults })
+  }
+
   render() {
 
     return (
@@ -138,6 +144,10 @@ class App extends Component {
                 />
               } />
 
+              {/* <Route path="contactus" element={
+                <ContactUs />
+              } /> */}
+
               <Route path="search" element={
                 <GameSearch 
                   userLat={this.state.user.userLat}
@@ -146,6 +156,8 @@ class App extends Component {
                   editGame={this.editGame}
                   status={this.state.status}
                   setStatus={this.setStatus}
+                  searchResults={this.state.searchResults}
+                  setSearchResults={this.setSearchResults}
                 />
                 }
               />

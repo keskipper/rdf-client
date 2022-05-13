@@ -6,6 +6,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import player from '../static/player.jpg';
 import ReverseGeocoder from './reverse-geocoder';
 import ProfileGameDisplay from './profile-game-display';
+import CloudinaryUserImage from './cloudinary-user-img';
 
 const UserViewer = (props) => {
     let navigate = useNavigate();
@@ -60,21 +61,24 @@ const UserViewer = (props) => {
 
   return (
     <div className="universal-wrapper">
-    <div className="user-view-wrapper">
+        <div className="user-view-wrapper">
 
-        <h1>Player Profile</h1>
+            <h1>Player Profile</h1>
 
-        <div className="user-view-info">
-            <div className="user-view-left">
-                <img alt="roller derby player silhouette" src={player} />
+            <div className="user-view-item">
+                <h2>{viewer.user.derbyName}
+                &nbsp;#{viewer.user.jerseyNumber}</h2>
             </div>
 
-            <div className="user-view-right">
-
-                <div className="user-view-item">
-                    <h2>{viewer.user.derbyName}
-                    &nbsp;#{viewer.user.jerseyNumber}</h2>
+            <div className="user-view-info">
+                <div className="user-view-left">
+                    <CloudinaryUserImage 
+                        filename={"user_1_fl0oc2"}
+                    />
                 </div>
+
+                <div className="user-view-right">
+
                 <div className="user-view-item">
                     {viewer.user.firstName} {viewer.user.lastName}
                 </div>

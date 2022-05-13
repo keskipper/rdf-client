@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import ReverseGeocoder from './reverse-geocoder';
+// import { Image, CloudinaryContext } from 'cloudinary-react';
+import CloudinaryUserImage from './cloudinary-user-img';
+import CloudinaryUploader from './cloudinary-uploader';
 
 
 const UserEditor = (props) => {
@@ -184,6 +187,17 @@ const UserEditor = (props) => {
           <div className="form-item">
             <h1>Player Profile</h1>
           </div>
+
+          <div className="cloudinary-user">
+            {/* <UploadImage /> */}
+            
+            <CloudinaryUserImage 
+              filename={"user_1_fl0oc2"}
+            />
+
+            <CloudinaryUploader />
+          </div>
+          <br/>
 
           <form id="user-edit-form" autoComplete='off'>
             <div className="form-item">

@@ -8,7 +8,6 @@ import ReverseGeocoder from './reverse-geocoder';
 
 function GameSearch(props) {
   const [ games, setGames ] = useState({
-    gameItems: [],
     adult: "adult",
     miles: 50,
     orderBy: "date",
@@ -30,10 +29,7 @@ function GameSearch(props) {
         "orderField": games.orderBy
       }
     }).then(response => {
-      setGames(prevGames => ({
-        ...prevGames,
-        gameItems: response.data
-      }))
+      props.setSearchResults(response.data);
     }).catch(error => {
       console.log("error in getGames(): ", error.response.data)
     });
@@ -70,7 +66,7 @@ function GameSearch(props) {
       <div className="search-results">
         <div className="search-results-top">
           <div className="search-results-top-left">
-            {games.gameItems.length} games found!
+            {props.searchResults.length} games found!
           </div>
           <div className="search-results-top-right">
             {games.orderBy === "date"
@@ -80,7 +76,7 @@ function GameSearch(props) {
           </div>
         </div>
 
-          {games.gameItems.map(g => (
+          {props.searchResults.map(g => (
             <GameSearchItem
               key={g.id}
               game={g}
@@ -153,7 +149,7 @@ function GameSearch(props) {
         <h2>Search results</h2>
         <div className="status" style={{ display: props.showStatus? "block" : "none" }}>{props.status}</div>
         <div className="search-results">          
-            {games.gameItems.length > 0 
+            {props.searchResults.length > 0 
               ? searchResults()
               : "No results! Either you haven't searched yet, or there aren't any games near you."
             }

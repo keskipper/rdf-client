@@ -175,8 +175,10 @@ function Game(props) {
                 </div>
 
                 {game.userRelation
-                ? <div style={{ color: 'purple', fontWeight: 700, padding: '8px' }}>You are in this game as {formatUserRelation()}!
-                    <br/>If you can't make it, contact the organizer.</div>
+                ? <div style={{ color: 'purple', fontWeight: 700, padding: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div>You are in this game as {formatUserRelation()}!</div>
+                    <div>If you can't make it, contact the organizer.</div>
+                    </div>
                 : null}
 
                 <div className="button-row">

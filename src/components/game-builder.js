@@ -296,12 +296,13 @@ function GameBuilder(props) {
 
             <div className="form-item">
             <label htmlFor="description">Description</label><br/>
-              <input 
+              <textarea 
+                cols="39"
+                rows="10"
                 role="presentation"
                 onChange={(event) => {setGame(prevGame => ({
                   ...prevGame, description: event.target.value
                 }))}} 
-                type="textarea"
                 name="description"
                 placeholder="Game description (required)"
                 maxLength={500}
