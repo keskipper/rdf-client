@@ -3,6 +3,7 @@ import React from 'react';
 import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
 
 const CloudinaryUploader = () => {
+
   return (
     <>
       <WidgetLoader /> 
@@ -35,8 +36,8 @@ const CloudinaryUploader = () => {
         multiple={false} // set to false as default. Allows multiple file uploading
         // will only allow 1 file to be uploaded if cropping set to true
         autoClose={true} // will close the widget after success. Default true
-        onSuccess={console.log("success! now add a callback")} // add success callback -> returns result
-        onFailure={console.log("error")} // add failure callback -> returns 'response.error' + 'response.result'
+        onSuccess={null} // add success callback -> returns result
+        onFailure={null} // add failure callback -> returns 'response.error' + 'response.result'
         logging={false} // logs will be provided for success and failure messages,
         // set to false for production -> default = true
         customPublicId={'sample'} // set a specific custom public_id.

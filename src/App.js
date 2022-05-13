@@ -143,11 +143,6 @@ class App extends Component {
                   showStatus={this.state.showStatus}
                 />
               } />
-
-              {/* <Route path="contactus" element={
-                <ContactUs />
-              } /> */}
-
               <Route path="search" element={
                 <GameSearch 
                   userLat={this.state.user.userLat}
@@ -164,6 +159,7 @@ class App extends Component {
               <Route path="games/:gameId" element={
                 <Game 
                   userId={this.state.user.id}
+                  user={this.state.user}
                   editGame={this.editGame}
                 />
                 } 

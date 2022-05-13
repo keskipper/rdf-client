@@ -182,7 +182,8 @@ function GameBuilder(props) {
               gameInDatabase: true
             })
             props.clearGame();
-            navigate(`/games/${game.id}`);
+            let newGameId=response.data.id;
+            navigate(`/games/${newGameId}`);
           }
         }).catch(error => {
             console.log("error in game-builder handleSubmit(): ", error.response.data)

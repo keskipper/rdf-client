@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactModal from 'react-modal';
 
 import JoinGame from '../modals/join-game';
+import { ContactOrganizer } from '../modals/contact-organizer';
 
 import Header from '../static/game-header.jpg';
 
@@ -14,7 +15,8 @@ function Game(props) {
 
     const [ game, setGame ] = useState({
         game: {},
-        showModal: false,
+        showJoinModal: false,
+        showContactModal: false,
         userRelation: ""
     })
 
@@ -85,7 +87,15 @@ function Game(props) {
     function handleJoinClick(){
         setGame(prevGame => ({
             ...prevGame,
-            showModal: true
+            showJoinModal: true
+        }))
+    }
+
+
+    function handleContactClick(){
+        setGame(prevGame => ({
+            ...prevGame,
+            showContactModal: true
         }))
     }
 
@@ -93,14 +103,10 @@ function Game(props) {
     function handleCloseModal(){
         setGame(prevGame => ({
             ...prevGame,
-            showModal: false
+            showJoinModal: false,
+            showContactModal: false
         }));
         getGame();
-    }
-    
-
-    function handleContact(){
-
     }
 
 
@@ -134,7 +140,7 @@ function Game(props) {
                 </div>
                 <div className="game-body">
                     <ReactModal 
-                    isOpen={game.showModal}
+                    isOpen={game.showJoinModal}
                     contentLabel="Join game"
                     ariaHideApp={false}            
                     shouldCloseOnOverlayClick={true}
@@ -148,6 +154,23 @@ function Game(props) {
                             game={game.game}
                             handleCloseModal={handleCloseModal}
                             joinType={game.joinType}
+                        />
+                    </ReactModal>
+
+                    <ReactModal 
+                    isOpen={game.showContactModal}
+                    contentLabel="Contact organizer"
+                    ariaHideApp={false}            
+                    shouldCloseOnOverlayClick={true}
+                    shouldCloseOnEsc={true}
+                    onRequestClose={handleCloseModal}
+                    className="modal"
+                    overlayClassName="overlay"
+                    >
+                        <ContactOrganizer 
+                            organizerEmail={props.user.email}
+                            organizerName={props.user.firstName}
+                            closeModal={handleCloseModal}
                         />
                     </ReactModal>
 
@@ -188,7 +211,7 @@ function Game(props) {
                             <FontAwesomeIcon icon="fa-solid fa-play" /> Join game!</button>
                     : null }
 
-                    <button onClick={handleContact} type='button' className="btn btn-theme">
+                    <button onClick={handleContactClick} type='button' className="btn btn-theme">
                         <FontAwesomeIcon icon="fa-solid fa-envelope" /> Contact organizer
                     </button>
 

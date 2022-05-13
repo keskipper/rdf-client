@@ -196,6 +196,7 @@ const UserEditor = (props) => {
             />
 
             <CloudinaryUploader />
+            
           </div>
           <br/>
 
