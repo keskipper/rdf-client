@@ -139,6 +139,7 @@ const UserEditor = (props) => {
             userExists: true,
             currentUser: response.data
           })
+          props.populateNewUser(response.data);
           navigate("/profile");
         }
       }).catch(error => {
@@ -173,6 +174,7 @@ const UserEditor = (props) => {
             userExists: false,
             currentUser: {}
           })
+          props.clearUser();
           navigate("/");
         }
       }).catch(error => {
@@ -330,11 +332,12 @@ const UserEditor = (props) => {
             <div className="button-row">
               <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="user-edit-form">Save Profile</button>
 
-              <button onClick={() => {navigate("/profile")}} type='submit' className="btn btn-theme">Cancel</button>
-
               {user.userInDatabase
-              ? <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Profile</button>
-              : <button type='button' className="btn btn-disabled">Delete Profile</button>
+              ? <><button onClick={() => {navigate("/profile")}} type='submit' className="btn btn-theme">Cancel</button>
+                <button onClick={handleDelete} type='submit' className="btn btn-delete">Delete Profile</button></>
+                
+              : <><button type='button' className="btn btn-disabled">Cancel</button>
+                <button type='button' className="btn btn-disabled">Delete Profile</button></>
               }
               
             </div>

@@ -58,9 +58,9 @@ const UserViewer = (props) => {
     }
 
 
-
   return (
     <div className="universal-wrapper">
+
         <div className="user-view-wrapper">
 
             <h1>Player Profile</h1>
@@ -71,6 +71,7 @@ const UserViewer = (props) => {
             </div>
 
             <div className="user-view-info">
+
                 <div className="user-view-left">
                     <CloudinaryUserImage 
                         filename={"user_1_fl0oc2"}
@@ -97,6 +98,7 @@ const UserViewer = (props) => {
                 <div className="user-view-item">
                     <ReverseGeocoder lat={viewer.user.userLat} lng={viewer.user.userLng} />
                 </div>
+
             </div>
         </div>
 
@@ -112,20 +114,22 @@ const UserViewer = (props) => {
 
         <div className="my-games-wrapper">
             <div><h1>My Games</h1></div>
+                <button onClick={() => {navigate("/search")}} type='button' className="btn btn-theme">Find games!</button>
+            
             <div className="my-games">
                 
-                        <ProfileGameDisplay 
-                        userType="organizer" 
-                        userId={viewer.user.id}
-                        editGame={props.editGame}
-                        />
+                <ProfileGameDisplay 
+                userType="organizer" 
+                userId={viewer.user.id}
+                editGame={props.editGame}
+                />
 
-                        <ProfileGameDisplay 
-                        userType="skater" 
-                        email={viewer.user.email}
-                        userId={viewer.user.id}
-                        handleClick={viewGame}
-                        />    
+                <ProfileGameDisplay 
+                userType="skater" 
+                email={viewer.user.email}
+                userId={viewer.user.id}
+                handleClick={viewGame}
+                />    
             </div>                                
         </div>
     </div>  

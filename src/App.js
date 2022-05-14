@@ -40,9 +40,10 @@ class App extends Component {
     this.handleSuccessfulLogout = this.handleSuccessfulLogout.bind(this);
     this.editGame = this.editGame.bind(this);
     this.clearGame = this.clearGame.bind(this);
+    this.clearUser = this.clearUser.bind(this);
     this.setStatus = this.setStatus.bind(this);
     this.resetStatus = this.resetStatus.bind(this);  
-    this.setUser = this.setUser.bind(this);  
+    this.populateNewUser = this.populateNewUser.bind(this);  
     this.setSearchResults = this.setSearchResults.bind(this);
   }
 
@@ -101,6 +102,17 @@ class App extends Component {
     this.setState({ gameToEdit: {} })
   }
 
+  clearUser(){
+    this.setState({ user: {} })
+  }
+
+  populateNewUser(newUser){
+    this.setState({
+      userExists: true,
+      user: newUser
+    })
+  }
+
   setStatus(newStatus){
     this.setState({ status: newStatus, showStatus: true });
     setTimeout(() => this.resetStatus(), 5000);
@@ -127,6 +139,7 @@ class App extends Component {
           loggedInStatus={this.state.loggedInStatus}
           handleSuccessfulLogin={this.handleSuccessfulLogin}
           handleSuccessfulLogout={this.handleSuccessfulLogout}
+          userExists={this.state.userExists}
           user={this.state.user}
         />
 
@@ -187,7 +200,8 @@ class App extends Component {
                   email={this.state.email}
                   userExists={this.state.userExists}
                   user={this.state.user}
-                  setUser={this.setUser}
+                  populateNewUser={this.populateNewUser}
+                  clearUser={this.clearUser}
                   />
                   }
               />

@@ -10,17 +10,26 @@ import skate from '../static/skate-wings.png'
 function Navigation(props) {
 
 const navigationManager = () => {
-    if(props.loggedInStatus === "LOGGED_IN") {
+    if(props.loggedInStatus === "LOGGED_IN" && props.userExists) {
         return (
             <Link to="/profile">
             <button className="btn btn-theme">
                 <FontAwesomeIcon icon="fa-user" />&nbsp;
                 {props.user.derbyName
                 ? props.user.derbyName
-                : `Profile`}
+                : props.user.firstName}
                 </button>
             </Link>
-        )
+            )
+        } else if(props.loggedInStatus === "LOGGED_IN" && !props.userExists){
+            return (
+                <Link to="/edit">
+                <button className="btn btn-theme">
+                    <FontAwesomeIcon icon="fa-user" />&nbsp;
+                        Profile
+                    </button>
+                </Link>
+                )
         } else if(props.loggedInStatus === "NOT_LOGGED IN") {
             return null;
         }

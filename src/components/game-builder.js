@@ -182,8 +182,12 @@ function GameBuilder(props) {
               gameInDatabase: true
             })
             props.clearGame();
-            let newGameId=response.data.id;
-            navigate(`/games/${newGameId}`);
+            
+            if(verb === "POST") {
+              navigate(`/games/${response.data.id}`);
+            } if(verb === "PUT"){
+              navigate(`/games/${game.id}`);
+            }
           }
         }).catch(error => {
             console.log("error in game-builder handleSubmit(): ", error.response.data)
@@ -478,7 +482,8 @@ function GameBuilder(props) {
                 onChange={(event) => {setGame(prevGame => ({
                   ...prevGame, zip: event.target.value
                 }))}} 
-                type="number"
+                type="text"
+                pattern="[0-9]*"
                 name="zip"
                 placeholder="Zip code"
                 maxLength={5}
