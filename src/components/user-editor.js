@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-import ReverseGeocoder from './reverse-geocoder';
-// import { Image, CloudinaryContext } from 'cloudinary-react';
 import CloudinaryUserImage from './cloudinary-user-img';
-import CloudinaryUploader from './cloudinary-uploader';
+import CloudinaryUploadWidget from './cloudinary-upload-widget';
 
 
 const UserEditor = (props) => {
@@ -52,7 +50,8 @@ const UserEditor = (props) => {
             gender: response.data.gender,
             birthdate: response.data.birthdate.substring(0, 10),
             userLat: response.data.userLat,
-            userLng: response.data.userLng
+            userLng: response.data.userLng,
+            status: response.data.userLat + ", " + response.data.userLng
           }))  
         }
       }).catch(error => {
@@ -139,7 +138,9 @@ const UserEditor = (props) => {
             userExists: true,
             currentUser: response.data
           })
-          props.populateNewUser(response.data);
+          if(verb === "POST"){
+            props.populateNewUser(response.data);
+          }
           navigate("/profile");
         }
       }).catch(error => {
@@ -191,13 +192,12 @@ const UserEditor = (props) => {
           </div>
 
           <div className="cloudinary-user">
-            {/* <UploadImage /> */}
             
             <CloudinaryUserImage 
-              filename={"user_1_fl0oc2"}
+              filename={props.user.imgName || "player_o5vlxo"}
             />
 
-            <CloudinaryUploader />
+            <CloudinaryUploadWidget userId={user.currentUser.id} />
             
           </div>
           <br/>
@@ -320,7 +320,7 @@ const UserEditor = (props) => {
                   <button onClick={getLocation} type='button' className='btn btn-theme'>Locate me!</button>
                 </div>
                 <div className="locate-me-bottom">
-                  Location: {user.status} <ReverseGeocoder lat={user.userLat} lng={user.userLng} />
+                  Location: {user.status} 
                 </div>
               </div>
             </div>

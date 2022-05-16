@@ -72,8 +72,17 @@ function Game(props) {
             let temp = date.split(",");
             date = temp[0] + " at " + temp[1].substring(1, temp[1].lastIndexOf(":")) + temp[1].substring(temp[1].length-3, temp[1].length) + " (" + game.game.timezoneAbbr + ")";
         }
-
         return date;
+    }
+
+    function zerofillZip(zip) {
+        if(!zip) return;
+        zip = zip.toString();
+        if(zip.length === 5) return zip;
+        if(zip.length === 4) return "0" + zip;
+        if(zip.length === 3) return "00" + zip;
+        if(zip.length === 2) return "000" + zip;
+        if(zip.length === 1) return "oooo" + zip;
     }
 
 
@@ -180,7 +189,7 @@ function Game(props) {
                     <div>{game.game.venueName}</div>
                     <div>{game.game.address1}</div>
                     <div>{game.game.address2}</div>
-                    <div>{game.game.city}, {game.game.state} {game.game.zip}</div>
+                    <div>{game.game.city}, {game.game.state} {zerofillZip(game.game.zip)}</div>
 
                     <div className="game-content">
                         {game.game.description}

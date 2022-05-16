@@ -3,7 +3,6 @@ import axios from 'axios';
 import moment from 'moment';
 import { useNavigate, Link } from 'react-router-dom';
 
-import player from '../static/player.jpg';
 import ReverseGeocoder from './reverse-geocoder';
 import ProfileGameDisplay from './profile-game-display';
 import CloudinaryUserImage from './cloudinary-user-img';
@@ -15,7 +14,7 @@ const UserViewer = (props) => {
         user: props.user,
         email: props.email,
         userExists: props.userExists,
-        userLocString: ""
+        userLocString: "player_o5vlxo"
     })
 
 
@@ -29,7 +28,8 @@ const UserViewer = (props) => {
           }
         ).then(response => {
           if(response.data.message === "NOTFOUND") {
-            console.log("user not found with email", viewer.email);
+            // console.log("user not found with email", viewer.email);
+            navigate("/edit");
           } else {
             setViewer(prevViewer => ({
                 ...prevViewer,
@@ -73,8 +73,9 @@ const UserViewer = (props) => {
             <div className="user-view-info">
 
                 <div className="user-view-left">
+                    
                     <CloudinaryUserImage 
-                        filename={"user_1_fl0oc2"}
+                        filename={viewer.user.imgName}
                     />
                 </div>
 
