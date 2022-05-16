@@ -93,7 +93,7 @@ class App extends Component {
     });
     this.props.navigate("/");
   }
-
+  
   editGame(props){
     this.setState({ gameToEdit: props })
   }
@@ -115,7 +115,7 @@ class App extends Component {
 
   setStatus(newStatus){
     this.setState({ status: newStatus, showStatus: true });
-    setTimeout(() => this.resetStatus(), 5000);
+    setTimeout(() => this.resetStatus(), 4000);
   }
 
   resetStatus(){

@@ -275,271 +275,281 @@ function GameBuilder(props) {
 
 
   return (
-    <div className="game-builder">
-      <div className="game-builder-wrapper">
+    <div className="universal-wrapper">
+      <div className="game-builder">
+        <div className="game-builder-wrapper">
 
-        <div className="form-wrapper">
-          <div className="form-item">
-            <h1>Create/Edit Game</h1>
-          </div>
-
-          <form id="game-edit-form">
+          <div className="form-wrapper">
             <div className="form-item">
-            <label htmlFor="title">Title</label><br/>
-              <input 
-                role="presentation"
-                onChange={(event) => {setGame(prevGame => ({
-                  ...prevGame, title: event.target.value
-                }))}} 
-                type="text"
-                name="title"
-                placeholder="Game title (required)"
-                maxLength={100}
-                required
-                value={game.title}/>
+              <h1>Create/Edit Game</h1>
             </div>
 
-            <div className="form-item">
-            <label htmlFor="description">Description</label><br/>
-              <textarea 
-                cols="39"
-                rows="10"
-                role="presentation"
-                onChange={(event) => {setGame(prevGame => ({
-                  ...prevGame, description: event.target.value
-                }))}} 
-                name="description"
-                placeholder="Game description (required)"
-                maxLength={500}
-                required
-                value={game.description}/>  
-            </div>
-
-            <div className="form-item">
-            <label htmlFor="hostingLeague">Hosting league</label><br/>
-              <input 
-                role="presentation"
-                onChange={(event) => {setGame(prevGame => ({
-                  ...prevGame, hostingLeague: event.target.value
-                }))}} 
-                type="textbox"
-                name="hostingLeague"
-                placeholder="Hosting league"
-                maxLength={100}
-                value={game.hostingLeague}/>  
-            </div>
-
-            <h3>Skaters</h3>
-            <div className="form-item-group">
+            <form id="game-edit-form">
               <div className="form-item">
-                  <label htmlFor="gameGender">Gender</label><br/>
-                  <select 
-                    onChange={(event) => {setGame(prevGame => ({
-                      ...prevGame, gameGender: event.target.value
-                    }))}} 
-                    name="gameGender"
-                    required
-                    value={game.gameGender} >
-                      <option value="female">female</option>
-                      <option value="male">male</option>
-                      <option value="expansive">expansive</option>
-                  </select>
-              </div>
-
-              <div className="form-item">
-                  <label htmlFor="adult">Age</label><br/>
-                  <select 
-                    onChange={(event) => {setGame(prevGame => ({
-                      ...prevGame, adult: event.target.value
-                    }))}} 
-                    name="adult"
-                    required
-                    value={game.adult} >
-                      <option value="adult">adult</option>
-                      <option value="junior">junior</option>
-                  </select>
-              </div>
-            </div>
-
-            <h3>Roster status</h3>
-            <div className="form-item-group">
-              <div className="form-item">
-                  <label htmlFor="skaterRoster">Skater Roster</label><br/>
-                  <select 
-                    onChange={(event) => {setGame(prevGame => ({
-                      ...prevGame, skaterRoster: event.target.value
-                    }))}} 
-                    name="skaterRoster"
-                    value={game.skaterRoster} >
-                      <option value="open">open</option>
-                      <option value="closed">closed</option>
-                  </select>
-              </div>
-
-              <div className="form-item">
-                  <label htmlFor="officialRoster">Official Roster</label><br/>
-                  <select 
-                    onChange={(event) => {setGame(prevGame => ({
-                      ...prevGame, officialRoster: event.target.value
-                    }))}} 
-                    name="officialRoster"
-                    value={game.officialRoster} >
-                      <option value="open">open</option>
-                      <option value="closed">closed</option>
-                  </select>
-              </div>
-            </div>
-
-            <div className="form-item">
-              <label htmlFor="date">Date</label><br/>
-              <input
+              <label htmlFor="title">Title</label><br/>
+                <input 
+                  role="presentation"
                   onChange={(event) => {setGame(prevGame => ({
-                  ...prevGame, date: event.target.value
+                    ...prevGame, title: event.target.value
                   }))}} 
-                  type="date"
-                  name="date"
-                  value={game.date}
-              />
-            </div>
+                  type="text"
+                  name="title"
+                  placeholder="Game title (required)"
+                  maxLength={100}
+                  required
+                  value={game.title}/>
+              </div>
 
-            <div className="form-item">
-              Time ({game.timezoneAbbr})<br/>
-              <input 
+              <div className="form-item">
+              <label htmlFor="description">Description</label><br/>
+                <textarea 
+                  cols="39"
+                  rows="10"
+                  role="presentation"
                   onChange={(event) => {setGame(prevGame => ({
-                  ...prevGame, time: event.target.value
+                    ...prevGame, description: event.target.value
                   }))}} 
-                  type="time"
-                  name="time"
-                  value={game.time}
-              />
-            </div>
+                  name="description"
+                  placeholder="Game description (required)"
+                  maxLength={500}
+                  required
+                  value={game.description}/>  
+              </div>
 
-            <LocationSearch passPlace={passPlace} passTimezone={passTimezone} venueName={game.venueName} />
+              <div className="form-item">
+              <label htmlFor="hostingLeague">Hosting league</label><br/>
+                <input 
+                  role="presentation"
+                  onChange={(event) => {setGame(prevGame => ({
+                    ...prevGame, hostingLeague: event.target.value
+                  }))}} 
+                  type="textbox"
+                  name="hostingLeague"
+                  placeholder="Hosting league"
+                  maxLength={100}
+                  value={game.hostingLeague}/>  
+              </div>
 
-            <div className="form-item">
-            <label htmlFor="address1">Address 1</label><br/>
-              <input 
-                role="presentation"
-                onChange={(event) => {setGame(prevGame => ({
-                  ...prevGame, address1: event.target.value
-                }))}} 
-                type="text"
-                name="address1"
-                placeholder="Address 1"
-                maxLength={45}
-                required
-                value={game.address1}/>
-            </div>
+              <h3>Skaters</h3>
+              <div className="form-item-group">
+                <div className="form-item">
+                    <label htmlFor="gameGender">Gender</label><br/>
+                    <select 
+                      onChange={(event) => {setGame(prevGame => ({
+                        ...prevGame, gameGender: event.target.value
+                      }))}} 
+                      name="gameGender"
+                      required
+                      value={game.gameGender} >
+                        <option value="female">female</option>
+                        <option value="male">male</option>
+                        <option value="expansive">expansive</option>
+                    </select>
+                </div>
 
-            <div className="form-item">
-            <label htmlFor="address1">Address 2</label><br/>
-              <input 
-                role="presentation"
-                onChange={(event) => {setGame(prevGame => ({
-                  ...prevGame, address2: event.target.value
-                }))}} 
-                type="text"
-                name="address2"
-                placeholder="Address 2"
-                maxLength={45}
-                value={game.address2}/>
-            </div>
+                <div className="form-item">
+                    <label htmlFor="adult">Age</label><br/>
+                    <select 
+                      onChange={(event) => {setGame(prevGame => ({
+                        ...prevGame, adult: event.target.value
+                      }))}} 
+                      name="adult"
+                      required
+                      value={game.adult} >
+                        <option value="adult">adult</option>
+                        <option value="junior">junior</option>
+                    </select>
+                </div>
+              </div>
 
-            <div className="form-item">
-            <label htmlFor="city">City</label><br/>
-              <input 
-                role="presentation"
-                onChange={(event) => {setGame(prevGame => ({
-                  ...prevGame, city: event.target.value
-                }))}} 
-                type="text"
-                name="city"
-                placeholder="City"
-                maxLength={45}
-                required
-                value={game.city}/>
-            </div>
+              <h3>Roster status</h3>
+              <div className="form-item-group">
+                <div className="form-item">
+                    <label htmlFor="skaterRoster">Skater Roster</label><br/>
+                    <select 
+                      onChange={(event) => {setGame(prevGame => ({
+                        ...prevGame, skaterRoster: event.target.value
+                      }))}} 
+                      name="skaterRoster"
+                      value={game.skaterRoster} >
+                        <option value="open">open</option>
+                        <option value="closed">closed</option>
+                    </select>
+                </div>
 
-            <div className="form-item">
-            <label htmlFor="state">State</label><br/>
-              <input 
-                role="presentation"
-                onChange={(event) => {setGame(prevGame => ({
-                  ...prevGame, state: event.target.value
-                }))}} 
-                type="text"
-                name="state"
-                placeholder="State"
-                maxLength={2}
-                required
-                value={game.state}/>
-            </div>
+                <div className="form-item">
+                    <label htmlFor="officialRoster">Official Roster</label><br/>
+                    <select 
+                      onChange={(event) => {setGame(prevGame => ({
+                        ...prevGame, officialRoster: event.target.value
+                      }))}} 
+                      name="officialRoster"
+                      value={game.officialRoster} >
+                        <option value="open">open</option>
+                        <option value="closed">closed</option>
+                    </select>
+                </div>
+              </div>
 
-            <div className="form-item">
-            <label htmlFor="zip">Zip</label><br/>
-              <input 
-                role="presentation"
-                onChange={(event) => {setGame(prevGame => ({
-                  ...prevGame, zip: event.target.value
-                }))}} 
-                type="text"
-                pattern="[0-9]*"
-                name="zip"
-                placeholder="Zip code"
-                maxLength={5}
-                required
-                value={game.zip}/>
-            </div>
+              <div className="form-item">
+                <label htmlFor="date">Date</label><br/>
+                <input
+                    onChange={(event) => {setGame(prevGame => ({
+                    ...prevGame, date: event.target.value
+                    }))}} 
+                    type="date"
+                    name="date"
+                    value={game.date}
+                />
+              </div>
 
-            <div className="form-item">
-              <label htmlFor="gameLat">Lat</label><br />
-              <input 
-                  disabled
+              <div className="form-item">
+                Time ({game.timezoneAbbr})<br/>
+                <input 
+                    onChange={(event) => {setGame(prevGame => ({
+                    ...prevGame, time: event.target.value
+                    }))}} 
+                    type="time"
+                    name="time"
+                    value={game.time}
+                />
+              </div>
+
+              <LocationSearch passPlace={passPlace} passTimezone={passTimezone} venueName={game.venueName} />
+
+              <div className="form-item">
+              <label htmlFor="address1">Address 1</label><br/>
+                <input 
+                  role="presentation"
+                  onChange={(event) => {setGame(prevGame => ({
+                    ...prevGame, address1: event.target.value
+                  }))}} 
                   type="text"
-                  name="gameLat"
-                  placeholder="Latitude"
-                  value={game.gameLat}
-              />
-            </div>
+                  name="address1"
+                  placeholder="Address 1"
+                  maxLength={45}
+                  required
+                  value={game.address1}/>
+              </div>
 
-            <div className="form-item">
-              <label htmlFor="gameLng">Lng</label><br />
-              <input 
-                  disabled
+              <div className="form-item">
+              <label htmlFor="address1">Address 2</label><br/>
+                <input 
+                  role="presentation"
+                  onChange={(event) => {setGame(prevGame => ({
+                    ...prevGame, address2: event.target.value
+                  }))}} 
                   type="text"
-                  name="gameLng"
-                  placeholder="Longitude"
-                  value={game.gameLng}
-              />
-            </div>
+                  name="address2"
+                  placeholder="Address 2"
+                  maxLength={45}
+                  value={game.address2}/>
+              </div>
 
-            <div className="errorDisplay">
-                {game.errorText}
-            </div>
-            
-            <div className="form-item">
-              <div className="button-row">
-                <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="game-edit-form">Save Game</button>
+              <div className="form-item">
+              <label htmlFor="city">City</label><br/>
+                <input 
+                  role="presentation"
+                  onChange={(event) => {setGame(prevGame => ({
+                    ...prevGame, city: event.target.value
+                  }))}} 
+                  type="text"
+                  name="city"
+                  placeholder="City"
+                  maxLength={45}
+                  required
+                  value={game.city}/>
+              </div>
 
-                <button onClick={handleCancel} type='button' className="btn btn-theme">Cancel</button>
+              <div className="form-item">
+              <label htmlFor="state">State</label><br/>
+                <input 
+                  role="presentation"
+                  onChange={(event) => {setGame(prevGame => ({
+                    ...prevGame, state: event.target.value
+                  }))}} 
+                  type="text"
+                  name="state"
+                  placeholder="State"
+                  maxLength={2}
+                  required
+                  value={game.state}/>
+              </div>
 
-                {game.gameInDatabase
-                ? <button onClick={handleDelete} type='submit' form="none" className="btn btn-delete">Delete Game</button>
-                : <button type='button' className="btn btn-disabled">Delete Game</button>
-                }
+              <div className="form-item">
+              <label htmlFor="zip">Zip</label><br/>
+                <input 
+                  role="presentation"
+                  onChange={(event) => {setGame(prevGame => ({
+                    ...prevGame, zip: event.target.value
+                  }))}} 
+                  type="text"
+                  pattern="[0-9]*"
+                  name="zip"
+                  placeholder="Zip code"
+                  maxLength={5}
+                  required
+                  value={game.zip}/>
+              </div>
+
+              <div className="form-item">
+                <label htmlFor="gameLat">Lat</label><br />
+                <input 
+                    disabled
+                    type="text"
+                    name="gameLat"
+                    placeholder="Latitude"
+                    value={game.gameLat}
+                />
+              </div>
+
+              <div className="form-item">
+                <label htmlFor="gameLng">Lng</label><br />
+                <input 
+                    disabled
+                    type="text"
+                    name="gameLng"
+                    placeholder="Longitude"
+                    value={game.gameLng}
+                />
+              </div>
+
+              <div className="errorDisplay">
+                  {game.errorText}
               </div>
               
-            </div>
-          </form>
-            <div> 
-                {game.gameInDatabase
-                ? <GameRoster id={game.id} />
-                : null}
-            </div>
-        </div>
-        
-      </div>
+              <div className="form-item">
+                <div className="button-row">
+                  <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="game-edit-form">Save Game</button>
 
+                  <button onClick={handleCancel} type='button' className="btn btn-theme">Cancel</button>
+
+                  {game.gameInDatabase
+                  ? <button onClick={handleDelete} type='submit' form="none" className="btn btn-delete">Delete Game</button>
+                  : <button type='button' className="btn btn-disabled">Delete Game</button>
+                  }
+                </div>
+                
+              </div>
+            </form>
+              <div> 
+                  {game.gameInDatabase
+                  ? <GameRoster id={game.id} joinType="player" />
+                  : null}
+
+                  {game.gameInDatabase
+                  ? <GameRoster id={game.id} joinType="official" />
+                  : null}
+
+                  {game.gameInDatabase
+                  ? <GameRoster id={game.id} joinType="nso" />
+                  : null}
+              </div>
+          </div>
+          
+        </div>
+
+      </div>
     </div>
   )
 }

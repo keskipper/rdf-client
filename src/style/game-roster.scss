@@ -1,14 +1,16 @@
 .game-roster-wrapper {
     margin-top: 25px;
+    margin-bottom: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
 
     .game-roster-container {
+        min-width: 100%;
         
         .roster-line {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-columns: 8fr 6fr 6fr 8fr 1fr;
             background-color: $lightestyellow;
             padding: 5px;
             border: 1px solid white;
@@ -27,6 +29,16 @@
 
             .four {
                 grid-column-start: 4;
+            }
+
+            .delete {
+                grid-column-start: 5;
+                
+                &:hover {
+                    cursor: pointer;
+                    color: red;
+                    transition: 0.5s ease-in-out;
+                }
             }
         }
     }

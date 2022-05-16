@@ -6,43 +6,60 @@ import { useNavigate } from 'react-router-dom';
 const CloudinaryUploadWidget = (props) => {
     let navigate = useNavigate();
 
-    useEffect(() => {
+    function loadScript() {
         const script = document.createElement('script');
-      
         script.src = "https://upload-widget.cloudinary.com/global/all.js";
-        script.async = true;
-      
+        // script.async = true;
         document.body.appendChild(script);
+
+        return new Promise((res, rej) => {
+          script.onload = function() {
+            res();
+          }
+          script.onerror = function () {
+            rej();
+          }
+        });
       
-        return () => {
-          document.body.removeChild(script);
-        }
-      }, []);
-
-
-    useEffect(() => {
-    var myWidget = window.cloudinary.createUploadWidget(
-      {
-        cloudName: "rollerderbyfinder",
-        uploadPreset: "zgewmw5t"
-      },
-      (error, result) => {
-        if (!error && result && result.event === "success") {
-          saveFileName(result.info.public_id.substring(6, result.info.public_id.length));
-        }
+        // return () => {
+        //   document.body.removeChild(script);
+        // }
       }
-    );
-    document.getElementById("upload_widget").addEventListener(
-      "click",
-      function () {
-        myWidget.open();
-      },
-      false
-    );
-    }, []);
+
+    loadScript()
+    .then(() => {
+      console.log('Script loaded!');
+      startWidget();
+    })
+    .catch(() => {
+      console.error('Script loading failed! Handle this error');
+    });
 
 
-    function saveFileName(filename){
+    function startWidget(){
+      var myWidget = window.cloudinary.createUploadWidget(
+        {
+          cloudName: "rollerderbyfinder",
+          uploadPreset: "zgewmw5t"
+        },
+        (error, result) => {
+          if (!error && result && result.event === "success") {
+            savePictureLink(result.info.public_id.substring(6, result.info.public_id.length));
+          }
+        }
+      );
+      document.getElementById("upload_widget").addEventListener(
+        "click",
+        function () {
+          myWidget.open();
+        },
+        false
+      );
+    }
+
+
+
+    function savePictureLink(filename){
         if(filename.length > 0){
             axios({
                 method: 'PUT',
