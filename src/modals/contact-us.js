@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
+import Bug from '../static/bug.png';
 
 export const ContactUs = (props) => {
   const form = useRef();
@@ -26,8 +27,8 @@ export const ContactUs = (props) => {
   return (
     <div className="contact-wrapper">
       <div className='form-item'>
-      <h1>Found a bug?</h1>
-      </div>
+      <h1>Found a bug?</h1></div>
+      <img src={Bug} alt="cartoon beetle" />
       <div className='form-item'>
         <h3>Tell me about it!</h3>
       </div>

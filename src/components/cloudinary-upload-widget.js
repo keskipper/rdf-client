@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,7 +9,6 @@ const CloudinaryUploadWidget = (props) => {
     function loadScript() {
         const script = document.createElement('script');
         script.src = "https://upload-widget.cloudinary.com/global/all.js";
-        // script.async = true;
         document.body.appendChild(script);
 
         return new Promise((res, rej) => {
@@ -20,10 +19,6 @@ const CloudinaryUploadWidget = (props) => {
             rej();
           }
         });
-      
-        // return () => {
-        //   document.body.removeChild(script);
-        // }
       }
 
     loadScript()

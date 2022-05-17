@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import ReactModal from 'react-modal';
 import { ContactUs } from '../modals/contact-us';
 
