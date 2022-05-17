@@ -9,8 +9,26 @@ function LocationSearch(props) {
         rendered: 0,
         placeList: [],
         show: false,
-        timeOfLastSearch: Date.now()
+        timeOfLastSearch: Date.now(),
+        api_key: ""
     })
+
+
+    useEffect(() => {
+        axios({
+            method: "POST",
+            url: "http://localhost:8080/api/api_keys/findByName",
+            data: {
+                serviceName: "location_iq"
+            }
+        }).then(response => {
+            setPlace(prevPlace => ({
+                 ...prevPlace, api_key: response.data[0].apiKey
+                }))
+        }).catch(error => {
+            console.log("Error getting API key:", error)
+        })
+    },[])
 
 
     function search(event){
@@ -19,17 +37,17 @@ function LocationSearch(props) {
 
         if(place.venueName.length >= 3 && diff > 1000){
             setPlace(prevPlace => ({ ...prevPlace, timeOfLastSearch: Date.now() }))
-            const endpoint = `https://api.locationiq.com/v1/autocomplete.php?key=pk.cdd03354d0919d4f569728b50bfb3552&q=${place.venueName}`;
+            const endpoint = `https://api.locationiq.com/v1/autocomplete.php?key=${place.api_key}&q=${place.venueName}`;
 
             axios({
-                method: "get",
+                method: "GET",
                 url: endpoint
             }).then(response => {
                 setPlace(prevPlace => ({
                     ...prevPlace, placeList: response.data
                 }))
             }).catch(error => {
-                console.log("Error in LocationSearch search(): ", error)
+                console.log("Error in LocationSearch search():", error)
             })
         }
     }
@@ -61,7 +79,7 @@ function LocationSearch(props) {
 
 
     function getTimeZone(lat, lon){
-        const endpoint = `https://us1.locationiq.com/v1/timezone.php?key=pk.cdd03354d0919d4f569728b50bfb3552&lat=${lat}&lon=${lon}`;
+        const endpoint = `https://us1.locationiq.com/v1/timezone.php?key=${place.api_key}&lat=${lat}&lon=${lon}`;
 
         axios({
             method: "get",

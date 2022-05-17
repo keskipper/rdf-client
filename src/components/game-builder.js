@@ -28,6 +28,7 @@ function GameBuilder(props) {
         hostingLeague: "",
         skaterRoster: "open",
         officialRoster: "open",
+        nsoRoster: "open",
         timezoneAbbr: "",
         timezoneString: "",
         adult: "adult",
@@ -92,6 +93,7 @@ function GameBuilder(props) {
             hostingLeague: game.currentGame.hostingLeague || "",
             skaterRoster: game.currentGame.rosterOpen,
             officialRoster: game.currentGame.officialRoster,
+            nsoRoster: game.currentGame.nsoRoster,
             gameGender: game.currentGame.gameGender,
             timezoneAbbr: game.currentGame.timezoneAbbr,
             timezoneString: game.currentGame.timezoneString,
@@ -128,6 +130,7 @@ function GameBuilder(props) {
           "hostingLeague": game.hostingLeague,
           "skaterRoster": game.skaterRoster,
           "officialRoster": game.officialRoster,
+          "nsoRoster": game.nsoRoster,
           "gameGender": game.gameGender || "expansive",
           "timezoneAbbr": game.timezoneAbbr,
           "timezoneString": game.timezoneString,
@@ -175,6 +178,7 @@ function GameBuilder(props) {
               hostingLeague: "",
               skaterRoster: "open",
               officialRoster: "open",
+              nsoRoster: "open",
               gameGender: "expansive",
               timezoneAbbr: "",
               timezoneString: "",
@@ -258,6 +262,7 @@ function GameBuilder(props) {
               hostingLeague: "",
               skaterRoster: "open",
               officialRoster: "open",
+              nsoRoster: "open",
               gameGender: "expansive",
               timezoneAbbr: "",
               timezoneString: "",
@@ -385,6 +390,19 @@ function GameBuilder(props) {
                       }))}} 
                       name="officialRoster"
                       value={game.officialRoster} >
+                        <option value="open">open</option>
+                        <option value="closed">closed</option>
+                    </select>
+                </div>
+
+                <div className="form-item">
+                    <label htmlFor="nsoRoster">NSO Roster</label><br/>
+                    <select 
+                      onChange={(event) => {setGame(prevGame => ({
+                        ...prevGame, nsoRoster: event.target.value
+                      }))}} 
+                      name="nsoRoster"
+                      value={game.nsoRoster} >
                         <option value="open">open</option>
                         <option value="closed">closed</option>
                     </select>

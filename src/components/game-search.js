@@ -30,6 +30,7 @@ function GameSearch(props) {
       }
     }).then(response => {
       props.setSearchResults(response.data);
+      console.log(response.data);
     }).catch(error => {
       console.log("error in getGames(): ", error.response.data)
     });

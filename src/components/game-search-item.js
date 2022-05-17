@@ -41,17 +41,17 @@ function GameSearchItem(props) {
 
                 </div>
                   <div className="game-search-info-bottom">
-                    {props.game.skaterRoster === "open" ?
-                      <div className="open">Roster space open to {props.game.adult} skaters (gender: {props.game.gameGender})</div>
-                      :
-                      <div className="closed">Roster space closed for skaters</div>
-                    }
+                    {props.game.skaterRoster === "open" 
+                      ? <div className="open">Roster space open to {props.game.adult} skaters (gender: {props.game.gameGender})</div>
+                      : <div className="closed">Roster space closed for skaters</div> }
 
-                    {props.game.officialRoster === "open" ?
-                      <div className="open">Roster space open to officials</div>
-                      :
-                      <div className="closed">Roster space closed for officials</div>
-                    }
+                    {props.game.officialRoster === "open" 
+                      ? <div className="open">Roster space open to officials</div>
+                      : <div className="closed">Roster space closed for officials</div> }
+                      
+                    {props.game.nsoRoster === "open" 
+                      ? <div className="open">Roster space open to NSOs</div>
+                      : <div className="closed">Roster space closed for NSOs</div> }
 
                     <div className="distance-away">{(props.game.distance/1609).toFixed(1)} miles from you</div>
                     <br/>

@@ -53,6 +53,15 @@ function JoinGame(props) {
     }
 
 
+    function createDropdownArray(){
+        let dropdown = [];
+        if(props.game.skaterRoster === "open") dropdown.push('Player')
+        if(props.game.officialRoster === "open") dropdown.push('Official')
+        if(props.game.nsoRoster === "open") dropdown.push('NSO')
+        return dropdown;
+    }
+
+
   return (
     <div className="modal-wrapper">
         <div><h2>You are about to join {props.game.title}</h2></div>
@@ -61,18 +70,19 @@ function JoinGame(props) {
             <form id="join-form">
             <div className="form-item"><h3>{props.game.hostingLeague} is excited to have you!</h3></div>
 
-                <div className="form-item">
+            <div className="form-item">
                     <label htmlFor="join-type">How will you join this game?</label><br/>
                     <select 
-                        onChange={(event) => {setJoin(prevJoin => ({
+                        onChange={(event) => {
+                            console.log(event.target);
+                            setJoin(prevJoin => ({
                         ...prevJoin, joinType: event.target.value
                         }))}} 
                         name="join-type"
                         required
                         value={join.joinType} >
-                        <option value="player">Player</option>
-                        <option value="official">Skating referee</option>
-                        <option value="nso">NSO (non-skating official)</option>
+                        {createDropdownArray().map((x,y) =>
+                            <option key={y} value={x}>{x}</option>)}
                     </select>
                 </div>
 

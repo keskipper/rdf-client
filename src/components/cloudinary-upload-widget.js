@@ -23,7 +23,6 @@ const CloudinaryUploadWidget = (props) => {
 
     loadScript()
     .then(() => {
-      console.log('Script loaded!');
       startWidget();
     })
     .catch(() => {

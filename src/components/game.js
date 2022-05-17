@@ -162,7 +162,6 @@ function Game(props) {
                             userId={props.userId}
                             game={game.game}
                             handleCloseModal={handleCloseModal}
-                            joinType={game.joinType}
                         />
                     </ReactModal>
 
@@ -202,7 +201,12 @@ function Game(props) {
                     
                     {game.game.officialRoster === "open"
                     ? <div className="open">Roster is {game.game.officialRoster} for officials</div>
-                    : <div className="closed">Roster is {game.game.officialRoster}</div>
+                    : <div className="closed">Roster is {game.game.officialRoster} for officials</div>
+                    }
+
+                    {game.game.nsoRoster === "open"
+                    ? <div className="open">Roster is {game.game.nsoRoster} for NSOs</div>
+                    : <div className="closed">Roster is {game.game.nsoRoster} for NSOs</div>
                     }
                 </div>
 
