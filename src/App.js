@@ -132,7 +132,6 @@ class App extends Component {
   }
 
   setLoading(newLoading){
-    console.log("setLoading()",newLoading);
     this.setState({ setLoading: newLoading })
   }
 
