@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import CloudinaryUserImage from './cloudinary-user-img';
 import CloudinaryUploadWidget from './cloudinary-upload-widget';
@@ -112,6 +113,7 @@ const UserEditor = (props) => {
 
     const handleSubmit = (event) => {
       event.preventDefault();
+      props.setLoading(true);
       
       let verb = "";
       let url = "https://rdf-server.herokuapp.com/api/users/";
@@ -130,9 +132,8 @@ const UserEditor = (props) => {
         data: buildBodyObject()
       }
       ).then(response => {
-        console.log("server response: ", response);
-
         if(response.status === 200) {
+          props.setLoading(false);
           setUser({
             userInDatabase: true,
             userExists: true,
@@ -145,6 +146,7 @@ const UserEditor = (props) => {
         }
       }).catch(error => {
           console.log("error in handleSubmit(): ", error.response);
+          props.setLoading(false);
       });
     }
 
@@ -157,8 +159,6 @@ const UserEditor = (props) => {
         url: `https://rdf-server.herokuapp.com/api/users/${user.currentUser.id}`
       }
       ).then(response => {
-        console.log("server response: ", response);
-
         if(response.status === 200) {
           setUser({
             firstName: "",
@@ -197,7 +197,7 @@ const UserEditor = (props) => {
               filename={props.user.imgName || "player_o5vlxo"}
             />
 
-            <CloudinaryUploadWidget userId={user.currentUser.id} />
+            {/* <CloudinaryUploadWidget userId={user.currentUser.id} /> */}
             
           </div>
           <br/>
@@ -330,7 +330,12 @@ const UserEditor = (props) => {
             </div>
 
             <div className="button-row">
-              <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="user-edit-form">Save Profile</button>
+              <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="user-edit-form">
+                {props.isLoading
+                ? <FontAwesomeIcon icon="fa-spinner" spin/>
+                : <FontAwesomeIcon icon="fa-user"/> }
+                &nbsp;Save Profile
+              </button>
 
               {user.userInDatabase
               ? <><button onClick={() => {navigate("/profile")}} type='submit' className="btn btn-theme">Cancel</button>

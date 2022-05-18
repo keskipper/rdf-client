@@ -34,7 +34,8 @@ const CloudinaryUploadWidget = (props) => {
       var myWidget = window.cloudinary.createUploadWidget(
         {
           cloudName: "rollerderbyfinder",
-          uploadPreset: "zgewmw5t"
+          uploadPreset: "zgewmw5t",
+          timeout: 10000
         },
         (error, result) => {
           if (!error && result && result.event === "success") {
@@ -42,9 +43,8 @@ const CloudinaryUploadWidget = (props) => {
           }
         }
       );
-      document.getElementById("upload_widget").addEventListener(
-        "click",
-        function () {
+      document.getElementById("upload_widget").addEventListener("click", function(event) {
+          event.preventDefault();
           myWidget.open();
         },
         false
@@ -74,7 +74,7 @@ const CloudinaryUploadWidget = (props) => {
 
 
     return (
-      <button id="upload_widget" className="btn btn-theme">
+      <button id="upload_widget" className="btn btn-theme" type='button' form="">
         Upload new image
       </button>
     );

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { useNavigate, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ReverseGeocoder from './reverse-geocoder';
 import ProfileGameDisplay from './profile-game-display';
@@ -28,7 +29,6 @@ const UserViewer = (props) => {
           }
         ).then(response => {
           if(response.data.message === "NOTFOUND") {
-            // console.log("user not found with email", viewer.email);
             navigate("/edit");
           } else {
             setViewer(prevViewer => ({
@@ -60,7 +60,6 @@ const UserViewer = (props) => {
 
   return (
     <div className="universal-wrapper">
-
         <div className="user-view-wrapper">
 
             <h1>Player Profile</h1>
@@ -71,69 +70,65 @@ const UserViewer = (props) => {
             </div>
 
             <div className="user-view-info">
-
                 <div className="user-view-left">
-                    
                     <CloudinaryUserImage 
                         filename={viewer.user.imgName}
                     />
                 </div>
 
                 <div className="user-view-right">
-
-                <div className="user-view-item">
-                    {viewer.user.firstName} {viewer.user.lastName}
-                </div>
-                <div className="user-view-item">
-                    {calculateAge(viewer.user.birthdate)} years old
-                </div>
-                <div className="user-view-item">
-                    {viewer.user.gender}
-                </div>
-                <div className="user-view-item">
-                    {viewer.user.email}
+                    <div className="user-view-item">
+                        {viewer.user.firstName} {viewer.user.lastName}
                     </div>
-                <div className="user-view-item">
-                    {viewer.user.phone.substring(0, 3)}-{viewer.user.phone.substring(3, 6)}-{viewer.user.phone.substring(6, 10)}
+                    <div className="user-view-item">
+                        {calculateAge(viewer.user.birthdate)} years old
+                    </div>
+                    <div className="user-view-item">
+                        {viewer.user.gender}
+                    </div>
+                    <div className="user-view-item">
+                        {viewer.user.email}
+                    </div>
+                    <div className="user-view-item">
+                        {viewer.user.phone.substring(0, 3)}-{viewer.user.phone.substring(3, 6)}-{viewer.user.phone.substring(6, 10)}
+                    </div>
+                    <div className="user-view-item">
+                        <ReverseGeocoder lat={viewer.user.userLat} lng={viewer.user.userLng} />
+                    </div>
                 </div>
-                <div className="user-view-item">
-                    <ReverseGeocoder lat={viewer.user.userLat} lng={viewer.user.userLng} />
+            </div>
+
+            <div className="button-row">
+                <div>
+                    <Link to="/edit">
+                        <button className="btn btn-theme"><FontAwesomeIcon icon="fa-edit" /> Edit Profile</button>
+                    </Link>
+                    <button className="btn btn-theme" onClick={() => {navigate("/")}}>Close</button>
                 </div>
-
             </div>
-        </div>
 
-        <div className="button-row">
-            <div>
-                <Link to="/edit">
-                    <button className="btn btn-theme">Edit Profile</button>
-                </Link>
+            <div className="my-games-wrapper">
+                <div><h1>My Games</h1></div>
+                <button onClick={() => {navigate("/search")}} type='button' className="btn btn-theme">
+                    <FontAwesomeIcon icon="fa-magnifying-glass" /> Find games!
+                </button>
                 
-                <button className="btn btn-theme" onClick={() => {navigate("/")}}>Close</button>
+                <div className="my-games">
+                    <ProfileGameDisplay 
+                    userType="organizer" 
+                    userId={viewer.user.id}
+                    editGame={props.editGame}
+                    />
+
+                    <ProfileGameDisplay 
+                    userType="skater" 
+                    email={viewer.user.email}
+                    userId={viewer.user.id}
+                    handleClick={viewGame}
+                    />    
+                </div>                                
             </div>
-        </div>
-
-        <div className="my-games-wrapper">
-            <div><h1>My Games</h1></div>
-                <button onClick={() => {navigate("/search")}} type='button' className="btn btn-theme">Find games!</button>
-            
-            <div className="my-games">
-                
-                <ProfileGameDisplay 
-                userType="organizer" 
-                userId={viewer.user.id}
-                editGame={props.editGame}
-                />
-
-                <ProfileGameDisplay 
-                userType="skater" 
-                email={viewer.user.email}
-                userId={viewer.user.id}
-                handleClick={viewGame}
-                />    
-            </div>                                
-        </div>
-    </div>  
+        </div>  
     </div>
   )
 }

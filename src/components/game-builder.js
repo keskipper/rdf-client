@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import LocationSearch from './location-search';
 import convertRegion from '../helpers/convert-region';
@@ -142,6 +143,7 @@ function GameBuilder(props) {
 
       function handleSubmit(event){
         event.preventDefault();
+        props.setLoading(true);
 
         let verb = "";
         let url = "https://rdf-server.herokuapp.com/api/games/";
@@ -162,6 +164,7 @@ function GameBuilder(props) {
         ).then(response => {
   
           if(response.status === 200) {
+            props.setLoading(false);
             setGame({
               title: "",
               description: "",
@@ -194,7 +197,8 @@ function GameBuilder(props) {
             }
           }
         }).catch(error => {
-            console.log("error in game-builder handleSubmit(): ", error.response.data)
+            console.log("error in game-builder handleSubmit(): ", error.response.data);
+            props.setLoading(false);
             setGame(prevGame => ({
               ...prevGame,
               errorText: error.response.data.message
@@ -538,7 +542,11 @@ function GameBuilder(props) {
               
               <div className="form-item">
                 <div className="button-row">
-                  <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="game-edit-form">Save Game</button>
+                  <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="game-edit-form">
+                    {props.isLoading
+                    ? <FontAwesomeIcon icon="fa-spinner" spin/>
+                    : 'Save Game' }
+                  </button>
 
                   <button onClick={handleCancel} type='button' className="btn btn-theme">Cancel</button>
 

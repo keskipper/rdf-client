@@ -31,7 +31,8 @@ class App extends Component {
       gameToEdit: {},
       status: "status",
       showStatus: false,
-      searchResults: []
+      searchResults: [],
+      isLoading: false
     }
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
@@ -44,6 +45,7 @@ class App extends Component {
     this.resetStatus = this.resetStatus.bind(this);  
     this.populateNewUser = this.populateNewUser.bind(this);  
     this.setSearchResults = this.setSearchResults.bind(this);
+    this.setLoading = this.setLoading.bind(this);
   }
 
 
@@ -129,6 +131,11 @@ class App extends Component {
     this.setState({ searchResults: newResults })
   }
 
+  setLoading(newLoading){
+    console.log("setLoading()",newLoading);
+    this.setState({ setLoading: newLoading })
+  }
+
   render() {
 
     return (
@@ -166,6 +173,8 @@ class App extends Component {
                   setStatus={this.setStatus}
                   searchResults={this.state.searchResults}
                   setSearchResults={this.setSearchResults}
+                  setLoading={this.setLoading}
+                  isLoading={this.isLoading}
                 />
                 }
               />
@@ -183,6 +192,8 @@ class App extends Component {
                   gameToEdit={this.state.gameToEdit}
                   clearGame={this.clearGame}
                   setStatus={this.setStatus}
+                  setLoading={this.setLoading}
+                  isLoading={this.isLoading}
                 />
                 } 
               />              
@@ -202,6 +213,8 @@ class App extends Component {
                   user={this.state.user}
                   populateNewUser={this.populateNewUser}
                   clearUser={this.clearUser}
+                  setLoading={this.setLoading}
+                  isLoading={this.isLoading}
                   />
                   }
               />

@@ -17,6 +17,7 @@ function GameSearch(props) {
 
   function getGames(event) {
     event.preventDefault();
+    props.setLoading(true);
     
     axios({
       method: "post",
@@ -30,9 +31,10 @@ function GameSearch(props) {
       }
     }).then(response => {
       props.setSearchResults(response.data);
-      console.log(response.data);
+      props.setLoading(false);
     }).catch(error => {
-      console.log("error in getGames(): ", error.response.data)
+      console.log("error in getGames(): ", error.response.data);
+      props.setLoading(false);
     });
   }
 
@@ -134,7 +136,12 @@ function GameSearch(props) {
               <div className="search-form-button">
 
                 <div className="form-item">
-                  <button className="btn btn-theme" type="submit" onClick={getGames}><FontAwesomeIcon icon="fa-magnifying-glass" /> Search</button>
+                  <button className="btn btn-theme" type="submit" onClick={getGames}>
+                    {props.isLoading
+                    ? <FontAwesomeIcon icon="fa-spinner" spin/>
+                    : <FontAwesomeIcon icon="fa-magnifying-glass" />}
+                    &nbsp;Search
+                  </button>
                 </div>
               </div>
 
