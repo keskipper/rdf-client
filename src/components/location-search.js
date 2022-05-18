@@ -17,7 +17,7 @@ function LocationSearch(props) {
     useEffect(() => {
         axios({
             method: "POST",
-            url: "http://localhost:8080/api/api_keys/findByName",
+            url: "https://rdf-server.herokuapp.com/api/api_keys/findByName",
             data: {
                 serviceName: "location_iq"
             }

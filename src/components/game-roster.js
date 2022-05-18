@@ -15,7 +15,7 @@ function GameRoster(props) {
         
         axios({
           method: "POST",
-          url: "http://localhost:8080/api/games/getGameRoster",
+          url: "https://rdf-server.herokuapp.com/api/games/getGameRoster",
           data: {
             "id": props.id,
             "joinType": props.joinType
@@ -69,7 +69,7 @@ function GameRoster(props) {
 
     axios({
       method: "DELETE",
-      url: `http://localhost:8080/api/jct_users_games/${joinId}`
+      url: `https://rdf-server.herokuapp.com/api/jct_users_games/${joinId}`
     }).then(response => {
       flashStatus("Deleted from roster");
       getRoster();

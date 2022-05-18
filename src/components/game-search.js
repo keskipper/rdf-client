@@ -20,7 +20,7 @@ function GameSearch(props) {
     
     axios({
       method: "post",
-      url: "http://localhost:8080/api/games/limitbydistance",
+      url: "https://rdf-server.herokuapp.com/api/games/limitbydistance",
       data: {
         "adult": games.adult,
         "miles": games.miles,

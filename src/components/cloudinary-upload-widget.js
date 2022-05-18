@@ -57,7 +57,7 @@ const CloudinaryUploadWidget = (props) => {
         if(filename.length > 0){
             axios({
                 method: 'PUT',
-                url: `http://localhost:8080/api/users/${props.userId}`,
+                url: `https://rdf-server.herokuapp.com/api/users/${props.userId}`,
                 data: {
                     imgName: filename
                 }

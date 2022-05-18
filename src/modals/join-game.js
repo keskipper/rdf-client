@@ -35,7 +35,7 @@ function JoinGame(props) {
         
         axios({
             method: 'post',
-            url: `http://localhost:8080/api/jct_users_games`,
+            url: `https://rdf-server.herokuapp.com/api/jct_users_games`,
             data: {
                 userId: props.userId,
                 gameId: props.game.id,

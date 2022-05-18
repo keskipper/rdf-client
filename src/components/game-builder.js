@@ -144,11 +144,11 @@ function GameBuilder(props) {
         event.preventDefault();
 
         let verb = "";
-        let url = "http://localhost:8080/api/games/";
+        let url = "https://rdf-server.herokuapp.com/api/games/";
 
         if(game.gameInDatabase){ 
           verb = "PUT";
-          url = `http://localhost:8080/api/games/${game.id}`;
+          url = `https://rdf-server.herokuapp.com/api/games/${game.id}`;
         }
         if(!game.gameInDatabase){
           verb = "POST";
@@ -242,7 +242,7 @@ function GameBuilder(props) {
 
         axios ({
           method: "delete",
-          url: `http://localhost:8080/api/games/${game.id}`
+          url: `https://rdf-server.herokuapp.com/api/games/${game.id}`
         }).then(response => {
           if(response.status === 200) {
             setGame({

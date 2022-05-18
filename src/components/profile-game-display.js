@@ -19,10 +19,10 @@ function ProfileGameDisplay(props) {
         let url, data;
         
         if(props.userType === "organizer") {
-            url = "http://localhost:8080/api/games/findByOrganizer";
+            url = "https://rdf-server.herokuapp.com/api/games/findByOrganizer";
             data = { "organizer": props.userId }
         } else if(props.userType === "skater") {
-            url = "http://localhost:8080/api/games/findGamesWhereUserJoined";
+            url = "https://rdf-server.herokuapp.com/api/games/findGamesWhereUserJoined";
             data = { "email": props.email }
         } else {
             console.log("User type is not recognized.");

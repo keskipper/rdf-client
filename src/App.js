@@ -11,7 +11,6 @@ import Footer from './components/footer';
 import Error404 from './components/error-404';
 import Game from './components/game';
 import UserEditor from './components/user-editor';
-// import { ContactUs } from './components/contact-us';
 import { withRouter } from './helpers/withRouter';
 
 import './style/main.scss';
@@ -55,7 +54,7 @@ class App extends Component {
     }, () => {
       axios({
           method: 'post',
-          url: "http://localhost:8080/api/users/email",
+          url: "https://rdf-server.herokuapp.com/api/users/email",
           data: {
             email: this.state.email
           }
@@ -139,6 +138,7 @@ class App extends Component {
           loggedInStatus={this.state.loggedInStatus}
           handleSuccessfulLogin={this.handleSuccessfulLogin}
           handleSuccessfulLogout={this.handleSuccessfulLogout}
+          handleUnsuccessfulLogin={this.handleUnsuccessfulLogin}
           userExists={this.state.userExists}
           user={this.state.user}
         />

@@ -21,7 +21,7 @@ const UserViewer = (props) => {
     function updateViewerUser() {        
         axios({
             method: 'post',
-            url: "http://localhost:8080/api/users/email",
+            url: "https://rdf-server.herokuapp.com/api/users/email",
             data: {
               email: viewer.email
             }

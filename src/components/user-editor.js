@@ -31,7 +31,7 @@ const UserEditor = (props) => {
       if(user.userInDatabase) {
         axios({
           method: 'post',
-          url: "http://localhost:8080/api/users/email",
+          url: "https://rdf-server.herokuapp.com/api/users/email",
           data: {
             email: user.email
           }
@@ -114,11 +114,11 @@ const UserEditor = (props) => {
       event.preventDefault();
       
       let verb = "";
-      let url = "http://localhost:8080/api/users/";
+      let url = "https://rdf-server.herokuapp.com/api/users/";
 
       if(props.userExists){ 
         verb = "PUT";
-        url = `http://localhost:8080/api/users/${user.currentUser.id}`;
+        url = `https://rdf-server.herokuapp.com/api/users/${user.currentUser.id}`;
       }
       if(!props.userExists){
         verb = "POST";
@@ -154,7 +154,7 @@ const UserEditor = (props) => {
 
       axios({
         method: "delete",
-        url: `http://localhost:8080/api/users/${user.currentUser.id}`
+        url: `https://rdf-server.herokuapp.com/api/users/${user.currentUser.id}`
       }
       ).then(response => {
         console.log("server response: ", response);

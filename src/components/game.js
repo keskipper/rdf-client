@@ -24,7 +24,7 @@ function Game(props) {
     function getGame() {        
         axios({
             method: 'get',
-            url: `http://localhost:8080/api/games/${params.gameId}`
+            url: `https://rdf-server.herokuapp.com/api/games/${params.gameId}`
           }
         ).then(response => {
             setGame(prevGame => ({
@@ -41,7 +41,7 @@ function Game(props) {
     function getUserRelation(gameId){
         axios({
             method: 'post',
-            url: `http://localhost:8080/api/jct_users_games/findRelation`,
+            url: `https://rdf-server.herokuapp.com/api/jct_users_games/findRelation`,
             data: {
                 userId: props.userId,
                 gameId: gameId
