@@ -13,19 +13,19 @@ const navigationManager = () => {
     if(props.loggedInStatus === "LOGGED_IN" && props.userExists) {
         return (
             <Link to="/profile">
-            <button className="btn btn-theme">
-                <FontAwesomeIcon icon="fa-user" />&nbsp;
-                {props.user.derbyName
-                ? props.user.derbyName
-                : props.user.firstName}
+                <button className="btn btn-theme">
+                    <FontAwesomeIcon icon="fa-user" />&nbsp;
+                    {props.user.derbyName
+                    ? props.user.derbyName
+                    : props.user.firstName}
                 </button>
             </Link>
             )
         } else if(props.loggedInStatus === "LOGGED_IN" && !props.userExists){
             return (
                 <Link to="/edit">
-                <button className="btn btn-theme">
-                    <FontAwesomeIcon icon="fa-user" />&nbsp;
+                    <button className="btn btn-theme">
+                        <FontAwesomeIcon icon="fa-user" />&nbsp;
                         Profile
                     </button>
                 </Link>
@@ -40,9 +40,9 @@ const navigationManager = () => {
     <div className="navigation-wrapper">
         <div className="navigation-left">
             <div className="navigation-item">
-                <Link to='/'>
-                    <img src={skate} alt="rollerskate logo" />
-                </Link>
+                {props.loggedInStatus === "LOGGED_IN" && !props.userExists
+                ? <img src={skate} alt="rollerskate logo" />
+                : <Link to='/'> <img src={skate} alt="rollerskate logo" /> </Link> }
             </div>
         </div>
 
