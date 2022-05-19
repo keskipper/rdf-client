@@ -155,7 +155,11 @@ const UserEditor = (props) => {
           navigate("/profile");
         }
       }).catch(error => {
-          console.log("error in handleSubmit(): ", error.response);
+          // console.log("error in handleSubmit(): ", error.response);
+          setUser(prevUser => ({
+            ...prevUser,
+            error: error.response.data.message
+          }))
           setLoading(false);
       });
     }
