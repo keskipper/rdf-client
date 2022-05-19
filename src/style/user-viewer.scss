@@ -35,6 +35,10 @@
 
         .my-games {
             display: flex;
+
+            @media screen and (min-width: 700px) {
+                flex-direction: column;
+            }
         }
 
         .my-games-layout {
