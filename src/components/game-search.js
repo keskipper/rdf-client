@@ -11,13 +11,22 @@ function GameSearch(props) {
     adult: "adult",
     miles: 50,
     orderBy: "date",
-    rendered: 0
+    rendered: 0,
+    loading: false
   })
+
+
+  function setLoading(newLoading){
+    setGames(prevGames => ({
+      ...prevGames,
+      loading: newLoading
+    }))
+  }
 
 
   function getGames(event) {
     event.preventDefault();
-    props.setLoading(true);
+    setLoading(true);
     
     axios({
       method: "post",
@@ -31,10 +40,10 @@ function GameSearch(props) {
       }
     }).then(response => {
       props.setSearchResults(response.data);
-      props.setLoading(false);
+      setLoading(false);
     }).catch(error => {
       console.log("error in getGames(): ", error.response.data);
-      props.setLoading(false);
+      setLoading(false);
     });
   }
 

@@ -23,8 +23,17 @@ const UserEditor = (props) => {
       userInDatabase: props.userExists,
       currentUser: props.user,
       status: "",
-      error: ""
+      error: "",
+      loading: false
     })
+
+
+    function setLoading(newLoading){
+      setUser(prevUser => ({
+        ...prevUser,
+        loading: newLoading
+      }))
+    }
 
 
     useEffect(() => {
@@ -112,7 +121,7 @@ const UserEditor = (props) => {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      props.setLoading(true);
+      setLoading(true);
       
       let verb = "";
       let url = "https://rdf-server.herokuapp.com/api/users/";
@@ -132,7 +141,7 @@ const UserEditor = (props) => {
       }
       ).then(response => {
         if(response.status === 200) {
-          props.setLoading(false);
+          setLoading(false);
           setUser({
             userInDatabase: true,
             userExists: true,
@@ -145,7 +154,7 @@ const UserEditor = (props) => {
         }
       }).catch(error => {
           console.log("error in handleSubmit(): ", error.response);
-          props.setLoading(false);
+          setLoading(false);
       });
     }
 
@@ -326,7 +335,7 @@ const UserEditor = (props) => {
 
             <div className="button-row">
               <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="user-edit-form">
-                {props.isLoading
+                {user.isLoading
                 ? <FontAwesomeIcon icon="fa-spinner" spin/>
                 : <FontAwesomeIcon icon="fa-user"/> }
                 &nbsp;Save Profile

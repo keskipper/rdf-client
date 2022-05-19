@@ -36,9 +36,17 @@ function GameBuilder(props) {
         gameGender: "expansive",
         gameInDatabase: false,
         currentGame: props.gameToEdit,
-        errorText: ""
+        errorText: "",
+        loading: false
       })
 
+
+      function setLoading(newLoading){
+        setGame(prevGame => ({
+          ...prevGame,
+          loading: newLoading
+        }))
+      }
 
 
       function formatISODate(localeString){    
@@ -143,7 +151,7 @@ function GameBuilder(props) {
 
       function handleSubmit(event){
         event.preventDefault();
-        props.setLoading(true);
+        setLoading(true);
 
         let verb = "";
         let url = "https://rdf-server.herokuapp.com/api/games/";
@@ -164,7 +172,7 @@ function GameBuilder(props) {
         ).then(response => {
   
           if(response.status === 200) {
-            props.setLoading(false);
+            setLoading(false);
             setGame({
               title: "",
               description: "",
@@ -198,7 +206,7 @@ function GameBuilder(props) {
           }
         }).catch(error => {
             console.log("error in game-builder handleSubmit(): ", error.response.data);
-            props.setLoading(false);
+            setLoading(false);
             setGame(prevGame => ({
               ...prevGame,
               errorText: error.response.data.message
@@ -543,7 +551,7 @@ function GameBuilder(props) {
               <div className="form-item">
                 <div className="button-row">
                   <button onClick={handleSubmit} type='submit' className="btn btn-theme" form="game-edit-form">
-                    {props.isLoading
+                    {game.isLoading
                     ? <FontAwesomeIcon icon="fa-spinner" spin/>
                     : 'Save Game' }
                   </button>
