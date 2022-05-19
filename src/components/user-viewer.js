@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReverseGeocoder from './reverse-geocoder';
 import ProfileGameDisplay from './profile-game-display';
 import CloudinaryUserImage from './cloudinary-user-img';
+import CloudinaryUploadWidget from './cloudinary-upload-widget';
 
 const UserViewer = (props) => {
     let navigate = useNavigate();
@@ -103,6 +104,7 @@ const UserViewer = (props) => {
                     <Link to="/edit">
                         <button className="btn btn-theme"><FontAwesomeIcon icon="fa-edit" /> Edit Profile</button>
                     </Link>
+                    <CloudinaryUploadWidget updateViewerUser={updateViewerUser} userId={viewer.user.id} />
                     <button className="btn btn-theme" onClick={() => {navigate("/")}}>Close</button>
                 </div>
             </div>

@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import CloudinaryUserImage from './cloudinary-user-img';
-import CloudinaryUploadWidget from './cloudinary-upload-widget';
 
 
 const UserEditor = (props) => {
@@ -192,13 +191,9 @@ const UserEditor = (props) => {
           </div>
 
           <div className="cloudinary-user">
-            
             <CloudinaryUserImage 
               filename={props.user.imgName || "player_o5vlxo"}
-            />
-
-            {/* <CloudinaryUploadWidget userId={user.currentUser.id} /> */}
-            
+            />            
           </div>
           <br/>
 

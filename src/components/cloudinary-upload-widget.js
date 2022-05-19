@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 const CloudinaryUploadWidget = (props) => {
@@ -52,7 +53,6 @@ const CloudinaryUploadWidget = (props) => {
     }
 
 
-
     function savePictureLink(filename){
         if(filename.length > 0){
             axios({
@@ -64,7 +64,7 @@ const CloudinaryUploadWidget = (props) => {
               }
               ).then(response => {
                 if(response.status === 200) {
-                  navigate("/profile");
+                  props.updateViewerUser();
                 }
               }).catch(error => {
                   console.log("error in saveFileName(): ", error.response);
@@ -75,7 +75,7 @@ const CloudinaryUploadWidget = (props) => {
 
     return (
       <button id="upload_widget" className="btn btn-theme" type='button' form="">
-        Upload new image
+        <FontAwesomeIcon icon="fa-solid fa-image" /> Upload new image
       </button>
     );
 }
