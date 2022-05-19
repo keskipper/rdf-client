@@ -190,7 +190,10 @@ const UserEditor = (props) => {
           navigate("/");
         }
       }).catch(error => {
-          console.log("error in handleSubmit(): ", error.response.data)
+          setUser(prevUser => ({
+            ...prevUser,
+            error: error.response.data.message
+          }))
       });
     }
 
