@@ -20,6 +20,7 @@ const UserEditor = (props) => {
       userLat: "",
       userLng: "",
       birthdate: "",
+      imgName: "",
       userInDatabase: props.userExists,
       currentUser: props.user,
       status: "",
@@ -60,6 +61,7 @@ const UserEditor = (props) => {
             birthdate: response.data.birthdate.substring(0, 10),
             userLat: response.data.userLat,
             userLng: response.data.userLng,
+            imgName: response.data.imgName,
             status: response.data.userLat + ", " + response.data.userLng
           }))  
         }
@@ -179,6 +181,7 @@ const UserEditor = (props) => {
             userLat: "",
             userLng: "",
             birthdate: "",
+            imgName: "",
             userInDatabase: false,
             userExists: false,
             currentUser: {}
@@ -201,7 +204,7 @@ const UserEditor = (props) => {
 
           <div className="cloudinary-user">
             <CloudinaryUserImage 
-              filename={props.user.imgName || "player_o5vlxo"}
+              filename={user.imgName || "player_o5vlxo"}
             />            
           </div>
           <br/>
