@@ -14,6 +14,10 @@
     .game-search-item {
         display: flex;
 
+        @media screen and (max-width: 700px) {
+            flex-direction: column;
+        }
+
         .game-search-left {
             padding: 15px;
             display: flex;
